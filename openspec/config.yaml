@@ -1,0 +1,37 @@
+schema: spec-driven
+
+context: |
+  Language: Spanish
+  All artifacts must be written in Spanish.
+  Keep OpenSpec structural headings and SHALL/MUST keywords in English.
+  Proyecto: SENIALON, radar de oportunidades de contenido para líderes y equipos de LatAm interesados en IA.
+  Leer docs/DEFINICION_MVP.md y docs/PLAN_DE_TRABAJO.md antes de redactar artefactos.
+  Los documentos contienen decisiones confirmadas y propuestas; distinguirlas y registrar lo pendiente sin inventar respuestas.
+  La fase actual es preparar y redactar especificaciones. No implementar código del producto durante esta etapa.
+  El MVP contempla recolección automática de videos cortos públicos de YouTube, evidencia audiovisual y decisiones con JEV.
+  Referentes iniciales: https://www.youtube.com/@30X_by_Andres_Bilbao y https://www.youtube.com/@30XDevs.
+  Separar desempeño observado, valor para la audiencia y relación con tendencias documentadas. Popularidad no acredita valor ni causalidad.
+  LatAm es el mercado editorial; cada señal conserva fuente, fecha, territorio y periodo realmente consultados.
+  No asumir países concretos, periodos, credenciales, presupuesto, stack ni integraciones operativas. Las rutas técnicas propuestas requieren validación.
+  Notion es una integración opcional de última prioridad y no condiciona la demo del MVP esencial.
+  Usar solo contenido público conforme a las restricciones del reto, sin datos personales ni acceso detrás de login de terceros.
+
+rules:
+  proposal:
+    - Explicar problema, resultado esperado, alcance esencial, exclusiones y decisiones pendientes a partir de los documentos del producto.
+    - Mantener Notion como extensión opcional y distinguir propuestas técnicas de decisiones confirmadas.
+  specs:
+    - Definir comportamientos observables y escenarios verificables, incluidos datos ausentes, evidencia insuficiente y errores de proveedores.
+    - Mantener separados desempeño, valor y tendencia; contemplar contenido útil sin tendencia y contenido popular sin valor respaldado.
+    - Conservar trazabilidad hacia fuentes y marcas de tiempo; no presentar inferencias como mediciones ni causalidad demostrada.
+  design:
+    - Documentar alternativas, dependencias y accesos por verificar; no elegir un stack por suposición.
+    - Distinguir candidatos por duración de Shorts confirmados; no presentar tendencias de búsquedas de Google como tendencias comprobadas de YouTube.
+  tasks:
+    - Organizar trabajo por dependencias y criterios de aceptación, con la evaluación de valor y el cruce de tendencias antes de Notion.
+    - No dar por ejecutadas tareas ni por validadas integraciones sin evidencia real.
+
+operations:
+  apply:
+    guidance:
+      - Respetar la fase actual de especificaciones; configurar OpenSpec no autoriza implementar el producto.

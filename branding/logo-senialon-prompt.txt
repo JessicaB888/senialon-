@@ -1,0 +1,20 @@
+SENIALON — prompt del logo
+
+Herramienta: generador integrado de imágenes (image_gen); no se utilizó CLI.
+Archivo: logo-senialon.png
+Formato: PNG con transparencia real, 2172 × 724 px.
+Concepto: una S geométrica que integra una señal seleccionada.
+
+Prompt utilizado, íntegro:
+
+Use case: logo-brand.
+Asset type: primary project logo, horizontal symbol-and-wordmark lockup.
+Primary request: Design a polished original logo for SENIALON, a content intelligence product that finds useful editorial opportunities by distinguishing observed performance, real audience value, and documented trends. The guiding idea is selecting a useful signal from noise.
+Scene/backdrop: genuinely transparent background with clean alpha, no background rectangle or checkerboard painted into the artwork.
+Subject: one compact, memorable geometric S symbol paired harmoniously with the exact wordmark SENIALON. Build the symbol from a very small number of bold solid shapes and a generous negative-space cut; a small solid segment integrated within that cut subtly suggests a selected signal. The silhouette must remain coherent and legible at small sizes. Do not use a detached notification dot.
+Style/medium: refined minimal flat graphic logo, crisp vector-like edges, strong monochrome silhouette, balanced optical spacing. Use one dark neutral ink throughout. This is a first monochrome logo proposal, not a complete brand palette.
+Typography: contemporary semibold uppercase sans serif, open counters, confident and approachable, meticulously kerned, no decorative sci-fi cuts.
+Text (verbatim): "SENIALON". Spell exactly S E N I A L O N, eight letters, no accent, no ñ, no extra words or tagline.
+Composition/framing: a single balanced horizontal lockup, symbol and name visually aligned, generous but practical transparent margin, occupying most of the usable width.
+Constraints: single logo only; no presentation board, mockup, stationery, UI, captions, measurements, gradients, shadows, 3D, textures, hairline strokes, stars, AI sparkles, brains, wifi arcs, literal radar screens, growth arrows, watermarks, or imitation of a known brand. Deliver the actual clean logo artwork with true transparency.
+
