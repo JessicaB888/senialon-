@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-17T23:25:56Z",
+  "title": "Design System: SENIALON",
+  "extensions": {
+    "shadows": [
+      {
+        "name": "overlay",
+        "value": "0 12px 32px rgba(0, 0, 0, 0.32)",
+        "purpose": "Delimitar un popover o diálogo necesario junto con un borde visible. Los módulos permanecen planos."
+      }
+    ],
+    "motion": [
+      {
+        "name": "control-duration",
+        "value": "160ms",
+        "purpose": "Respuesta breve de controles; eliminar movimiento no esencial cuando se solicita reducción de movimiento."
+      },
+      {
+        "name": "disclosure-duration",
+        "value": "220ms",
+        "purpose": "Duración máxima propuesta para expandir detalles, sin retrasar el acceso a contenido."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "medium",
+        "value": "768px"
+      },
+      {
+        "name": "wide",
+        "value": "1200px"
+      }
+    ]
+  },
+  "components": [],
+  "narrative": {
+    "northStar": "Mesa de criterio editorial",
+    "overview": "SENIALON debe sentirse como un espacio de trabajo donde cada afirmación puede contrastarse. La identidad combina el negro, el blanco cálido y el punto naranja de los logos Fluido con la precisión estructural del prisma aportado. La marca aparece en detalles consistentes; publicaciones, evidencia y decisiones ocupan el centro de la interfaz.",
+    "keyCharacteristics": [
+      "Superficies oscuras, contraste claro y un acento naranja contenido.",
+      "Sora en títulos; Work Sans en lectura, controles y datos.",
+      "Estructura modular alineada con el trabajo editorial y la inspección de evidencia.",
+      "Estados expresados con palabras, símbolos y color, sin depender solo del color.",
+      "Densidad suficiente para comparar, con espacio para leer y tomar una decisión."
+    ],
+    "rules": [
+      {
+        "name": "The Evidence Rule",
+        "body": "Un color nunca convierte una observación en verdad, una hipótesis en resultado ni un aumento de publicaciones en valor editorial.",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "Conservar los logos Fluido y el naranja de SENIALON.",
+      "Mantener fechas, cobertura y límites junto al resultado.",
+      "Separar observación, hipótesis y adaptación.",
+      "Comprobar accesibilidad y estados al implementar."
+    ],
+    "donts": [
+      "No trasladar la identidad ni las reglas operativas de Corefex.",
+      "No confundir crecimiento de publicaciones con valor o viralidad.",
+      "No convertir desconocidos en cero ni usar color como única explicación.",
+      "No presentar esta especificación como interfaz implementada."
+    ]
+  }
+}

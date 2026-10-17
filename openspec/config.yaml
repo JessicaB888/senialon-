@@ -7,6 +7,9 @@ context: |
   Proyecto SENIALON: radar de oportunidades editoriales de IA para líderes y equipos de LatAm.
   Leer docs/DEFINICION_MVP.md, docs/PLAN_DE_TRABAJO.md y los artefactos del cambio definir-mvp-senialon.
   Fase actual: completar especificaciones y planificación; no implementar código del producto ni ejecutar el prototipo de referencia.
+  Equipo confirmado de tres integrantes: Frontend (FE), Algoritmia/JEV (ALG) y Backend/infraestructura (BE). Cada tarea tiene un único dueño; revisiones y dependencias no transfieren propiedad.
+  FE posee frontend, Next Route Handlers y autenticación web, UI/pruebas E2E y playbook. ALG posee backend/analysis, ventanas, reglas, prompts/rúbricas JEV/Gemini, cálculos y evaluación, sin HTTP/BD/secretos directos. BE posee resto backend, adquisición técnica, adaptadores, contrato API, persistencia/gasto, infraestructura, README operativo y paquete/envío humano.
+  BE publica el borrador del contrato; ALG revisa semántica y FE consumo; BE cierra una versión común. ALG usa adaptadores autenticados inyectados por BE. Ventanas y conteos se implementan una sola vez en ALG.
   Corpus fijo de 11 canales: conservar las URLs exactas de la definición y youtube-corpus.
   Videos públicos de hasta 180 segundos, IA central o aplicación concreta; mención incidental insuficiente. Distinguir candidato corto de Short confirmado.
   Contexto automático de YouTube; comparar últimos 7 días completos frente a los 7 anteriores en America/Bogota, UTC−5, excluyendo el día actual.
@@ -46,7 +49,7 @@ rules:
     - Restringir preguntas abiertas a detalles diferibles que no cambien requisitos, enfoque o tareas.
   tasks:
     - Ordenar por dependencias con pruebas reales de acceso al inicio; cada tarea debe tener evidencia de finalización.
-    - Conservar cuatro frentes sin inventar disponibilidad ni responsables individuales.
+    - Agrupar todas las tareas en las tres áreas confirmadas FE/ALG/BE, con dueño único, fronteras de archivos, dependencias y verificación; dividir tareas mixtas sin perder requisitos ni inventar disponibilidad o nombres.
     - Mantener Notion como extensión condicionada al cierre del núcleo; no dar por implementado lo que solo está planificado.
 
 operations:

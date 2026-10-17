@@ -48,4 +48,4 @@ La primera etapa de ejecución debe habilitar YouTube y JEV, configurar persiste
 
 Se mantienen fuera del MVP predicción, Kleinberg obligatorio, crecimiento de audiencia, fases de saturación, puntuaciones compuestas, ingesta multirred, edición manual de clasificaciones y distribución por Gmail/Slack/Aply. El archivo radar_30x_prototype-v2.py queda como base candidata para una futura capa predictiva por validar.
 
-El corpus y antecedentes están en [DEFINICION_MVP.md](../../../docs/DEFINICION_MVP.md). La fecha oficial permanece: 18 de octubre de 2026 antes de las 12:00, hora de Colombia. Los cuatro frentes se conservan sin inventar nombres, experiencia u horas disponibles.
+El corpus y antecedentes están en [DEFINICION_MVP.md](../../../docs/DEFINICION_MVP.md). La fecha oficial permanece: 18 de octubre de 2026 antes de las 12:00, hora de Colombia. El usuario confirmó tres integrantes y tres áreas: Frontend, Algoritmia/JEV y Backend/infraestructura. Las tareas se redistribuyen con dueño único y contratos explícitos; no se amplía el producto ni se inventan nombres, experiencia u horas disponibles.

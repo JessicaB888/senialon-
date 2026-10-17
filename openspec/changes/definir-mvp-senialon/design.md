@@ -13,7 +13,7 @@ Este diseño aplica: hay varios proveedores, un modelo de datos nuevo, autentica
 **Goals:**
 
 - Un proyecto Vercel con frontend Next.js/React/TypeScript y backend Python, fuentes y resultados trazables y contratos explícitos entre ambos runtimes.
-- Pasos acotados y recuperables entre solicitudes, con persistencia externa y contratos estables entre los cuatro frentes.
+- Pasos acotados y recuperables entre solicitudes, con persistencia externa y contratos estables entre las tres áreas confirmadas: Frontend, Algoritmia/JEV y Backend/infraestructura.
 - Acceso compartido a toda la aplicación y gasto incremental controlado dentro del límite autorizado.
 - Pruebas de acceso y de una ruta real antes de ampliar procesamiento o trabajar en Notion.
 
@@ -122,6 +122,30 @@ No fijar un umbral numérico arbitrario como si estuviera calibrado. Las salidas
 La adaptación contiene ángulo, aporte, gancho y estructura sugeridos, CTA si tiene respaldo, evidencias, hipótesis y límites. No trasladar porcentajes o urgencias ilustrativas de la investigación a hechos, ni atribuir experiencias o recursos inexistentes al equipo.
 
 ### 8. Datos y contratos entre frentes
+
+El usuario confirmó tres integrantes. Cada archivo y tarea tiene un dueño de implementación; otra área revisa o consume su entrega sin escribir una segunda versión. Las rutas siguientes delimitan la implementación futura: no se crean carpetas ni código durante esta revisión.
+
+| Área | Propiedad de implementación y documentación |
+| --- | --- |
+| FE — Frontend | frontend/, incluidas dependencias, componentes, Route Handlers, tipos consumidores y pruebas frontend/E2E; branding de interfaz, DESIGN.md, guía frontend y playbook. Valida acceso en Next y presenta estados; no adquiere contenido, calcula señales ni accede directamente a proveedores o BD. |
+| ALG — Algoritmia/JEV | backend/analysis/, incluidas sus pruebas y documentación de criterios/evaluación. Define ventanas, pertinencia IA, grupos, conteos, cobertura analítica, preguntas JEV, prompts Gemini y significado de observaciones/adaptaciones. No implementa HTTP, endpoints, BD, secretos, reservas ni despliegues. |
+| BE — Backend/infraestructura | backend/ excepto backend/analysis/, incluidas pruebas de API/adaptadores/persistencia, contratos API y migraciones; configuración raíz y de Vercel, entornos/secretos, README operativo, costos, integración de ramas y paquete final. Adquiere YouTube, conecta proveedores, controla ejecución/persistencia y entrega; no duplica cálculos o rúbricas de ALG ni escribe componentes frontend. |
+
+**Contrato de integración:** BE publica un borrador de operaciones, entradas/salidas, IDs, estados, errores, versiones y ejemplos; ALG comprueba su semántica y FE su consumo. BE registra la versión acordada en una única fuente de contrato, con validación de compatibilidad. Las revisiones se realizan sobre el borrador, sin esperar el cierre de esa misma tarea. El contrato API y los esquemas de transporte pertenecen a BE; las interfaces internas de análisis pertenecen a ALG y BE realiza el mapeo si hace falta. FE deriva tipos consumidores y no mantiene un contrato competidor.
+
+| Transferencia | Productor y consumidor | Regla que evita duplicación |
+| --- | --- | --- |
+| Ventanas | ALG → BE | ALG calcula una vez desde el inicio de ejecución; BE conserva y usa esas fronteras para adquirir. FE solo las muestra. |
+| Publicaciones y cobertura técnica | BE → ALG | BE resuelve canales, pagina, valida condición pública/duración y deduplica. ALG decide pertinencia IA y temas; no crea otro recolector. |
+| Solicitudes a JEV/Gemini | ALG → adaptadores BE → ALG | ALG define preguntas, prompts y respuestas esperadas. BE aporta transporte autenticado, errores y uso; cada llamada pasa por reserva de costo/paso. Ningún secreto llega al módulo de ALG. |
+| Grupos y confirmación | ALG → BE → FE → BE | ALG propone; FE permite inspeccionar/confirmar; BE persiste versión y momento. Confirmar no cambia asignaciones ni aprueba una adaptación. |
+| Señales, análisis y evidencia | ALG → BE → FE | ALG produce resultados; BE valida/persiste/expone; FE presenta sin volver a calcular o juzgar. |
+| Selección, revisión y motivo | FE → BE | BE conserva identidad de ejecución/análisis y aplica transiciones atómicas. Abrir una ficha no inicia análisis pagado. |
+| Notion opcional | BE API → FE interfaz | BE decide la activación al final y construye el adaptador; FE conecta la acción solo cuando exista un contrato operativo. |
+
+El módulo de ALG es código de dominio sin acceso directo a HTTP/BD/secretos; puede invocar puertos de proveedor inyectados por BE. Las funciones de ventanas y cálculo son deterministas. BE es el único dueño de reclamaciones de pasos, reservas, reintentos y persistencia: no delega a ALG una vía directa que omita esos controles. FE ejecuta comprobaciones E2E; ALG es dueño de evaluación analítica y entrega sus resultados a FE para el playbook; BE consolida operación, costos, respaldos y entrega final.
+
+No editar archivos de otra área para resolver una integración: registrar el cambio requerido y su dueño lo aplica. Cada entrega incluye versión, ejemplo de entrada/salida, comprobación y limitaciones. BE coordina la integración de ramas sin reescribir silenciosamente el trabajo de los otros. El [plan de trabajo](../../../docs/PLAN_DE_TRABAJO.md) define las puertas globales y [tasks.md](tasks.md) contiene las casillas únicas y la trazabilidad de la redistribución.
 
 | Entidad | Contenido propuesto |
 | --- | --- |

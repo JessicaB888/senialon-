@@ -1,69 +1,122 @@
 # Tasks
 
-Plan de ejecución posterior a las especificaciones. Todas las tareas están pendientes: escribir esta lista no implementa el producto ni valida accesos. Iniciar desarrollo solo con una nueva instrucción del usuario. Referencias: [diseño](design.md), [propuesta](proposal.md) y [plan de cuatro frentes](../../../docs/PLAN_DE_TRABAJO.md).
+Plan de ejecución posterior a las especificaciones. El usuario confirmó **tres integrantes y tres áreas**: Frontend (FE), Algoritmia/JEV (ALG) y Backend/infraestructura (BE). Cada casilla tiene un único dueño: el del encabezado. Las revisiones o dependencias de otra área no transfieren la propiedad de la tarea.
 
-Asignación por rol, sin inventar nombres o disponibilidad: integrante 1, adquisición/calidad; integrante 2, clasificación/señales/JEV; integrante 3, audiovisual/valor/adaptación; integrante 4, interfaz/persistencia/integración/entrega. El integrante 4 coordina contratos y despliegues; cada frente verifica y documenta su trabajo.
+Todas las casillas siguen pendientes. No se desarrolla código durante esta reorganización. Referencias: [diseño técnico](design.md), [sistema visual](../../../DESIGN.md), [propuesta](proposal.md) y [plan de tres áreas](../../../docs/PLAN_DE_TRABAJO.md). Nombres, experiencia y horas disponibles siguen sin confirmar.
 
-## 1. Accesos, prueba inicial y presupuesto
+Se separan tareas mixtas del plan anterior: **42 tareas con dueño único**, sin ampliar el alcance. La numeración agrupa por área; el orden global lo determinan estas puertas:
 
-- [ ] 1.1 Preparar el registro de costos nuevos, recargas y reservas frente al máximo de 20 USD, excluyendo el abono Vercel existente; establecer como precondición de cada prueba real verificar tarifas y mínimos de su cuenta, estimar el consumo y comprobar saldo suficiente. Verificar que un costo desconocido no se trata como cero ni autoriza una llamada pagada.
-- [ ] 1.2 Verificar el proyecto y límites efectivos del Vercel ya abonado, disponibilidad de Services para Next.js/Python y el acceso Gemini declarado; registrar runtimes, modelos y cuotas disponibles sin secretos. Tras el control previo de 1.1, completar con evidencia de acceso y una solicitud audiovisual real comprobada contra un video público.
-- [ ] 1.3 Habilitar YouTube Data API en el proyecto del equipo y configurar su credencial; comprobar resolución de una URL del corpus y lectura de metadatos públicos, registrando campos, cuota y errores reales.
-- [ ] 1.4 Configurar el acceso JEV y, tras verificar cobro y saldo mediante 1.1, comprobar una decisión tipada auténtica en español; registrar modelo, entrada pública o simulada identificada, respuesta y uso, sin presentar el material de prueba como contenido recolectado.
-- [ ] 1.5 Configurar PostgreSQL en Supabase Free y probar conexión backend con TLS y pooler; comprobar escritura/lectura y acceso desde el entorno de despliegue sin exponer la conexión al cliente.
-- [ ] 1.6 Consolidar las primeras mediciones de duración, uso y costo en el registro y comprobar que caben antes de ampliar el procesamiento. Si una dependencia obligatoria no cabe o no funciona, documentar el bloqueo, sin sustituirla por datos simulados.
+| Puerta | Condición y secuencia |
+| --- | --- |
+| G0 — Contratos y control previo | BE publica el borrador 3.1; ALG revisa semántica con 2.1 y FE comprueba consumo con 1.1; BE registra una versión acordada. Las revisiones pueden comenzar sobre el borrador, sin esperar que 3.1 esté cerrado. 3.2 habilita el control previo de cualquier consumo pagado. |
+| G1 — Accesos y base desplegada | FE prepara 1.2–1.3; BE verifica 3.3–3.7 y control de pasos/gasto 3.10. Toda prueba externa de pago debe pasar antes por 3.2; toda llamada de la aplicación pasa por 3.10. ALG aporta entradas y revisa salidas de las pruebas mediante 2.1. |
+| G2 — Corpus y comparación | ALG entrega ventanas 2.2; BE adquiere/persiste con 3.8–3.9; ALG entrega 2.3–2.6; BE conecta 3.11–3.12; FE integra 1.4–1.6. Confirmar grupos sigue siendo previo al cálculo. |
+| G3 — Piezas y revisión | ALG entrega 2.7–2.9; BE integra análisis seleccionado y revisión con 3.11–3.12; FE integra 1.7–1.9. El catálogo elegible no espera a que la comparación esté completa. |
+| G4 — Evaluación y entrega preparada | ALG completa 2.10–2.12; FE completa 1.10–1.11; BE completa 3.13–3.14. Hay recorrido real, cobertura explícita, evaluación y paquete preparado. |
+| G5 — Extensión y cierre | BE decide Notion con 3.15. Solo si se activa, BE implementa 3.16 y FE 1.12; si se difiere, ambas tareas dejan constancia sin simular una integración. Después BE congela y entrega con 3.17–3.18. |
 
-## 2. Base web protegida, persistencia y ejecución por pasos
+Los escenarios y ejemplos de prueba deben identificarse como tales; nunca sustituyen datos, evidencia o decisiones reales en la demo. Cada área documenta y comprueba sus entregables antes de pasarlos a otra.
 
-- [ ] 2.1 Preparar frontend Next.js 16.3.3/App Router, React/React DOM 19.3.0, TypeScript 5.9.3 y npm con Node >=24.21.0 <25, y backend Python 3.12/FastAPI; fijar dependencias compatibles. Comprobar arranque local, build y primer despliegue Vercel Services, con Next público y Python interno mediante binding, sin copiar código del proyecto de referencia ni presentar datos de prueba como reales.
-- [ ] 2.2 Implementar la credencial compartida de demo en páginas, datos y mutaciones de Next y verificarla otra vez en FastAPI; comprobar rechazo sin credencial o con credencial incorrecta en ambos servicios, transmisión solo desde servidor por binding, origen de mutaciones y acceso válido. Verificar que layouts/proxy no sean el único control, Python no tenga ruta pública y no se expongan datos en caché compartida ni secretos en bundle o logs.
-- [ ] 2.3 Crear esquema y migraciones de ejecuciones, cobertura, publicaciones, clasificaciones, grupos/confirmación, análisis, revisiones y uso de proveedores; comprobar restricciones de identidad y recuperación tras reiniciar la aplicación con datos de prueba identificados.
-- [ ] 2.4 Implementar pasos y checkpoints persistidos con reclamación atómica antes de llamar proveedores y reserva de gasto; probar reintentos simultáneos del mismo paso, recuperación de resultados existentes y estado incierto sin segunda llamada pagada automática.
-- [ ] 2.5 Documentar entornos Node/Python, arranque de ambos servicios, configuración y binding sin valores secretos, mecanismo de acceso, persistencia y reanudación. Definir y comprobar contrato JSON/Pydantic/TypeScript de estados, evidencia, cobertura y errores, validando respuestas durante la ejecución; verificar desde un entorno limpio los límites y tiempos de ambas funciones según el plan usado.
+## 1. Frontend — responsable FE
 
-## 3. Adquisición y cobertura — integrante 1
+**Propiedad:** frontend/, sus dependencias y pruebas, branding de interfaz y DESIGN.md. Construye Next.js y sus Route Handlers; consume el contrato publicado por BE. No implementa adquisición, reglas analíticas, proveedores, acceso directo a PostgreSQL ni configuración de infraestructura.
 
-- [ ] 3.1 Implementar las dos ventanas completas en America/Bogota y el corte de día actual; comprobar límites inclusivo/exclusivo y un caso que cambie de fecha al convertir desde UTC.
-- [ ] 3.2 Resolver y conservar las once URLs exactas del corpus y sus estados; comprobar que un fallo no sustituye el canal ni elimina su estado de cobertura.
-- [ ] 3.3 Recolectar páginas y metadatos necesarios para las ventanas usando la fecha pública del video, deduplicando por ID; verificar paginación, repetición de IDs y diferencia entre fecha de inclusión en playlist y publicación del video.
-- [ ] 3.4 Aplicar condición pública y hasta 180 segundos, conservando estadísticas originales y captura; verificar 180/181 segundos, duración o métrica ausente y candidato corto sin afirmar Short por duración solamente.
-- [ ] 3.5 Persistir cobertura por canal, ventana y etapa y documentar el contrato de adquisición; comprobar con una consulta real y casos controlados de canal vacío, acceso fallido y reintento que desconocido no se transforme en cero.
+- [ ] 1.1 Revisar el borrador de contrato de 3.1, registrar campos/estados necesarios y preparar tipos TypeScript y ejemplos identificados para consumo. Verificar validación de respuestas durante la ejecución, desconocido distinto de cero y errores por etapa; documentar el consumo sin crear un segundo contrato API autoritativo.
+- [ ] 1.2 Preparar Next.js 16.3.3 con App Router, React/React DOM 19.3.0, TypeScript 5.9.3 y npm sobre Node >=24.21.0 <25. Verificar arranque y build locales, dependencias fijadas y aplicación del DESIGN.md con los logos Fluido; entregar a BE los comandos y variables requeridos por el servicio frontend, sin secretos.
+- [ ] 1.3 Implementar acceso compartido en páginas y Route Handlers de Next, transmisión validada al binding interno y consumo JSON del backend. Comprobar rechazo sin credencial o con credencial incorrecta, validación de origen en mutaciones, ausencia de secretos en bundle/logs y respuestas privadas sin caché compartida; no depender solo de layout/proxy ni ejecutar trabajo desde lecturas.
+- [ ] 1.4 Construir la vista de ejecuciones, cobertura, errores y recuperación, con consulta de estado y petición explícita de avance/reanudación. Verificar once canales previstos, ventanas reales, ejecución anterior identificada y último paso persistido; no prometer trabajo activo tras cerrar navegador ni inventar progreso/ETA.
+- [ ] 1.5 Construir inspección y confirmación de grupos mediante la API de BE. Comprobar versión/fecha visibles y comparación pendiente antes de confirmar, sin ofrecer edición manual de pertinencia, grupos o asignaciones; diferenciar esta acción de la revisión editorial.
+- [ ] 1.6 Construir comparación por tema con A/B, diferencia, porcentaje permitido, base cero y cobertura. Verificar presentación de 2/4, 2/0, 0/3, 0/0 y base desconocida a partir de respuestas del contrato; con cobertura parcial no mostrar porcentaje ni novedad del corpus completo. Enlazar publicaciones y contribución por canal, sin recalcular las señales en React.
+- [ ] 1.7 Construir listado y selección de cualquier pieza elegible para análisis profundo mediante BE. Comprobar selección sin aumento o con comparación pendiente y que abrir/listar una pieza no dispare análisis pagado; identificar candidato corto frente a Short confirmado.
+- [ ] 1.8 Construir la ficha con métricas originales, señal, observaciones audiovisuales, evidencia temporal, valor, afinidad, hipótesis y adaptación separadas. Comprobar enlaces al original, estado de revisión y dimensiones insuficientes; ante fallo audiovisual conservar metadatos y señal disponible, sin puntuación global ni hechos inventados.
+- [ ] 1.9 Construir registro de decisión editorial y motivo mediante la API, con confirmación real de guardado. Comprobar estado inicial pendiente, conservación de texto si falla el envío y recuperación tras cerrar navegador/reiniciar la aplicación con la misma evidencia y versión; no confundir confirmación de grupos con aprobación editorial.
+- [ ] 1.10 Verificar TypeScript, ESLint, Prettier, build, Vitest para consumo/lógica relevante y Playwright para el recorrido protegido entre Next y Python. Cubrir fallo de canal, fallo audiovisual, consulta/recarga sin repetición pagada y recuperación desde otro equipo; documentar resultados y guía de frontend, sin asumir que un fixture acredita una integración real.
+- [ ] 1.11 Consolidar el playbook de máximo cinco páginas u ocho diapositivas y el guion de demo con los datos de evaluación de ALG y operación/costos de BE. Verificar fuentes, preguntas JEV, evidencia, cobertura, límites y enlace correcto; entregar a BE el material final de presentación y comprobar que otra persona puede seguir el recorrido.
+- [ ] 1.12 Resolver la interfaz opcional de Notion solo después de G4 y la decisión 3.15. Si se activa, consumir 3.16 y comprobar guardado manual, enlace real, duplicado y error sin pérdida local. Si se difiere, dejarlo pendiente sin botón o resultado simulado; documentar cuál rama se resolvió.
 
-## 4. Clasificación, confirmación y señales — integrante 2 con interfaz del 4
+## 2. Algoritmia y JEV — responsable ALG
 
-- [ ] 4.1 Implementar pertinencia IA con JEV y evidencia de entrada versionada; comprobar IA central, aplicación concreta, mención incidental, material insuficiente y fallo de proveedor, sin reemplazar errores por decisiones simuladas.
-- [ ] 4.2 Generar grupos automáticamente con material de ambas ventanas y asignar un principal y secundarios sin conteo; validar IDs de entrada, equivalencias, aplicaciones distintas y falta de respaldo antes de presentar la propuesta.
-- [ ] 4.3 Construir inspección y confirmación de grupos con fecha/versión persistida; comprobar que no se calcula comparación antes de confirmar y que no hay edición manual de pertinencia, principal o asignaciones.
-- [ ] 4.4 Implementar conteos de IDs únicos por principal y ventana, con publicaciones y contribución por canal; comprobar que secundarios, formato, afinidad y falta de análisis profundo no alteran por sí solos el conteo.
-- [ ] 4.5 Implementar diferencia, porcentaje permitido, base cero y cobertura parcial; verificar A/B de 2/4, 2/0, 0/3, 0/0 y base desconocida. Con cobertura incompleta comprobar comparación completa pendiente, sin porcentaje ni novedad del corpus completo.
-- [ ] 4.6 Documentar criterios de pertinencia/agrupación y confirmación, y validar una ejecución real hasta los conteos disponibles; conservar versiones y evidencia de JEV y diferenciar la comparación completa de una demo parcial.
+**Propiedad:** backend/analysis/, incluidas sus pruebas y documentación de criterios/evaluación. Define reglas, ventanas, rúbricas, prompts y significado de las salidas. No crea endpoints, conexiones de base de datos, clientes HTTP, secretos, reservas de gasto o despliegues. Usa adaptadores autenticados inyectados por BE; JEV decide y Gemini observa/sintetiza según las funciones ya especificadas.
 
-## 5. Análisis profundo, valor y adaptación — integrante 3 con JEV del 2
+- [ ] 2.1 Revisar la semántica del borrador 3.1 y definir las interfaces de entrada/salida del módulo de análisis y sus puertos de proveedores. Verificar ejemplos de material suficiente/insuficiente, referencias a evidencia, estados y versiones; entregar a BE preguntas/esquemas esperados sin crear un cliente HTTP paralelo ni modificar el contrato API por su cuenta.
+- [ ] 2.2 Implementar una única función determinista de ventanas a partir del inicio de ejecución: últimos siete días completos frente a los siete anteriores en America/Bogota, excluyendo el día actual. Probar inicio inclusivo/fin exclusivo y cambio de fecha desde UTC; entregar fronteras y zona a BE para la consulta, sin recalcularlas en otra área.
+- [ ] 2.3 Implementar rúbrica y decisión de pertinencia IA con JEV mediante el puerto inyectado por BE. Probar IA central, aplicación concreta, mención incidental, material insuficiente y error del proveedor; conservar evidencia y criterios/modelo versionados, sin sustituir el error por una decisión simulada.
+- [ ] 2.4 Implementar la propuesta automática de temas con Gemini a partir de ambas ventanas, conciliando una sola versión canónica. Probar equivalencias, asuntos distintos y falta de respaldo; validar IDs y asignar un tema principal y secundarios sin conteo, sin inventar transcripciones ni modificar manualmente las clasificaciones.
+- [ ] 2.5 Implementar conteos de IDs distintos por tema principal y ventana, con publicaciones y aporte por canal, requiriendo versión confirmada. Probar que no se calcula sin confirmación y que secundarios, formato, afinidad o falta de análisis profundo no cambian por sí solos el conteo.
+- [ ] 2.6 Implementar diferencia, porcentaje permitido, base cero y política de cobertura temática evaluable. Probar 2/4, 2/0, 0/3, 0/0 y base desconocida; con cobertura incompleta producir conteos observados y comparación completa pendiente, sin porcentaje ni novedad del corpus completo. No inferir crecimiento de audiencia o predicción.
+- [ ] 2.7 Implementar prompts e interpretación del análisis audiovisual seleccionado con Gemini por el adaptador de BE. Contrastar formato, gancho verbal/visual/auditivo, estructura y marcas temporales contra el video original; comprobar que una dimensión no observada permanece insuficiente y que el formato no entra en el conteo semanal.
+- [ ] 2.8 Implementar las rúbricas JEV de valor, persona, contexto empresarial y pilar. Verificar tres estados de valor, cuatro pilares y alternativas, razones/evidencia y versiones; no inventar espectadores, fijar umbrales no calibrados ni aplicar puntuación compuesta o exclusiones sociales automáticas.
+- [ ] 2.9 Implementar síntesis de hipótesis y adaptación mediante Gemini con observaciones y decisiones JEV respaldadas. Revisar fuentes, ángulo, aporte, gancho, estructura y CTA cuando proceda; comprobar que no añade cifras, causalidad, resultados propios, activos o urgencias sin evidencia y que popularidad o crecimiento no acreditan utilidad.
+- [ ] 2.10 Evaluar fidelidad audiovisual, pertinencia y utilidad con revisión humana y material distinto del usado para ajustar criterios. Registrar acuerdos, discrepancias, errores y límites reales; entregar a FE resultados, preguntas JEV y política de revisión para el playbook, sin inventar precisión o latencia.
+- [ ] 2.11 Validar una ruta real de clasificación, grupos y conteos disponibles y una pieza seleccionada con audiovisual/JEV/adaptación, usando exclusivamente los adaptadores controlados por BE y el presupuesto disponible. Conservar entradas/salidas auténticas, criterios, uso y evidencia; distinguir comparación completa de demo parcial y no reprocesar piezas válidas por defecto.
+- [ ] 2.12 Entregar pruebas pytest del módulo y documentación de ventanas, pertinencia, agrupación, conteos, cobertura, observaciones y rúbricas. Verificar que las pruebas cubren los casos anteriores, que las salidas respetan el contrato acordado y que no existe acceso directo a HTTP, base de datos o secretos en backend/analysis/.
 
-- [ ] 5.1 Conectar selección del operador desde cualquier pieza elegible y procesar solo las elegidas en profundidad; comprobar acceso a una pieza sin aumento o con comparación pendiente y que otras piezas no disparan ese análisis por defecto.
-- [ ] 5.2 Obtener observaciones de formato, gancho verbal/visual/auditivo y estructura con Gemini por URL; contrastar marcas contra el video real, conservar estados de revisión y comprobar que una dimensión no observada no se inventa desde metadatos.
-- [ ] 5.3 Implementar las decisiones JEV de valor, persona, contexto y pilar con salidas acordadas; verificar tres estados de valor, cuatro pilares y alternativas, evidencia y modelo/versiones, sin puntuación compuesta ni rechazos sociales automáticos.
-- [ ] 5.4 Producir hipótesis y adaptación con fuentes, ángulo, aporte, gancho, estructura y CTA cuando proceda; revisar que no añade cifras, causalidad, resultados propios, activos o urgencias sin evidencia y que crecimiento o popularidad no acreditan utilidad.
-- [ ] 5.5 Evaluar fidelidad audiovisual, pertinencia y utilidad con material distinto del usado para ajustar criterios; registrar acuerdos, discrepancias, errores y límites reales, y documentar preguntas JEV y política de revisión humana para el playbook.
+## 3. Backend e infraestructura — responsable BE
 
-## 6. Revisión, integración y entrega — integrante 4 con los demás frentes
+**Propiedad:** backend/ excepto backend/analysis/, configuración raíz de despliegue y entornos, contratos API, migraciones, integraciones externas, README operativo, registro de costos, integración de ramas y paquete final. Escribe los adaptadores de YouTube, JEV y Gemini y conecta el módulo de ALG; no duplica sus criterios, prompts, ventanas o cálculos, ni edita el frontend.
 
-- [ ] 6.1 Integrar en Next.js/React la bandeja de ejecuciones/cobertura, grupos, comparación temática, publicaciones y fichas con las variantes Fluido de branding; consumir contratos de FastAPI por rutas autenticadas de Next, sin duplicar conteos en el cliente. Comprobar el recorrido protegido desde otra persona/equipo y separación visible de señal, métricas, valor, afinidad y propuestas.
-- [ ] 6.2 Guardar revisión editorial y motivo, y diferenciarla de confirmar grupos; comprobar recuperación tras cerrar navegador y reiniciar la app con la misma evidencia y versión, y ejecución anterior identificada como respaldo.
-- [ ] 6.3 Verificar con Playwright el recorrido entre Next y Python de extremo a extremo: publicación real → pertinencia/grupos → confirmación → conteos disponibles → selección → audiovisual/JEV → adaptación/revisión recuperable. Incluir fallo de canal y fallo audiovisual, y comprobar que recargar o consultar estado no repite llamadas pagadas; registrar cobertura parcial sin simular cumplimiento de la comparación completa.
-- [ ] 6.4 Comprobar TypeScript, ESLint, Prettier y build del frontend, Vitest para contratos/lógica relevante y pytest para cálculo/cobertura/pasos. Completar README, medición de tiempo/costo de ambos servicios y playbook de máximo cinco páginas u ocho diapositivas; otra persona debe reproducir el arranque fuera de 30X, abrir la URL y contrastar las evidencias y decisiones documentadas.
+- [ ] 3.1 Publicar un borrador del contrato JSON/API y recoger las revisiones 2.1 y 1.1 para cerrar una versión común antes de integrar. Incluir operaciones, IDs, ventanas, cobertura, grupos/confirmación, selección, evidencia/revisión, errores y ejemplos; comprobar compatibilidad con Pydantic y consumidor TypeScript. Documentar la autoridad del contrato y el cambio de versiones en un único lugar.
+- [ ] 3.2 Preparar el registro de cargos nuevos, recargas, reservas y tarifas frente al máximo incremental de 20 USD, excluyendo el abono Vercel existente. Verificar mínimos y saldo de las cuentas antes de cada prueba pagada; un costo desconocido no equivale a cero. Dejar evidencia del control previo del consumo y del bloqueo si no puede justificarse que cabe, sin activar planes o extras automáticamente.
+- [ ] 3.3 Preparar Python 3.12/FastAPI y verificar Vercel Services, runtimes, comandos frontend entregados en 1.2 y límites efectivos del plan abonado. Comprobar arranque local y primer despliegue con Next público y Python interno por binding, sin ruta pública para Python; registrar límites de ambas funciones y cualquier bloqueo antes de ampliar desarrollo.
+- [ ] 3.4 Habilitar YouTube Data API y JEV y verificar los accesos declarados a Gemini y Vercel. Configurar secretos solo en servidor y, tras 3.2, comprobar una resolución/lectura pública, una decisión tipada JEV auténtica y una observación audiovisual real con entradas de ALG; registrar modelo, cuota, uso, cobro y errores sin exponer claves.
+- [ ] 3.5 Configurar PostgreSQL en Supabase Free con TLS y pooler; crear esquema y migraciones de ejecuciones, cobertura, publicaciones/capturas, clasificaciones, grupos/confirmación, análisis, revisiones y uso. Probar restricciones de identidad, escritura/lectura desde despliegue y recuperación tras reinicio; no usar filesystem ni memoria como almacenamiento duradero.
+- [ ] 3.6 Implementar autenticación de FastAPI y autorización de todas sus operaciones con la misma credencial de demo. Probar rechazo a llamadas internas sin credencial o con credencial incorrecta, protección/desactivación de OpenAPI y respuestas privadas; configurar binding y secretos para que FE implemente su control separado en 1.3.
+- [ ] 3.7 Implementar adaptadores HTTP de YouTube, JEV y Gemini con los contratos de proveedor y puertos acordados en 2.1. Probar serialización, respuesta válida/no válida, uso informado, timeout y fallo técnico; transportar preguntas/prompts de ALG sin redefinirlos, capturar versión y evidencia, y canalizar cada llamada pagada por 3.10.
+- [ ] 3.8 Resolver las once URLs exactas, consultar publicaciones paginadas con las fronteras de 2.2 y conservar la fecha pública del video. Aplicar condición pública y duración hasta 180 segundos, deduplicar por ID y guardar estadísticas originales/captura; probar 180/181, duración o métrica ausente, fecha playlist distinta, ID repetido y candidato corto sin confirmación de Short. Un canal fallido no se sustituye ni desaparece.
+- [ ] 3.9 Persistir cobertura de adquisición/elegibilidad por canal, ventana y etapa y conectar los estados de clasificación entregados por ALG sin reinterpretarlos. Probar canal revisado sin publicaciones, canal no consultado, paginación incompleta, error y reintento; desconocido no se serializa como cero y un fallo audiovisual no altera cobertura temática ya sustentada.
+- [ ] 3.10 Implementar orquestación por pasos persistidos, cursor y reclamación atómica con reserva de gasto antes de cada llamada pagada, incluida cada llamada dentro de un lote analítico. Probar reintentos simultáneos, reutilización de resultados y recuperación del último checkpoint; ante confirmación de proveedor incierta conservar estado y reserva sin liberar ni repetir automáticamente el consumo.
+- [ ] 3.11 Conectar adquisición, módulo de ALG y endpoints mediante el contrato común. Probar ejecución persistida hasta propuesta de grupos y conteos tras confirmar, y análisis profundo solo por selección explícita; listar/consultar no dispara consumos, una pieza elegible puede analizarse sin crecimiento o con comparación pendiente y no se procesa profundamente el resto por defecto.
+- [ ] 3.12 Implementar operaciones persistidas y atómicas de confirmación de grupos, revisión de evidencia y decisión editorial/motivo, vinculadas a ejecución, versión y análisis exactos. Probar acciones independientes, estado inicial pendiente, rechazo de edición manual no permitida y recuperación tras cierre/reinicio sin borrar origen al descartar una adaptación.
+- [ ] 3.13 Ejecutar pruebas de contrato e integración backend y documentar sus resultados: autenticación interna, proveedores, persistencia, flujo entre etapas, fallo de canal, fallo audiovisual, concurrencia y gasto incierto. Verificar con el recorrido real disponible que estado y evidencia sobreviven a reinicios y que el binding cumple el contrato consumido por FE.
+- [ ] 3.14 Consolidar mediciones iniciales y finales de tiempo, cuota y costo de ambos servicios y proveedores, con su fuente y alcance. Comprobar margen antes de ampliar lotes y dependencia funcional dentro de los 20 USD; completar README operativo con entornos Node/Python, secretos sin valores, arranque reproducible, acceso, persistencia y reanudación. Entregar a FE datos de operación/costo para el playbook.
+- [ ] 3.15 Decidir y registrar si Notion se activa o se difiere, solo tras G4 y antes de congelar funciones. Verificar que el núcleo, la evaluación y la preparación de entrega están cubiertos y que la extensión no desplaza dependencias esenciales; FE recibe esta decisión, sin implementar Notion anticipadamente.
+- [ ] 3.16 Resolver el backend de la rama Notion: si se activa, configurar una base y comprobar guardado manual real, ID de publicación para duplicados, contexto/revisión, enlace y error sin pérdida local ni sobreescritura silenciosa. Si se difiere, dejar estado pendiente documentado sin llamadas o guardados simulados; entregar a FE el contrato y la rama efectiva para 1.12.
+- [ ] 3.17 Integrar únicamente entregables revisados de cada dueño y congelar versión y respaldo permitido de ejecuciones reales después de cerrar el núcleo y resolver Notion. Comprobar fecha, cobertura, criterios/modelos, evidencia/revisión y recuperación del respaldo; tras el cierre solo aceptar correcciones necesarias para ejecutar o entregar.
+- [ ] 3.18 Verificar repositorio público sin secretos, URL protegida y acceso desde otro equipo, y reunir README/playbook/evaluación/respaldo en el paquete final. Dejar al responsable humano de BE el envío por el canal requerido y registro de recepción antes del 18 de octubre de 2026 a las 12:00, Colombia. Las 11:00 son objetivo interno propuesto; no se da por hecho el envío ni se autoriza mensajería automática.
 
-## 7. Notion opcional, posterior al núcleo
+## Trazabilidad de la redistribución
 
-- [ ] 7.1 Decidir antes del cierre de funciones si la extensión cabe después de validar núcleo, evaluación y preparación de entrega; verificar que la decisión y su motivo quedan documentados y que no desplaza ninguna dependencia esencial.
-- [ ] 7.2 Resolver la rama elegida: si se activa, implementar y comprobar guardado manual real, enlace, deduplicación por ID, contexto completo y error sin pérdida local; si se difiere, comprobar que queda pendiente y la demo no simula guardados. Registrar cuál de las dos ramas se completó, sin afirmar que Notion está implementado cuando se difiere.
+Los IDs anteriores se reemplazan por los nuevos. Las casillas anteriores estaban sin completar; ninguna se marca hecha por esta reorganización. Esta tabla permite comprobar que todas conservan cobertura:
 
-## 8. Cierre y paquete final — integrante 4 con el equipo
-
-- [ ] 8.1 Congelar versión y respaldo permitido de ejecuciones reales tras cerrar el núcleo y resolver si Notion se implementó o difirió; comprobar fecha, cobertura, versiones y revisión, y que después solo quedan correcciones necesarias para ejecutar o entregar.
-- [ ] 8.2 Verificar repositorio público sin secretos, URL protegida, acceso con credencial compartida y paquete preparado según condiciones finales de envío; dejar al equipo responsable el envío y registro de recepción antes del 18 de octubre de 2026 a las 12:00, Colombia. Las 11:00 son objetivo interno propuesto, no un hito ya cumplido.
+| ID anterior | Tareas nuevas |
+| --- | --- |
+| 1.1 | 3.2, 3.10 |
+| 1.2 | 3.3, 3.4, 3.7, 2.11 |
+| 1.3 | 3.4, 3.8 |
+| 1.4 | 3.4, 3.7, 2.3, 2.11 |
+| 1.5 | 3.5 |
+| 1.6 | 2.11, 3.14 |
+| 2.1 | 1.2, 3.3 |
+| 2.2 | 1.3, 3.6 |
+| 2.3 | 3.5 |
+| 2.4 | 3.10 |
+| 2.5 | 1.1, 2.1, 3.1, 3.14 |
+| 3.1 | 2.2, 3.8 |
+| 3.2 | 3.8 |
+| 3.3 | 3.8 |
+| 3.4 | 3.8 |
+| 3.5 | 3.9, 3.13 |
+| 4.1 | 2.3 |
+| 4.2 | 2.4 |
+| 4.3 | 1.5, 2.5, 3.12 |
+| 4.4 | 2.5 |
+| 4.5 | 2.6 |
+| 4.6 | 2.11, 2.12 |
+| 5.1 | 1.7, 3.11 |
+| 5.2 | 2.7, 3.7 |
+| 5.3 | 2.8 |
+| 5.4 | 2.9 |
+| 5.5 | 2.10, 2.12 |
+| 6.1 | 1.4, 1.5, 1.6, 1.7, 1.8 |
+| 6.2 | 1.9, 3.12 |
+| 6.3 | 1.10, 3.13 |
+| 6.4 | 1.10, 1.11, 2.10, 2.12, 3.14 |
+| 7.1 | 3.15 |
+| 7.2 | 1.12, 3.16 |
+| 8.1 | 3.17 |
+| 8.2 | 3.18 |
 
 ## Workflow follow-up
 
-- Revisar artefactos y evidencias de implementación antes de sincronizar o archivar el cambio; no archivar mientras el producto solo esté planificado.
+- Revisar artefactos y evidencias antes de sincronizar o archivar el cambio; no archivar mientras el producto solo esté planificado.
 - La evolución predictiva basada en radar_30x_prototype-v2.py se especificará como trabajo futuro; este cambio no ejecuta ni integra ese archivo.

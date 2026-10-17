@@ -30,7 +30,7 @@ La viralidad no acredita valor; el crecimiento de publicaciones tampoco acredita
 - Se permite una demo con cobertura parcial explícita. Si faltan datos, la comparación completa de los once canales queda pendiente; aceptar esa demo no acredita cobertura ni crecimiento completos.
 - LatAm es el mercado editorial, no una medición de la ubicación de los espectadores.
 - Notion: guardado manual opcional, última prioridad y sin condicionar la entrega esencial.
-- Cuatro integrantes; entrega el 18 de octubre de 2026 antes de las 12:00, hora de Colombia. Nombres, experiencia individual y horas disponibles siguen sin confirmar.
+- Tres integrantes confirmados: Frontend, Algoritmia/JEV y Backend/infraestructura, con tareas y fronteras de responsabilidad en el [plan de trabajo](PLAN_DE_TRABAJO.md). Entrega el 18 de octubre de 2026 antes de las 12:00, hora de Colombia. Nombres, experiencia individual y horas disponibles siguen sin confirmar.
 - Vercel tiene un plan de pago activo ya abonado aparte. El máximo para **nuevos consumos de APIs y extras de la demo es USD 20**; no incluye ese abono existente. El límite no garantiza un volumen procesable sin pruebas.
 
 ## Corpus de referencia
@@ -168,7 +168,7 @@ No se presupone acceso a subtítulos de terceros, retención, guardados, compart
 
 ## Pendientes de operación
 
-- Asignar nombres a los cuatro frentes y confirmar experiencia individual y horas disponibles, sin inventar disponibilidad.
+- Asignar nombres a las tres áreas confirmadas y comunicar experiencia individual y horas disponibles, sin inventar disponibilidad. Cada tarea tiene un único dueño; contratos y dependencias están en el plan y las tareas OpenSpec.
 - Configurar y comprobar realmente YouTube Data API, JEV y la persistencia propuesta; verificar también los accesos declarados de Gemini y Vercel, incluido Services beta y la comunicación protegida entre Next.js y Python.
 - Resolver los once canales y medir el material elegible recuperable en ambas ventanas, distinguiendo cero conocido de falta de datos.
 - Medir calidad audiovisual y de decisiones, costos, cuotas, latencia y errores con el proyecto del equipo. Conservar versiones y evidencias de las pruebas.
