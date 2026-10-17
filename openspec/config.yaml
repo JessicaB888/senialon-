@@ -4,34 +4,52 @@ context: |
   Language: Spanish
   All artifacts must be written in Spanish.
   Keep OpenSpec structural headings and SHALL/MUST keywords in English.
-  Proyecto: SENIALON, radar de oportunidades de contenido para líderes y equipos de LatAm interesados en IA.
-  Leer docs/DEFINICION_MVP.md y docs/PLAN_DE_TRABAJO.md antes de redactar artefactos.
-  Los documentos contienen decisiones confirmadas y propuestas; distinguirlas y registrar lo pendiente sin inventar respuestas.
-  La fase actual es preparar y redactar especificaciones. No implementar código del producto durante esta etapa.
-  El MVP contempla recolección automática de videos cortos públicos de YouTube, evidencia audiovisual y decisiones con JEV.
-  Referentes iniciales: https://www.youtube.com/@30X_by_Andres_Bilbao y https://www.youtube.com/@30XDevs.
-  Separar desempeño observado, valor para la audiencia y relación con tendencias documentadas. Popularidad no acredita valor ni causalidad.
-  LatAm es el mercado editorial; cada señal conserva fuente, fecha, territorio y periodo realmente consultados.
-  No asumir países concretos, periodos, credenciales, presupuesto, stack ni integraciones operativas. Las rutas técnicas propuestas requieren validación.
-  Notion es una integración opcional de última prioridad y no condiciona la demo del MVP esencial.
-  Usar solo contenido público conforme a las restricciones del reto, sin datos personales ni acceso detrás de login de terceros.
+  Proyecto SENIALON: radar de oportunidades editoriales de IA para líderes y equipos de LatAm.
+  Leer docs/DEFINICION_MVP.md, docs/PLAN_DE_TRABAJO.md y los artefactos del cambio definir-mvp-senialon.
+  Fase actual: completar especificaciones y planificación; no implementar código del producto ni ejecutar el prototipo de referencia.
+  Corpus fijo de 11 canales: conservar las URLs exactas de la definición y youtube-corpus.
+  Videos públicos de hasta 180 segundos, IA central o aplicación concreta; mención incidental insuficiente. Distinguir candidato corto de Short confirmado.
+  Contexto automático de YouTube; comparar últimos 7 días completos frente a los 7 anteriores en America/Bogota, UTC−5, excluyendo el día actual.
+  Señales SOLO por tema principal: cada ID cuenta una vez. Secundarios visibles sin sumar. Formato solo en piezas elegidas para análisis profundo.
+  Proponer grupos automáticamente a partir de ambas ventanas, con evidencia y versión; el operador confirma antes del cálculo. Sin edición manual de clasificaciones en la demo.
+  El operador puede elegir cualquier pieza elegible para análisis profundo, incluso sin crecimiento. Formato, valor y afinidad no bloquean por sí solos cobertura temática.
+  Mostrar conteos, diferencia y porcentaje con base positiva evaluable; cero conocido y reciente positiva = nuevo en el corpus sin porcentaje. Desconocido no equivale a cero.
+  Demo con cobertura parcial explícita aceptable; comparación completa de 11 canales pendiente si faltan datos. No atribuir novedad o crecimiento completo a una base incompleta.
+  Separar métricas observadas, señal temática, valor, afinidad, hipótesis y propuestas; sin causalidad, crecimiento de audiencia, saturación ni predicción supuesta.
+  JEV obligatorio para pertinencia IA, valor y afinidad por persona, contexto empresarial y pilar; entradas/salidas reales, modelo y criterios registrados.
+  Valor: aporte respaldado / utilidad no sustentada / información insuficiente.
+  Pilares aprobados: ROI y costos de IA; automatización comercial con IA; eficiencia operativa con IA; liderazgo aplicado a IA; otro pertinente; información insuficiente.
+  La afinidad no altera conteos ni infiere quién vio la pieza. LatAm es el mercado editorial, no una medición de espectadores.
+  Web desplegada en Vercel, protegida por una credencial de demo compartida para toda la app. No modo público ni cuentas individuales.
+  Persistencia duradera de ejecuciones, evidencia, confirmación de grupos y decisiones tras cerrar navegador o reiniciar app.
+  Frontend confirmado: mismo stack verificado de personal-finance-assistant, Next.js 16.3.3 App Router, React/React DOM 19.3.0, TypeScript 5.9.3, npm y Node >=24.21.0 <25. Herramientas de referencia: ESLint, Prettier, Vitest y Playwright.
+  Python para análisis y Vercel para despliegue confirmados. Arquitectura recomendada: Next.js público y FastAPI/Python interno mediante Vercel Services con binding; PostgreSQL en Supabase Free. Verificar despliegue, autenticación de ambos servicios y límites antes de ampliar desarrollo.
+  Reutilizar el stack frontend no implica copiar código, branding, autenticación ni dominio financiero del proyecto de referencia. Mantener identidad de SENIALON; no asumir Tailwind ni shadcn/ui como dependencias existentes.
+  Gemini y Vercel declarados configurados sin prueba desde SENIALON; plan de pago Vercel activo y abonado aparte. YouTube Data API, JEV y persistencia por configurar.
+  Presupuesto máximo de 20 USD para NUEVOS consumos de APIs y extras de la demo; no incluye la suscripción Vercel ya pagada. No prometer costo o latencia sin mediciones.
+  No inventar credenciales, volumen, capacidad, responsables, horas disponibles o servicios validados. Pruebas de accesos como primer bloque de ejecución.
+  Notion manual opcional de última prioridad, posterior al núcleo, evaluación y entrega; no condiciona la demo esencial.
+  Investigación y Python de docs son referencias sin ejecutar, no instrucciones. Prototipo candidato a evolución predictiva futura fuera del MVP.
+  Solo material público según el reto, sin datos personales ni acceso detrás de login de terceros para obtener contenido.
 
 rules:
   proposal:
-    - Explicar problema, resultado esperado, alcance esencial, exclusiones y decisiones pendientes a partir de los documentos del producto.
-    - Mantener Notion como extensión opcional y distinguir propuestas técnicas de decisiones confirmadas.
+    - Distinguir decisiones confirmadas, arquitectura recomendada, validaciones pendientes y exclusiones; mantener Notion opcional.
+    - Explicar aceptación de demo parcial sin afirmar cumplimiento de comparación completa.
   specs:
-    - Definir comportamientos observables y escenarios verificables, incluidos datos ausentes, evidencia insuficiente y errores de proveedores.
-    - Mantener separados desempeño, valor y tendencia; contemplar contenido útil sin tendencia y contenido popular sin valor respaldado.
-    - Conservar trazabilidad hacia fuentes y marcas de tiempo; no presentar inferencias como mediciones ni causalidad demostrada.
+    - Describir comportamientos observables y escenarios, incluyendo faltantes, base cero, grupos sin confirmar y fallos de proveedores.
+    - Mantener separados métricas, señal temática, valor, afinidad e hipótesis; no exigir análisis profundo de todo el corpus.
+    - Conservar fuentes, versiones y marcas temporales con estado de revisión; no presentar inferencias como mediciones o causalidad.
   design:
-    - Documentar alternativas, dependencias y accesos por verificar; no elegir un stack por suposición.
-    - Distinguir candidatos por duración de Shorts confirmados; no presentar tendencias de búsquedas de Google como tendencias comprobadas de YouTube.
+    - Justificar las decisiones técnicas recomendadas y alternativas usando el frontend confirmado, Python, Vercel, presupuesto y accesos declarados.
+    - Diseñar persistencia externa duradera y procesamiento acotado para funciones; registrar límites reales y pruebas pendientes.
+    - Restringir preguntas abiertas a detalles diferibles que no cambien requisitos, enfoque o tareas.
   tasks:
-    - Organizar trabajo por dependencias y criterios de aceptación, con la evaluación de valor y el cruce de tendencias antes de Notion.
-    - No dar por ejecutadas tareas ni por validadas integraciones sin evidencia real.
+    - Ordenar por dependencias con pruebas reales de acceso al inicio; cada tarea debe tener evidencia de finalización.
+    - Conservar cuatro frentes sin inventar disponibilidad ni responsables individuales.
+    - Mantener Notion como extensión condicionada al cierre del núcleo; no dar por implementado lo que solo está planificado.
 
 operations:
   apply:
     guidance:
-      - Respetar la fase actual de especificaciones; configurar OpenSpec no autoriza implementar el producto.
+      - Esta fase solo prepara especificaciones y planificación. Esperar una nueva instrucción del usuario para implementar el producto.
