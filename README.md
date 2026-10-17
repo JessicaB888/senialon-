@@ -18,6 +18,7 @@ Los logos actuales están en `branding/`. Las variantes disponibles son:
 
 - [Definición del MVP](docs/DEFINICION_MVP.md).
 - [Plan de trabajo](docs/PLAN_DE_TRABAJO.md).
+- [Arquitectura C4](docs/ARQUITECTURA_C4.md).
 - [Sistema visual y de interfaz](DESIGN.md).
 - [Contexto del producto para diseño](PRODUCT.md).
 
