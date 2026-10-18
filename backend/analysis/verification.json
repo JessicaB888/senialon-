@@ -1,0 +1,41 @@
+{
+  "checked_at": "2026-10-18T06:50:41Z",
+  "tasks": ["ALG 2.2", "ALG 2.5", "ALG 2.6"],
+  "scope": "Funciones puras, con fixtures sintéticos. No acredita datos, proveedores, persistencia o despliegue reales.",
+  "provider_calls": false,
+  "deployed": false,
+  "canonical_contract": {
+    "version": "1.0.0",
+    "sha256": "d7e0b018263658e686da00997ddffbd19ba96e6e73de5b08e3f8917b95375956",
+    "changed": false
+  },
+  "pytest": {
+    "command": "./.venv/bin/python -B -m pytest -q tests analysis/tests",
+    "cwd": "backend",
+    "passed": 179,
+    "existing_backend": 52,
+    "windows": 27,
+    "counts": 55,
+    "comparison": 45,
+    "warnings": ["Deprecación previa Starlette/HTTPX en TestClient, sin fallos"]
+  },
+  "canonical_validation": {
+    "validator": "Ajv existente de frontend, sobre los esquemas derivados de 1.0.0",
+    "new_dependencies": false,
+    "computed_windows_accepted": 9,
+    "computed_counts_accepted": 6,
+    "computed_comparisons_accepted": 8
+  },
+  "delivery": {
+    "windows": "BE debe persistir una vez derive_windows(started_at) y compartir las mismas fronteras con adquisición/ALG/FE",
+    "counts": "BE valida formas y aporta snapshots inmutables; count_publications comprueba relaciones, confirmación e IDs",
+    "comparison": "BE reserva revisión e instante; compare_topics conserva contexto y no se ejecuta desde GET"
+  },
+  "pending": [
+    "Accesos y adaptadores de proveedores BE 3.4/3.7",
+    "Control previo de cuentas/gasto BE 3.2",
+    "Adquisición, persistencia, pasos y endpoints BE 3.5/3.8/3.9/3.10/3.11/3.12",
+    "Clasificación y grupos auténticos ALG 2.3/2.4",
+    "Integración real, evaluación y despliegue protegido"
+  ]
+}

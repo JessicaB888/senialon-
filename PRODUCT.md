@@ -10,7 +10,9 @@ web
 
 Frontend confirmado por el usuario: el mismo stack de personal-finance-assistant, cuya referencia usa Next.js 16.3.3. La base implementada en FE 1.2 fija **Next.js 16.3.8** por un parche de seguridad de esa línea, con App Router, React/React DOM 19.3.0, TypeScript 5.9.3 y npm; Node.js >=24.21.0 y <25. Ver [entrega y verificación local](frontend/README.md). Python para análisis y Vercel para despliegue también están confirmados.
 
-FastAPI, PostgreSQL en Supabase Free y dos servicios conectados en Vercel son la arquitectura propuesta, todavía sin implementar ni probar. Ver [diseño técnico](openspec/changes/definir-mvp-senialon/design.md). Reutilizar el stack no implica copiar código ni la identidad visual del proyecto financiero.
+FastAPI/Python 3.12, HTTP Basic en ambos servicios y el transporte Next–FastAPI están implementados y verificados localmente, también mediante el binding de Vercel Services. FE 1.4 incorpora la interfaz de ejecuciones y cobertura sobre el contrato; sus escenarios de dominio se verifican con pruebas sintéticas. PostgreSQL en Supabase Free, las operaciones reales de ejecuciones y el despliegue siguen pendientes. Ver [diseño técnico](openspec/changes/definir-mvp-senialon/design.md) y [estado de la interfaz](frontend/EJECUCIONES.md). Reutilizar el stack no implica copiar código ni la identidad visual del proyecto financiero.
+
+La preparación de [FE 1.5](frontend/GRUPOS.md) permite inspeccionar y confirmar una propuesta exacta con evidencia; su integración real permanece pendiente. ALG 2.2/2.5/2.6 entrega funciones puras de ventanas, conteos y comparación; no acredita adquisición, clasificación o análisis con proveedores. Las pruebas sintéticas y las comprobaciones pendientes se registran por separado de esas capacidades objetivo.
 
 ## Users
 
@@ -41,9 +43,9 @@ La entrega prevista es el 18 de octubre de 2026 antes de las 12:00, America/Bogo
 - Análisis audiovisual solamente de las piezas elegidas. Formato, evidencia temporal, valor, afinidad, hipótesis y adaptación tienen estados independientes.
 - JEV decide pertinencia IA, valor y afinidad por persona, contexto empresarial y pilar. Valor: aporte respaldado, utilidad no sustentada o información insuficiente.
 - Pilares: ROI y costos de IA, automatización comercial con IA, eficiencia operativa con IA y liderazgo aplicado a IA; también otro pertinente e información insuficiente.
-- URL desplegada, credencial compartida para toda la aplicación y persistencia duradera. HTTP Basic es el mecanismo técnico propuesto; no hay un login propio confirmado.
+- URL desplegada, credencial compartida para toda la aplicación y persistencia duradera son requisitos. HTTP Basic está implementado y probado localmente; el despliegue y la persistencia siguen pendientes. No hay formulario propio de login.
 - Notion es una extensión manual opcional de última prioridad. El prototipo predictivo aportado queda fuera del MVP, sin ejecutar ni validar.
-- La base visual, los [tipos/validación del consumidor](frontend/CONTRATO_API.md) y el control offline de presupuesto están implementados y probados localmente. La recolección, autenticación, persistencia y análisis real siguen pendientes; el [control de presupuesto](docs/budget/README.md) bloquea pruebas pagadas mientras falten verificaciones de cuenta. Las capacidades objetivo se formalizan en las [specs del cambio](openspec/changes/definir-mvp-senialon/proposal.md).
+- La base visual, los [tipos/validación del consumidor](frontend/CONTRATO_API.md), [acceso/transporte](frontend/ACCESO.md), la [interfaz de ejecuciones](frontend/EJECUCIONES.md) y el control offline de presupuesto están implementados y probados localmente. La recolección, persistencia y análisis real siguen pendientes; el [control de presupuesto](docs/budget/README.md) bloquea pruebas pagadas mientras falten verificaciones de cuenta. Las capacidades objetivo se formalizan en las [specs del cambio](openspec/changes/definir-mvp-senialon/proposal.md).
 
 ## Brand Commitments
 
@@ -53,7 +55,7 @@ El prisma describe otra marca, Corefex. Sus razones sociales, contratos, lemas, 
 
 ## Evidence on Hand
 
-Existen documentos del reto, definición del MVP, plan de trabajo, investigación, prototipo externo de referencia, seis specs y archivos PNG de branding. No existen resultados de análisis de SENIALON, métricas de precisión ni integraciones probadas que puedan usarse como evidencia del producto.
+Existen documentos del reto, definición del MVP, plan de trabajo, investigación, prototipo externo de referencia, seis specs y archivos PNG de branding. El acceso y transporte local Next–FastAPI tienen evidencia técnica; los escenarios de ejecuciones/cobertura de FE 1.4 son sintéticos. No existen resultados de análisis de SENIALON ni métricas de precisión que puedan usarse como evidencia del producto; las pruebas no acreditan adquisición, persistencia o proveedores de análisis.
 
 ## Product Principles
 

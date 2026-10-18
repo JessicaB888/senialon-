@@ -1,0 +1,61 @@
+{
+  "task": "FE 1.5",
+  "checked_at": "2026-10-18T12:34:17Z",
+  "scope": "Preparación de interfaz y acciones locales; grupos/confirmación del backend real no disponibles.",
+  "task_complete": false,
+  "deployed": false,
+  "provider_calls": false,
+  "canonical_contract": {
+    "version": "1.0.0",
+    "sha256": "d7e0b018263658e686da00997ddffbd19ba96e6e73de5b08e3f8917b95375956",
+    "changed": false
+  },
+  "checks": {
+    "vitest": { "passed": 386, "new_fe15": 30 },
+    "canonical_typed_examples": { "passed": 74, "synthetic": true },
+    "build": "passed",
+    "typecheck": "passed",
+    "eslint": "passed",
+    "prettier": "passed",
+    "private_markers_in_build_logs": false,
+    "private_markers_in_client_assets": false,
+    "client_assets_checked": 14,
+    "playwright_first_pass": {
+      "total": 21,
+      "passed": 19,
+      "failed": 2,
+      "runs_passed": 12,
+      "groups_passed": 7,
+      "upstream": "Servidor HTTP sintético exclusivo de pruebas, sin proveedores o BD",
+      "corrected_test_failures_not_rerun": [
+        "Selector de evidencia textual apuntaba al primer detalle plegado, no al abierto",
+        "Harness respondía 503 para PROVIDER_RESULT_UNCERTAIN, pero el contrato exige 409"
+      ]
+    },
+    "rerun": {
+      "status": "not_run_approval_rejected",
+      "command": "PATH=/private/tmp/node-v24.21.0-darwin-x64/bin:$PATH npx playwright test --config playwright.runs.config.ts tests/runs-e2e/groups.spec.ts",
+      "working_directory": "/Users/andrescelis/Documents/30x/hackathon30x/SENIALON/frontend",
+      "purpose": "Repetir los nueve escenarios sintéticos de grupos tras corregir dos archivos de prueba; requiere puertos loopback 3340/3341",
+      "alternative_route_used": false
+    },
+    "impeccable_detector_findings": 0,
+    "visual_review": {
+      "desktop_viewport": "1440x1000",
+      "mobile_viewport": "390x844",
+      "reflow_checked_at_width": 320,
+      "captures": "Primera pasada sintética; sección de grupos en escritorio y móvil",
+      "material_findings": [],
+      "reviewer_verdict": "Sin defectos materiales en el alcance local revisado",
+      "correction_rounds": 0,
+      "does_not_accredit_pending_tests_or_integration": true
+    }
+  },
+  "pending": [
+    "Repetición de los dos escenarios corregidos; ejecución solicitada rechazada",
+    "Clasificación/grupos auténticos ALG 2.3/2.4 y exposición BE 3.11",
+    "Confirmación atómica y persistida BE 3.12",
+    "Recuperación real tras reinicio y desde otro equipo",
+    "Proyecto y despliegue protegido BE 3.3/3.6 y FE 1.3"
+  ]
+}

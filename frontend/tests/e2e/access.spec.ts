@@ -131,7 +131,7 @@ test("el navegador accede con Basic y consulta el BFF del mismo origen", async (
       page.getByRole("heading", { name: "Ejecuciones", exact: true }),
     ).toBeVisible();
     await expect(
-      page.getByRole("button", { name: "Iniciar recolección" }),
+      page.getByRole("button", { name: "Crear ejecución" }),
     ).toBeDisabled();
     const result = await page.evaluate(async () => {
       const response = await fetch("/api/v1/meta", {

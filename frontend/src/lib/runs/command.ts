@@ -1,0 +1,107 @@
+export const receiptStorageKey = "senialon:command:v1";
+export type CommandReceipt = {
+  version: 1;
+  key: string;
+  createdAt: string;
+  operationId: string | null;
+} & (
+  | { kind: "create" }
+  | { kind: "advance"; runId: string; revision: number }
+  | {
+      kind: "confirm_groups";
+      runId: string;
+      revision: number;
+      groupsId: string;
+      groupsVersion: number;
+    }
+);
+
+// Only delivery metadata is stored. Run/results, credentials and budget remain
+// on the server. An unresolved receipt never expires into a new paid request.
+export function parseReceipt(text: string | null): CommandReceipt | null {
+  if (text === null) return null;
+  if (text.length > 2048) throw new Error("Registro local no válido.");
+  const value: unknown = JSON.parse(text);
+  if (
+    !value ||
+    typeof value !== "object" ||
+    !("version" in value) ||
+    value.version !== 1 ||
+    !("key" in value) ||
+    typeof value.key !== "string" ||
+    !/^[a-zA-Z0-9._:-]{16,128}$/.test(value.key) ||
+    !("createdAt" in value) ||
+    typeof value.createdAt !== "string" ||
+    !Number.isFinite(Date.parse(value.createdAt)) ||
+    !("operationId" in value) ||
+    (value.operationId !== null &&
+      (typeof value.operationId !== "string" ||
+        !value.operationId.length ||
+        value.operationId.length > 128)) ||
+    !("kind" in value)
+  )
+    throw new Error("Registro local no válido.");
+  const base = {
+    version: 1 as const,
+    key: value.key,
+    createdAt: value.createdAt,
+    operationId: value.operationId,
+  };
+  if (value.kind === "create" && Object.keys(value).length === 5)
+    return { ...base, kind: "create" };
+  if (
+    (value.kind === "advance" || value.kind === "confirm_groups") &&
+    "runId" in value &&
+    typeof value.runId === "string" &&
+    value.runId.length > 0 &&
+    value.runId.length <= 128 &&
+    "revision" in value &&
+    typeof value.revision === "number" &&
+    Number.isSafeInteger(value.revision) &&
+    value.revision > 0
+  ) {
+    if (value.kind === "advance" && Object.keys(value).length === 7)
+      return {
+        ...base,
+        kind: "advance",
+        runId: value.runId,
+        revision: value.revision,
+      };
+    if (
+      value.kind === "confirm_groups" &&
+      Object.keys(value).length === 9 &&
+      "groupsId" in value &&
+      typeof value.groupsId === "string" &&
+      value.groupsId.length > 0 &&
+      value.groupsId.length <= 128 &&
+      "groupsVersion" in value &&
+      typeof value.groupsVersion === "number" &&
+      Number.isSafeInteger(value.groupsVersion) &&
+      value.groupsVersion > 0
+    )
+      return {
+        ...base,
+        kind: "confirm_groups",
+        runId: value.runId,
+        revision: value.revision,
+        groupsId: value.groupsId,
+        groupsVersion: value.groupsVersion,
+      };
+  }
+  throw new Error("Registro local no válido.");
+}
+
+export function readReceipt(): CommandReceipt | null {
+  return parseReceipt(localStorage.getItem(receiptStorageKey));
+}
+export function saveReceipt(receipt: CommandReceipt): void {
+  // Preserve another tab's unconfirmed delivery instead of silently replacing it.
+  const existing = readReceipt();
+  if (existing && existing.key !== receipt.key)
+    throw new Error("Existe una solicitud pendiente.");
+  localStorage.setItem(receiptStorageKey, JSON.stringify(receipt));
+}
+export function clearReceipt(key: string): void {
+  const current = readReceipt();
+  if (current?.key === key) localStorage.removeItem(receiptStorageKey);
+}

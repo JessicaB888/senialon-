@@ -17,6 +17,8 @@
     "test": "vitest run",
     "pretest:e2e": "node scripts/build-e2e.mjs",
     "test:e2e": "playwright test",
+    "pretest:e2e:runs": "node scripts/build-e2e.mjs",
+    "test:e2e:runs": "playwright test --config playwright.runs.config.ts",
     "security:client": "node scripts/check-client-boundary.mjs",
     "test:types": "node scripts/check-contract-types.mjs",
     "lint": "eslint .",

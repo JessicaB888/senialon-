@@ -23,6 +23,7 @@ Los logos actuales están en `branding/`. Las variantes disponibles son:
 - [Tipos, validación y pruebas del consumidor — FE 1.1](frontend/CONTRATO_API.md).
 - [Revisión semántica — ALG 2.1](docs/REVISION_SEMANTICA_ALG.md).
 - [Interfaces internas de análisis y puertos de proveedores](docs/INTERFACES_ANALISIS.md).
+- [Ventanas, conteos y comparación deterministas — ALG 2.2/2.5/2.6](backend/analysis/README.md).
 - [Contrato API único — acuerdo 1.0.0 y política de versiones](docs/contracts/README.md).
 - [Arquitectura C4](docs/ARQUITECTURA_C4.md).
 - [Sistema visual y de interfaz](DESIGN.md).
@@ -32,6 +33,8 @@ Los logos actuales están en `branding/`. Las variantes disponibles son:
 - [Base FastAPI, Services y entrega para FE 1.3 — avance BE 3.3](backend/README.md).
 - [Pruebas locales y pendientes de despliegue — BE 3.3](backend/VERIFICACION.md).
 - [Acceso compartido, BFF y pruebas Next–FastAPI — avance FE 1.3](frontend/ACCESO.md).
+- [Interfaz de ejecuciones, cobertura y recuperación — avance FE 1.4](frontend/EJECUCIONES.md).
+- [Inspección y confirmación de grupos — avance FE 1.5 y pendientes](frontend/GRUPOS.md).
 
 ## OpenSpec
 
@@ -48,9 +51,9 @@ openspec --version
 
 La configuración del proyecto y las skills ya están en `openspec/` y `.agents/skills/`; no hace falta repetir la inicialización al clonar el repositorio.
 
-Para revisar o resolver dudas en Codex, usar `openspec-explore`; para ejecutar tareas autorizadas, `openspec-apply-change`. El [contrato único](docs/contracts/openapi.json) conserva `1.0.0`. ALG 2.1 y BE 3.1 están cerradas documentalmente y G0 contractual cerrado por revisión asistida, sin firmas atribuidas ni servicios probados. FE 1.2 y ambos hitos de FE 1.1 están completos, con [evidencia del consumidor](frontend/CONTRATO_API.md). La siguiente FE es 1.3, con servicios de BE 3.3 y autenticación de BE 3.6; BE dispone de los comandos y el contexto de build entregados. BE 3.2 conserva pendiente verificar las cuentas antes de pruebas pagadas. Las tareas mantienen dueños y dependencias. [Documentación de la integración](https://openspec.dev/docs/supported-tools#codex).
+Para revisar o resolver dudas en Codex, usar `openspec-explore`; para ejecutar tareas autorizadas, `openspec-apply-change`. El [contrato único](docs/contracts/openapi.json) conserva `1.0.0`. ALG 2.1 y BE 3.1 están cerradas documentalmente y G0 contractual cerrado por revisión asistida, sin firmas atribuidas ni proveedores probados. FE 1.2 y ambos hitos de FE 1.1 están completos; FE 1.3 y FE 1.4 tienen avances locales con sus pendientes de integración/despliegue documentados. BE 3.2 conserva pendiente verificar las cuentas antes de pruebas pagadas. Las tareas mantienen dueños y dependencias. [Documentación de la integración](https://openspec.dev/docs/supported-tools#codex).
 
-El contexto y las reglas de SENIALON están en [openspec/config.yaml](openspec/config.yaml). El trabajo comienza por las especificaciones antes de implementar el producto.
+FE 1.4 añade la interfaz de ejecuciones, cobertura, consultas y avance explícito sobre el contrato, con escenarios de dominio sintéticos separados de las pruebas de acceso con FastAPI real. ALG 2.2/2.5/2.6 entrega las funciones puras de ventanas, conteo y comparación; la integración/persistencia de sus entradas y salidas reales sigue pendiente. FE 1.5 prepara la inspección/confirmación de una propuesta exacta y conserva pendientes la integración auténtica y dos pruebas corregidas sin repetición autorizada. El contexto y las reglas de SENIALON están en [openspec/config.yaml](openspec/config.yaml).
 
 La conciliación mantiene una sola fuente de integración: [docs/contracts/openapi.json](docs/contracts/openapi.json). El borrador competidor incorporado en `ae6b1a0` se retiró del árbol activo; sus diferencias, decisiones de migración y recuperación desde Git están en [openspec/contract/README.md](openspec/contract/README.md). Las comprobaciones se refieren exclusivamente a la versión y hash del contrato actual.
 

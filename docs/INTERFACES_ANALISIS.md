@@ -4,6 +4,12 @@
 
 El usuario autorizó continuar ALG 2.1 y cerrar el contrato. Esta revisión asistida por Codex no representa una firma o intervención de los otros integrantes. La [revisión semántica](REVISION_SEMANTICA_ALG.md) registra el contraste y el [registro de acuerdo](contracts/README.md) identifica la versión común.
 
+**Entrega posterior ALG 2.2:** `analysis.derive_windows` ya está implementada y verificada localmente en [backend/analysis](../backend/analysis/README.md). Recibe un `datetime` con zona conocida y devuelve `Windows` serializable con instantes UTC y `timezone=America/Bogota`. BE debe persistir sus fronteras una vez y entregarlas sin recalcular a adquisición, conteos y FE. Las otras operaciones de esta interfaz continúan pendientes; esta entrega no implementa inferencia, endpoints o persistencia.
+
+**Entrega posterior ALG 2.5:** `analysis.count_publications` recibe `AnalysisContext` y los registros canónicos de grupos confirmados, publicaciones y cobertura. Devuelve `CountSnapshot` interno con `Count` por tema/ventana, fuentes, IDs y contexto exacto. `AnalysisContext` conserva también `input_version` e instante de procesamiento aportados por BE. Ver [reglas y pruebas](../backend/analysis/README.md). Es código puro de dominio; la clasificación, generación de grupos y ruta real de integración conservan sus tareas. BE valida las formas del contrato y ALG sus relaciones, sin crear otra API.
+
+**Entrega posterior ALG 2.6:** `analysis.compare_topics` consume ese `CountSnapshot`, grupos confirmados y cobertura del mismo contexto, con `comparison_revision` reservada por BE. Produce `Comparison` canónica y señales permitidas; parciales sin diferencia, porcentaje o novedad del corpus completo. Conserva las ventanas al procesar en otra fecha. Ventanas, conteos y comparación son funciones puras disponibles; las operaciones de inferencia y la integración real continúan pendientes.
+
 ## Propiedad y convenciones
 
 ALG implementará `backend/analysis/**`; BE implementará los adaptadores inyectados, la serialización HTTP, persistencia, reclamaciones y gasto. Los nombres siguientes son interfaces internas a implementar, no endpoints, archivos ya creados ni métodos de un SDK externo. Los tipos públicos se referencian por su nombre en `components.schemas` de OpenAPI; sus enums, campos requeridos y nulabilidad no se duplican aquí.

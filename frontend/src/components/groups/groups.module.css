@@ -1,0 +1,113 @@
+.panel {
+  margin-top: var(--space-section);
+  padding-block: var(--space-panel);
+  border-block: 1px solid var(--color-border);
+  scroll-margin-top: var(--space-panel);
+}
+.panel h2 + p {
+  margin-top: var(--space-small);
+}
+.panel > p {
+  margin-top: var(--space-control);
+}
+.version {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-control) var(--space-panel);
+  font-size: var(--text-small);
+  margin-block: var(--space-medium);
+  font-variant-numeric: tabular-nums;
+}
+.topics,
+.assignments,
+.evidence {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.topics > li {
+  padding-block: var(--space-panel);
+  border-bottom: 1px solid var(--color-border);
+}
+.topics h3 + p {
+  margin-top: var(--space-small);
+  max-width: 70ch;
+}
+.topics p {
+  overflow-wrap: anywhere;
+}
+.topics p + p {
+  margin-top: var(--space-small);
+}
+.assignments {
+  margin-top: var(--space-medium);
+}
+.assignments > li {
+  margin-block: var(--space-medium);
+  padding-block: var(--space-small);
+}
+.assignments a,
+.evidence a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--color-primary);
+  font-size: var(--text-small);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+.assignments a:hover,
+.evidence a:hover {
+  color: var(--color-primary-hover);
+}
+.panel summary {
+  min-height: 44px;
+  align-content: center;
+  cursor: pointer;
+  font-size: var(--text-small);
+}
+.panel summary:hover {
+  color: var(--color-primary-hover);
+}
+.evidence > li {
+  margin-top: var(--space-medium);
+  padding-block: var(--space-control);
+  border-bottom: 1px solid var(--color-border);
+}
+.evidence p {
+  max-width: 70ch;
+  margin-top: var(--space-small);
+}
+.evidence strong {
+  font-weight: 600;
+  font-size: var(--text-small);
+}
+.pending,
+.provenance {
+  margin-top: var(--space-medium);
+  color: var(--color-text-secondary);
+  font-size: var(--text-small);
+}
+.provenance p {
+  overflow-wrap: anywhere;
+  max-width: 70ch;
+}
+.provenance p + p {
+  margin-top: var(--space-small);
+}
+.confirmation {
+  padding-top: var(--space-panel);
+}
+.confirmation > p {
+  margin-top: var(--space-control);
+}
+.confirmation > button:last-child {
+  margin-top: var(--space-medium);
+}
+@media (max-width: 767px) {
+  .confirmation > button {
+    width: 100%;
+  }
+}

@@ -6,6 +6,10 @@ Las doce tareas y sus casillas siguen en [tasks.md](../openspec/changes/definir-
 
 ## Por cuál empezar
 
+**Avance autorizado de 1.4:** la [interfaz de ejecuciones y cobertura](../frontend/EJECUCIONES.md) ya está implementada sobre el contrato. Sus escenarios de dominio son sintéticos; el backend actual solo ofrece metadatos. Para cerrar 1.4, integrar las operaciones, persistencia, cobertura y pasos BE 3.5/3.9/3.10/3.11 y las ventanas ALG 2.2, además del despliegue protegido. La casilla sigue abierta; preparar interfaz no acredita datos reales ni recuperación duradera.
+
+**Continuidad preparada:** ALG 2.2/2.5/2.6 ya entrega funciones puras de ventanas, conteos y comparación; BE debe integrarlas y persistir sus contextos. La [inspección/confirmación FE 1.5](../frontend/GRUPOS.md) tiene interfaz y acciones locales, con integración BE 3.11/3.12 y ALG 2.3/2.4 aún pendientes. Sus dos pruebas corregidas no se marcan aprobadas: el reintento solicitado fue rechazado. Priorizar las entregas reales de backend para cerrar los recorridos preparados.
+
 **Cerrar 1.3 en despliegue:** su implementación local ya incluye comprobaciones independientes en páginas/handlers, validación de entradas/salidas, origen y transporte por binding. Pasan 326 pruebas unitarias, 9 Playwright y 6 comprobaciones de Services. BE debe crear/vincular el proyecto de 3.3, verificar límites/margen de cuenta y revisar los secretos de 3.6; después FE comprueba la URL protegida. Las operaciones de datos de 1.4 siguen dependiendo de las entregas BE/ALG indicadas abajo.
 
 Tras la inspección inicial sin contrato se preparó draft.1 y se emitió la [revisión FE](REVISION_CONTRATO_FRONTEND.md) de diez necesidades, veinte casos y ocho observaciones. Draft.2 incorporó H01–H04; son antecedentes preservados en el contrato activo [1.0.0](contracts/README.md), SHA-256 `d7e0b018263658e686da00997ddffbd19ba96e6e73de5b08e3f8917b95375956`, con 94 esquemas y 74 ejemplos sintéticos. La [revisión semántica](REVISION_SEMANTICA_ALG.md) y las [interfaces ALG–BE](INTERFACES_ANALISIS.md) cierran el acuerdo documental, sin atribuir una firma a otros integrantes ni acreditar calidad empírica o implementación.
