@@ -4,7 +4,9 @@
 
 El usuario autorizó implementar FE 1.2 y BE 3.2. La base Next.js y su entrega a BE están en `frontend/README.md`; las verificaciones locales en `frontend/VERIFICACION.md`. Se aplicó Next.js 16.3.8 como parche de seguridad de la referencia 16.3.3. El control offline y el registro de gasto están en `docs/budget/README.md`: BE 3.2 conserva pendiente la verificación de cargos previos, modelos, saldos y mínimos de cuenta, con consumos pagados bloqueados. No desplegar la base sin completar FE 1.3/BE 3.6.
 
-La fuente única `docs/contracts/openapi.json` sigue acordada en `1.0.0`, con autoridad BE y política/registro en `docs/contracts/README.md`. ALG 2.1 y BE 3.1 están cerradas documentalmente y G0 contractual cerrado, mediante revisión asistida solicitada por el usuario, sin atribuir firmas a los otros integrantes ni acreditar integraciones. FE 1.1 conserva pendiente su segundo hito técnico de tipos/validación; debe preceder a FE 1.3. No ejecutar el prototipo ni reintentar la instalación cancelada de validadores.
+El usuario autorizó después continuar con la siguiente tarea recomendada, FE 1.1. Ambos hitos están completos: revisión documental y tipos/validación locales en `frontend/CONTRATO_API.md`, con 250 pruebas Vitest y 74 ejemplos canónicos comprobados estáticamente. La fuente única `docs/contracts/openapi.json` conserva versión `1.0.0` y hash; los archivos de `frontend/src/lib/api/generated/` son derivados regenerables, nunca otra autoridad. `contract:check` bloquea el build si están desactualizados. No usar casts sobre JSON sin validar ni importar el validador `server-only` desde componentes cliente.
+
+ALG 2.1 y BE 3.1 siguen cerradas documentalmente y G0 contractual cerrado por revisión asistida solicitada por el usuario, sin firmas atribuidas ni integraciones probadas. La siguiente tarea FE es 1.3, con dependencias BE 3.3/3.6; este cierre no implementa HTTP, autenticación, persistencia o despliegue. No ejecutar el prototipo ni reintentar la instalación cancelada de validadores.
 
 ## Contexto del producto
 

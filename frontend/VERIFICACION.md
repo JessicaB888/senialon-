@@ -43,4 +43,4 @@ La corrección final fue documental; no cambió la interfaz de las capturas. El 
 
 ## Fronteras del cierre
 
-FE 1.2 entrega la base y los comandos. FE 1.1 sigue pendiente de tipos y validación del consumidor; FE 1.3/BE 3.6 deben proteger la aplicación antes de publicarla. BE 3.3 verificará los servicios y el primer despliegue; el arranque local no los sustituye. El control offline de [BE 3.2](../docs/budget/README.md) mantiene bloqueadas las pruebas pagadas mientras falten verificaciones de cuenta.
+FE 1.2 entrega la base y los comandos. El hito técnico posterior de FE 1.1 está documentado en [CONTRATO_API.md](CONTRATO_API.md); no modifica las capturas de esta base. FE 1.3/BE 3.6 deben proteger la aplicación antes de publicarla. BE 3.3 verificará los servicios y el primer despliegue; el arranque local no los sustituye. El control offline de [BE 3.2](../docs/budget/README.md) mantiene bloqueadas las pruebas pagadas mientras falten verificaciones de cuenta.

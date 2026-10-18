@@ -2,7 +2,7 @@
 
 **Fecha:** 17 de octubre de 2026, America/Bogota. **Responsable:** FE, usuario solicitante.
 
-**Estado:** revisión documental FE favorable para consumir [openapi.json](contracts/openapi.json), versión acordada **`1.0.0`**. Las diez necesidades y veinte casos tienen representación documental; H01–H04 siguen resueltos. La [revisión semántica ALG 2.1](REVISION_SEMANTICA_ALG.md), las [interfaces internas](INTERFACES_ANALISIS.md) y el [registro de acuerdo BE](contracts/README.md) completan el acuerdo solicitado por el usuario mediante revisión asistida. **G0 contractual está cerrado; FE 1.1 completa sigue pendiente de 1.2 y del segundo hito técnico**. El cierre no acredita accesos, implementación o gasto ni una aprobación atribuida a los otros integrantes.
+**Estado actualizado al 18 de octubre de 2026:** FE 1.1 completa sus dos hitos. La revisión documental es favorable sobre [openapi.json](contracts/openapi.json) **`1.0.0`**; las diez necesidades y veinte casos tienen representación documental, con H01–H04 resueltos. Después de FE 1.2 se implementaron [tipos y validación del consumidor](../frontend/CONTRATO_API.md), con 250 pruebas locales y los 74 ejemplos canónicos comprobados estáticamente. La revisión semántica ALG, las interfaces internas y el registro BE conservan cerrado G0 contractual. Este cierre no acredita intercambio HTTP real, acceso, persistencia o gasto ni una aprobación atribuida a los otros integrantes.
 
 **Versión vigente examinada:** `1.0.0`, SHA-256 `d7e0b018263658e686da00997ddffbd19ba96e6e73de5b08e3f8917b95375956`, con 94 esquemas y 74 ejemplos sintéticos. La revisión inicial correspondía a draft.1, SHA-256 `76f34a51c2ff5934f52005c0c4227185ef37d457224c55fa2a8fc2e9a7dd5d98`; H01–H04 se incorporaron en draft.2, SHA-256 `2b384d99c7a2a8f99fcc9375ae8e045af910128686d54fab761d75be256b1808`. Ambos son antecedentes históricos de la versión única acordada. Este ajuste documental no inicia Next.js, no implementa componentes y no retoma instalaciones canceladas.
 
@@ -10,7 +10,7 @@
 
 **Antecedente de integración desde `main`:** el commit `ae6b1a0` añadió un segundo borrador incompatible, con error de sintaxis JSON. Esa propuesta se retira del árbol activo y su procedencia, matriz y referencia Git quedan en [openspec/contract/README.md](../openspec/contract/README.md). La única fuente API activa es `docs/contracts/openapi.json`. Los dictámenes de este documento se refieren a esa fuente; el antecedente remoto no recibe aprobación ni se transforma en otro contrato operativo.
 
-Este es el entregable de revisión de FE, no un contrato API alternativo. Backend conserva la autoría de rutas, métodos, nombres de campos, esquemas y versiones. Esta revisión no crea endpoints ni tipos consumidores del frontend. Las proyecciones temporales usadas antes para comprobar BE 3.1 no completan el segundo hito FE; sus ejemplos siguen siendo sintéticos.
+Este documento conserva el entregable documental de FE y sus antecedentes; Backend mantiene la autoría de rutas, métodos, campos, esquemas y versiones. El segundo hito se registra en [frontend/CONTRATO_API.md](../frontend/CONTRATO_API.md), con derivados del mismo contrato y sin endpoints nuevos. Las proyecciones temporales anteriores de BE 3.1 siguen siendo antecedentes de aquella comprobación; no se confunden con el consumidor actual ni con resultados reales de demo.
 
 ## Resultado de la inspección inicial
 

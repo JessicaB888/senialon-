@@ -20,6 +20,7 @@ Los logos actuales están en `branding/`. Las variantes disponibles son:
 - [Plan de trabajo](docs/PLAN_DE_TRABAJO.md).
 - [Prioridades y dependencias de frontend](docs/PLAN_FRONTEND.md).
 - [Revisión de consumo del contrato API — FE 1.1](docs/REVISION_CONTRATO_FRONTEND.md).
+- [Tipos, validación y pruebas del consumidor — FE 1.1](frontend/CONTRATO_API.md).
 - [Revisión semántica — ALG 2.1](docs/REVISION_SEMANTICA_ALG.md).
 - [Interfaces internas de análisis y puertos de proveedores](docs/INTERFACES_ANALISIS.md).
 - [Contrato API único — acuerdo 1.0.0 y política de versiones](docs/contracts/README.md).
@@ -31,7 +32,7 @@ Los logos actuales están en `branding/`. Las variantes disponibles son:
 
 ## OpenSpec
 
-Configurado con OpenSpec **1.14.3**, esquema `spec-driven`, perfil `core` e integración para Codex. El cambio [definir-mvp-senialon](openspec/changes/definir-mvp-senialon/proposal.md) incluye la propuesta, seis especificaciones funcionales, el [diseño técnico recomendado](openspec/changes/definir-mvp-senialon/design.md) y las [tareas de ejecución](openspec/changes/definir-mvp-senialon/tasks.md). El usuario autorizó FE 1.2 y BE 3.2: existe una base visual local y un control offline de presupuesto. Recolección, autenticación, persistencia, análisis y despliegue siguen pendientes; no hay integraciones externas probadas. El Python aportado en `docs/` se conserva sin ejecutar para una evolución predictiva futura.
+Configurado con OpenSpec **1.14.3**, esquema `spec-driven`, perfil `core` e integración para Codex. El cambio [definir-mvp-senialon](openspec/changes/definir-mvp-senialon/proposal.md) incluye la propuesta, seis especificaciones funcionales, el [diseño técnico recomendado](openspec/changes/definir-mvp-senialon/design.md) y las [tareas de ejecución](openspec/changes/definir-mvp-senialon/tasks.md). Están completas FE 1.2 y FE 1.1: base visual local, tipos generados y validación JSON del consumidor. BE 3.2 tiene control offline preparado y verificación de cuentas pendiente. Recolección, autenticación, persistencia, análisis y despliegue siguen pendientes; no hay integraciones externas probadas. El Python aportado en `docs/` se conserva sin ejecutar para una evolución predictiva futura.
 
 El frontend conserva el stack de `personal-finance-assistant`: **Next.js/App Router, React 19.3.0, TypeScript 5.9.3 y npm**, con Node `>=24.21.0 <25`. SENIALON fija Next.js **16.3.8**, un parche de seguridad de la referencia 16.3.3; [motivo y comandos](frontend/README.md). Python para análisis y Vercel para despliegue también están confirmados. El diseño propone Next.js como entrada web y FastAPI/Python como servicio interno del mismo proyecto Vercel, PostgreSQL en Supabase Free y acceso mediante credencial compartida. El primer despliegue debe verificar esta conexión. Los nuevos consumos de la demo tienen un máximo de **20 USD**; la suscripción Vercel ya abonada queda aparte. Las pruebas pagadas permanecen bloqueadas hasta verificar las cuentas según BE 3.2.
 
@@ -44,7 +45,7 @@ openspec --version
 
 La configuración del proyecto y las skills ya están en `openspec/` y `.agents/skills/`; no hace falta repetir la inicialización al clonar el repositorio.
 
-Para revisar o resolver dudas en Codex, usar `openspec-explore`; para ejecutar las tareas autorizadas, `openspec-apply-change`. El [contrato único](docs/contracts/openapi.json) conserva `1.0.0`, con revisión semántica, interfaces y [consumo documental FE](docs/REVISION_CONTRATO_FRONTEND.md) registrados. ALG 2.1 y BE 3.1 están cerradas y G0 contractual cerrado mediante revisión asistida por Codex, sin firmas atribuidas a otros integrantes ni pruebas reales de servicios. Después de la base FE 1.2, sigue el hito técnico de tipos/validación FE 1.1 y luego FE 1.3; BE puede preparar 3.3 con los comandos entregados. BE 3.2 conserva pendientes sus verificaciones de cuenta antes de pruebas pagadas. Las tareas mantienen dueños y dependencias. [Documentación de la integración](https://openspec.dev/docs/supported-tools#codex).
+Para revisar o resolver dudas en Codex, usar `openspec-explore`; para ejecutar tareas autorizadas, `openspec-apply-change`. El [contrato único](docs/contracts/openapi.json) conserva `1.0.0`. ALG 2.1 y BE 3.1 están cerradas documentalmente y G0 contractual cerrado por revisión asistida, sin firmas atribuidas ni servicios probados. FE 1.2 y ambos hitos de FE 1.1 están completos, con [evidencia del consumidor](frontend/CONTRATO_API.md). La siguiente FE es 1.3, con servicios de BE 3.3 y autenticación de BE 3.6; BE dispone de los comandos y el contexto de build entregados. BE 3.2 conserva pendiente verificar las cuentas antes de pruebas pagadas. Las tareas mantienen dueños y dependencias. [Documentación de la integración](https://openspec.dev/docs/supported-tools#codex).
 
 El contexto y las reglas de SENIALON están en [openspec/config.yaml](openspec/config.yaml). El trabajo comienza por las especificaciones antes de implementar el producto.
 

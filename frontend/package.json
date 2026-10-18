@@ -8,9 +8,14 @@
   },
   "scripts": {
     "dev": "next dev --hostname 127.0.0.1",
+    "prebuild": "npm run contract:check",
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
+    "contract:generate": "node scripts/generate-contract.mjs",
+    "contract:check": "node scripts/generate-contract.mjs --check",
+    "test": "vitest run",
+    "test:types": "node scripts/check-contract-types.mjs",
     "lint": "eslint .",
     "format:check": "prettier --check .",
     "format": "prettier --write ."
@@ -18,9 +23,12 @@
   "dependencies": {
     "@fontsource-variable/sora": "5.3.0",
     "@fontsource-variable/work-sans": "5.3.0",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
     "next": "16.3.8",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "server-only": "0.0.1"
   },
   "devDependencies": {
     "@types/node": "24.13.6",
@@ -28,7 +36,9 @@
     "@types/react-dom": "19.3.0",
     "eslint": "9.39.5",
     "eslint-config-next": "16.3.8",
+    "openapi-typescript": "7.13.0",
     "prettier": "3.9.9",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "vitest": "5.0.1"
   }
 }

@@ -1,12 +1,12 @@
 # Plan de frontend de SENIALON
 
-**Responsable confirmado:** tú, como integrante FE del equipo. **Estado:** contrato único **`1.0.0`** y G0 contractual cerrados mediante las revisiones documentales registradas. El usuario autorizó FE 1.2 y BE 3.2: la [base frontend local](../frontend/README.md) tiene arranque y build verificables; el [control offline de presupuesto](budget/README.md) bloquea pruebas pagadas mientras falte la verificación de cuentas. FE 1.1 conserva pendiente el hito técnico de tipos/validación; no hay autenticación, integración o despliegue acreditados. La entrega sigue siendo el 18 de octubre de 2026 antes de las 12:00, America/Bogota; no se asignan duraciones sin disponibilidad confirmada.
+**Responsable confirmado:** tú, como integrante FE del equipo. **Estado:** contrato único **`1.0.0`**, G0 contractual cerrado, FE 1.2 y los dos hitos de FE 1.1 completos. La [base frontend](../frontend/README.md) y el [consumidor tipado/validado](../frontend/CONTRATO_API.md) tienen comprobaciones locales. El [control de presupuesto](budget/README.md) sigue bloqueando pruebas pagadas mientras falte verificar las cuentas. La autenticación, integración y despliegue siguen pendientes. La entrega es el 18 de octubre de 2026 antes de las 12:00, America/Bogota; no se asignan duraciones sin disponibilidad confirmada.
 
 Las doce tareas y sus casillas siguen en [tasks.md](../openspec/changes/definir-mvp-senialon/tasks.md). Este documento prepara su prioridad, dependencias y orden; no crea otra lista de estados ni cambia sus IDs. Referencias: [plan del equipo](PLAN_DE_TRABAJO.md), [diseño técnico](../openspec/changes/definir-mvp-senialon/design.md), [C4](ARQUITECTURA_C4.md) y [DESIGN.md](../DESIGN.md).
 
 ## Por cuál empezar
 
-**La siguiente tarea de frontend es completar 1.1: tipos y validación de respuestas.** Su primer hito documental ya es favorable sobre 1.0.0 y la base de 1.2 entrega el entorno técnico. Después sigue 1.3 —acceso y conexión—. BE puede preparar 3.3 usando los comandos de `frontend/README.md`; eso no habilita pruebas pagadas o un despliegue sin protección.
+**La siguiente tarea de frontend es 1.3: acceso compartido y conexión con Backend.** FE 1.1 ya entrega tipos, validación JSON y pruebas del contrato 1.0.0. Para integrar y cerrar 1.3 se necesitan los servicios/binding de BE 3.3 y la autenticación de FastAPI de BE 3.6. BE puede preparar 3.3 con los comandos y el contexto de build de `frontend/README.md`; las pruebas pagadas requieren primero la verificación pendiente de BE 3.2.
 
 Tras la inspección inicial sin contrato se preparó draft.1 y se emitió la [revisión FE](REVISION_CONTRATO_FRONTEND.md) de diez necesidades, veinte casos y ocho observaciones. Draft.2 incorporó H01–H04; son antecedentes preservados en el contrato activo [1.0.0](contracts/README.md), SHA-256 `d7e0b018263658e686da00997ddffbd19ba96e6e73de5b08e3f8917b95375956`, con 94 esquemas y 74 ejemplos sintéticos. La [revisión semántica](REVISION_SEMANTICA_ALG.md) y las [interfaces ALG–BE](INTERFACES_ANALISIS.md) cierran el acuerdo documental, sin atribuir una firma a otros integrantes ni acreditar calidad empírica o implementación.
 
@@ -49,7 +49,7 @@ La preparación visual o las pruebas con ejemplos no equivalen a integración re
 
 | Tarea FE | Base de frontend necesaria | Entrega externa para integración y cierre |
 | --- | --- | --- |
-| **1.1** | Revisión documental favorable en 1.0.0; 1.2 antes de completar tipos/validación. | Semántica/interfaces **ALG 2.1** y versión común de **BE 3.1** registradas. La aplicación consumidora y su validación durante la ejecución siguen pendientes. |
+| **1.1** | Ambos hitos completos sobre 1.0.0, después de la base 1.2. | Tipos, validación JSON y evidencia local en [CONTRATO_API.md](../frontend/CONTRATO_API.md). La integración HTTP protegida se verifica en 1.3. |
 | **1.2** | G0 contractual ya cerrado. Requiere el stack y sistema visual acordados. | No necesita APIs de proveedores. Entrega comandos de arranque/build y nombres de variables a **BE 3.3**; el despliegue no es condición para terminar el arranque local de esta tarea. |
 | **1.3** | Base 1.2 y consumo técnico de 1.1. | Contrato de autorización de **BE 3.1**, binding/servicios de **BE 3.3** y autenticación FastAPI de **BE 3.6**. El cierre exige probar ambos servicios, no solo Next con un ejemplo local. |
 | **1.4** | Acceso y cliente API de 1.3. | Operaciones de ejecución/estado de **BE 3.11**, persistencia **3.5**, cobertura **3.9** y pasos **3.10**; ventanas de **ALG 2.2**. No espera grupos o análisis audiovisual para mostrar avance y fallos disponibles. |
@@ -135,7 +135,7 @@ Los ejemplos de desarrollo deben respetar el contrato y quedar identificados. No
 
 Cada pantalla incorpora su comprobación al construirse: teclado/foco, lectura en móvil, estados de carga/error/parcial, desconocido distinto de cero y accesos protegidos. 1.10 consolida esas comprobaciones y el recorrido real; no es el momento de empezar todas las pruebas.
 
-FE es dueño del frontend, sus Route Handlers, validación del consumidor, DESIGN.md, pruebas E2E y playbook. Backend conserva FastAPI, secretos, proveedores, base de datos, control de gasto y despliegue; Algoritmia conserva criterios y cálculos. Solicitar el cambio a su dueño en vez de escribir un reemplazo dentro del frontend. No se han enviado mensajes a otras personas. La revisión documental FE es favorable y G0 contractual está cerrado; la casilla 1.1 permanece abierta por el hito técnico posterior a 1.2. BE 3.2 y las comprobaciones de acceso, gasto e integración siguen sus tareas propias.
+FE es dueño del frontend, sus Route Handlers, validación del consumidor, DESIGN.md, pruebas E2E y playbook. Backend conserva FastAPI, secretos, proveedores, base de datos, control de gasto y despliegue; Algoritmia conserva criterios y cálculos. Solicitar cambios a su dueño sin escribir un reemplazo en frontend. No se enviaron mensajes a otras personas. FE 1.1 y 1.2 están completas con evidencia local; FE 1.3 y las comprobaciones de acceso, gasto e integración siguen sus tareas propias.
 
 El núcleo y la entrega requieren **1.1–1.11**; Notion **1.12** es la única tarea opcional de frontend. Si el tiempo no alcanza, simplificar acabado secundario y diferir Notion, conservando acceso, evidencia, cobertura, revisión recuperable y pruebas esenciales. El estado se actualiza en las casillas originales de OpenSpec.
 

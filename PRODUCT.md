@@ -43,7 +43,7 @@ La entrega prevista es el 18 de octubre de 2026 antes de las 12:00, America/Bogo
 - Pilares: ROI y costos de IA, automatización comercial con IA, eficiencia operativa con IA y liderazgo aplicado a IA; también otro pertinente e información insuficiente.
 - URL desplegada, credencial compartida para toda la aplicación y persistencia duradera. HTTP Basic es el mecanismo técnico propuesto; no hay un login propio confirmado.
 - Notion es una extensión manual opcional de última prioridad. El prototipo predictivo aportado queda fuera del MVP, sin ejecutar ni validar.
-- La base visual de frontend y el control offline de presupuesto están implementados. La recolección, autenticación, persistencia y análisis real siguen pendientes; el [control de presupuesto](docs/budget/README.md) bloquea pruebas pagadas mientras falten verificaciones de cuenta. Las capacidades objetivo se formalizan en las [specs del cambio](openspec/changes/definir-mvp-senialon/proposal.md).
+- La base visual, los [tipos/validación del consumidor](frontend/CONTRATO_API.md) y el control offline de presupuesto están implementados y probados localmente. La recolección, autenticación, persistencia y análisis real siguen pendientes; el [control de presupuesto](docs/budget/README.md) bloquea pruebas pagadas mientras falten verificaciones de cuenta. Las capacidades objetivo se formalizan en las [specs del cambio](openspec/changes/definir-mvp-senialon/proposal.md).
 
 ## Brand Commitments
 

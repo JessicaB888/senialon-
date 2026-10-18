@@ -1,6 +1,8 @@
-# Frontend de SENIALON — FE 1.2
+# Frontend de SENIALON
 
 Base local verificable de la aplicación. Incluye App Router, TypeScript estricto, fuentes locales, estilos de `DESIGN.md`, logos Fluido y una pantalla inicial sin resultados de análisis. La recolección permanece deshabilitada hasta implementar sus operaciones.
+
+FE 1.1 añade [tipos generados y validación del contrato](CONTRATO_API.md), con pruebas Vitest locales. La fuente única sigue en `docs/contracts/openapi.json`; el transporte autenticado se implementará en FE 1.3.
 
 ## Requisitos y arranque
 
@@ -38,6 +40,8 @@ Abrir `http://127.0.0.1:3100`. Estos comandos no necesitan credenciales, una bas
 | Variables necesarias en esta base | Ninguna                                             |
 | Artefactos generados              | `.next/`, excluido de Git                           |
 
+El build ejecuta `contract:check` antes de Next. Su contexto debe incluir `../docs/contracts/openapi.json`; mantener el checkout completo al configurar BE 3.3.
+
 La configuración de Vercel Services, su binding y el primer despliegue corresponden a BE 3.3. FE 1.3 implementará el acceso y el cliente del contrato [OpenAPI 1.0.0](../docs/contracts/README.md). Los nombres ya acordados para ese paso están en `.env.example`: `DEMO_USERNAME`, `DEMO_PASSWORD` y `DEMO_ALLOWED_ORIGIN`, solo de servidor y sin valores. Ninguno se consume todavía. El binding se acordará con BE; no se inventa una URL pública para Python ni una variable `NEXT_PUBLIC_*` para secretos.
 
 Esta base todavía no autentica peticiones. Su revisión se realiza localmente; el despliegue accesible a otras personas requiere FE 1.3 y BE 3.6. Los documentos privados tendrán renderizado por solicitud y `Cache-Control: private, no-store`; esto no sustituye la autenticación.
@@ -53,6 +57,9 @@ Esta base todavía no autentica peticiones. Su revisión se realiza localmente; 
 ## Comprobaciones
 
 ```sh
+npm run contract:check
+npm run test
+npm run test:types
 npm run typecheck
 npm run lint
 npm run format:check
@@ -60,7 +67,7 @@ npm run build
 npm audit --omit=dev
 ```
 
-La evidencia y los límites de esta entrega están en [VERIFICACION.md](VERIFICACION.md). Vitest para el consumo del contrato y Playwright para el recorrido protegido se incorporan en las tareas correspondientes; el arranque visual no acredita integración o persistencia.
+La evidencia de la base visual está en [VERIFICACION.md](VERIFICACION.md) y la del consumidor en [CONTRATO_API.md](CONTRATO_API.md). Vitest 5.0.1 comprueba el consumo local; Playwright para el recorrido protegido y el cierre de FE 1.10 siguen pendientes. Las pruebas locales no acreditan integración o persistencia.
 
 ## Parche de seguridad del stack de referencia
 
