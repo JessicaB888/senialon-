@@ -1,5 +1,9 @@
 # SENIALON
 
+## Integración posterior de JEV
+
+El usuario autorizó integrar `../senialon-compatible` conservando el trabajo vigente y resolviendo conflictos. Esa carpeta no tiene Git; referencia previa `codex/before-jev-integration-20261018` en `ab05029`. La integración vigente está en `docs/INTEGRACION_JEV.md` y `backend/README.md`: `senialon_api` incorpora operaciones PostgreSQL, gateway con reserva y adaptadores específicos sobre `JsonHttpTransport`; `analysis/inference.py` y `criteria.py` conservan rúbricas/prompts. Se reutilizan sin reemplazar ALG 2.2/2.5/2.6 y el frontend completo. El contrato 1.0.0 y su hash se conservan; `backend/senialon_api/generated/contract.json` es un derivado de empaquetado regenerable. No hay lectura implícita de `.env`, claves copiadas o pagos habilitados por defecto. Configurar `GEMINI_MODEL` explícitamente. Pruebas de proveedores simulados y PostgreSQL temporal no acreditan accesos reales, Supabase del equipo o Vercel. No ejecutar el prototipo ni reintentar los E2E rechazados. La decisión posterior de despliegue es transferencia al GitHub del usuario y Git nativo a main; la nueva URL sigue pendiente. No inferir cierre de tareas o publicar automáticamente esta integración.
+
 ## Fase de trabajo
 
 El usuario autorizó implementar FE 1.2 y BE 3.2. La base Next.js y su entrega a BE están en `frontend/README.md`; las verificaciones locales en `frontend/VERIFICACION.md`. Se aplicó Next.js 16.3.8 como parche de seguridad de la referencia 16.3.3. El control offline y el registro de gasto están en `docs/budget/README.md`: BE 3.2 conserva pendiente la verificación de cargos previos, modelos, saldos y mínimos de cuenta, con consumos pagados bloqueados. No desplegar la base sin completar FE 1.3/BE 3.6.

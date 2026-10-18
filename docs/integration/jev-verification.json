@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-18",
+  "base_commit": "ab05029",
+  "contract": {
+    "version": "1.0.0",
+    "sha256": "d7e0b018263658e686da00997ddffbd19ba96e6e73de5b08e3f8917b95375956",
+    "source_unchanged": true
+  },
+  "python": {
+    "passed": 328,
+    "skipped": 0,
+    "postgresql_version": "17.11",
+    "postgresql_scope": "instancia temporal dedicada, socket Unix y esquemas aleatorios",
+    "provider_transport": "httpx.MockTransport",
+    "previous_starlette_httpx_warning": true
+  },
+  "frontend": {
+    "vitest_passed": 386,
+    "typescript": "passed",
+    "eslint": "passed",
+    "prettier": "passed",
+    "contract_check": "passed",
+    "source_unchanged": true,
+    "new_build_run": false,
+    "e2e_rerun": false
+  },
+  "cross_runtime": {
+    "computed_api_responses": 93,
+    "consumer": "frontend/src/lib/api/validation.ts:parseApiResponse (transpilado sin modificar la fuente)",
+    "schema_engine": "Ajv 2020-12 original del frontend",
+    "provider_data": "sintetico",
+    "passed": true,
+    "deployed_binding_test": false
+  },
+  "isolated_python_bundle": "passed_without_docs_or_frontend",
+  "openspec": {
+    "strict": "passed",
+    "completed": 7,
+    "total": 42
+  },
+  "account_or_cloud_validation": false,
+  "paid_provider_calls": false,
+  "team_database_accessed": false,
+  "pushed_during_verification": false
+}

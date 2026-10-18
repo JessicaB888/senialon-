@@ -1,4 +1,4 @@
-"""Base FastAPI privada. Sin proveedores, persistencia ni trabajo analítico implícito."""
+"""FastAPI privado: guardas originales y operaciones explícitas de dominio."""
 
 import base64
 import binascii
@@ -48,7 +48,7 @@ def error_response(request: Request, status: int, code: str, message: str) -> JS
     )
 
 
-def create_app(settings: Settings | None = None) -> FastAPI:
+def create_app(settings: Settings | None = None, *, runtime=None, sessions=None, transport=None) -> FastAPI:
     settings = settings if settings is not None else Settings.from_environment()
     app = FastAPI(
         title="SENIALON interno",
@@ -98,4 +98,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         # Hechos del acuerdo documental; no acredita integraciones o análisis operativos.
         return CapabilitiesResponse(meta=meta(request))
 
+    from .routes import install_domain_routes
+    from .runtime import RuntimeSettings
+
+    install_domain_routes(app, runtime if runtime is not None else RuntimeSettings(), sessions, transport)
     return app

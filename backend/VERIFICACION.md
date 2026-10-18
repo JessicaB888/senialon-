@@ -1,5 +1,7 @@
 # Verificación de la base BE 3.3
 
+Este registro conserva la evidencia histórica de la base. La [integración posterior desde senialon-compatible](../docs/INTEGRACION_JEV.md) añade operaciones, adaptadores y persistencia probados localmente; consultar allí el estado vigente. Las limitaciones del despliegue y de cuentas reales no se cierran por esas pruebas.
+
 Registro del **18 de octubre de 2026, America/Bogota**, sobre trabajo local posterior a `5d3bda3`. No acredita un despliegue, facturación de cuenta, persistencia ni proveedores de análisis. BE 3.3 permanece abierta.
 
 ## Pruebas realizadas

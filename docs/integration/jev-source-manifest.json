@@ -1,0 +1,65 @@
+{
+  "source": "../senialon-compatible",
+  "source_has_git_history": false,
+  "destination_base": "ab05029",
+  "preserved_ref": "codex/before-jev-integration-20261018",
+  "method": "conciliacion_por_componentes",
+  "canonical_contract_sha256": "d7e0b018263658e686da00997ddffbd19ba96e6e73de5b08e3f8917b95375956",
+  "source_modules": [
+    {
+      "path": "backend/app/main.py",
+      "sha256": "e34a9cf8a80561c860f547c5280b625821c97d73c1b139eb3ba1ab51108505e2"
+    },
+    {
+      "path": "backend/app/config.py",
+      "sha256": "59be3aade9ea659949a88bdcce4f58bcc59c10abad615a9dd60c29d6536509d7"
+    },
+    {
+      "path": "backend/app/contract.py",
+      "sha256": "c4d229b2f79d97274c428eef6e69f7aee89663ea15075e6880bdb141c14a467b"
+    },
+    {
+      "path": "backend/app/db.py",
+      "sha256": "9f542268c3159dde524a7deae1ad97b6cd9d4a767b892215283b53fa68d327d5"
+    },
+    {
+      "path": "backend/app/domain.py",
+      "sha256": "7deb62f04a3ef33654c4263aa8f187d90be695a1f1db276ecf1560ec04b73ebb"
+    },
+    {
+      "path": "backend/app/gateway.py",
+      "sha256": "09cf99fdc46b260ae80927cf34e98ebdee234dd32a171b0bbfe1c2ebc5010aeb"
+    },
+    {
+      "path": "backend/app/providers.py",
+      "sha256": "8ba7fd9357f9eecb3413b55a94d0b1912d25cbfcf7c24d6e3e8bf4d0711a1b01"
+    },
+    {
+      "path": "backend/app/work.py",
+      "sha256": "2cdaf6cad6756bfd2eb19cb6e41ce4141e35aed6d229ed305d7ad089fa1dbc7e"
+    },
+    {
+      "path": "backend/analysis/core.py",
+      "sha256": "33855e2dba29bf6d1d90ecf910f9ea0f35dc130b56e416d33f03bfd44fafc5a0"
+    },
+    {
+      "path": "backend/analysis/inference.py",
+      "sha256": "76308e17c1be3faf350831bc2614b5072fcda81986bc66f5daade57e4c8b5983"
+    },
+    {
+      "path": "backend/analysis/rules.py",
+      "sha256": "41f241786f5173eb38f77daab247700e1677a8050c69781e840e45418d3a9895"
+    },
+    {
+      "path": "backend/tests/test_contract.py",
+      "sha256": "687c74f9bb55cb4eb97df8caa1b86c0e0cf262cdd88e4741743615705bf68d4c"
+    }
+  ],
+  "excluded": [
+    "archivos privados y entornos",
+    "frontend alternativo",
+    "contrato duplicado",
+    "configuracion Vercel alternativa",
+    "scripts de empaquetado/inspeccion sin el control vigente"
+  ]
+}

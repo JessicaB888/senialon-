@@ -31,6 +31,7 @@ Los logos actuales están en `branding/`. Las variantes disponibles son:
 - [Base frontend, arranque y entrega a Backend — FE 1.2](frontend/README.md).
 - [Control de presupuesto y verificaciones pendientes — BE 3.2](docs/budget/README.md).
 - [Base FastAPI, Services y entrega para FE 1.3 — avance BE 3.3](backend/README.md).
+- [Integración de JEV, PostgreSQL y operaciones del contrato](docs/INTEGRACION_JEV.md).
 - [Pruebas locales y pendientes de despliegue — BE 3.3](backend/VERIFICACION.md).
 - [Despliegue automático de main con GitHub Actions y tu cuenta Vercel](docs/DESPLIEGUE_GITHUB_ACTIONS.md).
 - [Acceso compartido, BFF y pruebas Next–FastAPI — avance FE 1.3](frontend/ACCESO.md).

@@ -17,6 +17,8 @@ Se separan tareas mixtas del plan anterior: **42 tareas con dueño único**, sin
 
 Los escenarios y ejemplos de prueba deben identificarse como tales; nunca sustituyen datos, evidencia o decisiones reales en la demo. Cada área documenta y comprueba sus entregables antes de pasarlos a otra.
 
+Integración posterior autorizada: [conciliación de JEV desde senialon-compatible](../../../docs/INTEGRACION_JEV.md). Aporta código para ALG 2.3/2.4/2.7–2.9 y BE 3.5/3.7–3.12, conectado a las funciones ALG existentes y al frontend vigente. Las pruebas usan proveedores simulados y PostgreSQL temporal aislado; cuentas, persistencia del equipo, evaluación real y despliegue mantienen sus dependencias. No se marca una casilla completa por importar o comprobar parcialmente su implementación.
+
 ## 1. Frontend — responsable FE
 
 **Responsable confirmado:** el usuario solicitante. Prioridades, precedencias y entregas externas en [PLAN_FRONTEND.md](../../../docs/PLAN_FRONTEND.md). Empezar por la revisión documental de 1.1; después de G0, construir 1.2 y completar los tipos de 1.1 antes de 1.3. Las rutas 1.5–1.6 y 1.7–1.9 son independientes entre sí; 1.10 y el borrador de 1.11 se trabajan de forma continua. Se conservan los doce IDs y ninguna tarea se marca terminada por preparar este plan.

@@ -67,7 +67,7 @@ def test_invalid_request_id_is_replaced(client, identity):
     check_transport(response)
 
 
-@pytest.mark.parametrize("path", ["/docs", "/redoc", "/openapi.json", "/api/v1/runs", "/api/v1/meta/"])
+@pytest.mark.parametrize("path", ["/docs", "/redoc", "/openapi.json", "/api/v1/meta/"])
 def test_disabled_docs_and_unimplemented_resources_are_not_fake_success(client, path):
     response = client.get(path, headers={"Authorization": basic()})
     assert response.status_code == 404
@@ -86,9 +86,11 @@ def test_mutations_reject_absent_or_wrong_origin(client, origin):
     check_transport(response)
 
 
-def test_allowed_origin_does_not_create_unimplemented_run(client):
-    response = client.post("/api/v1/runs", headers={"Authorization": basic(), "Origin": SETTINGS.allowed_origin}, json={})
-    assert response.status_code == 404
+def test_configured_access_does_not_create_run_without_persistence(client):
+    response = client.post("/api/v1/runs", headers={"Authorization": basic(), "Origin": SETTINGS.allowed_origin,
+                                               "Idempotency-Key": "synthetic-create-key-001"}, json={})
+    assert response.status_code == 503
+    assert response.json()["error"]["code"] == "FEATURE_UNAVAILABLE"
     check_transport(response)
 
 
