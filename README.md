@@ -20,7 +20,9 @@ Los logos actuales están en `branding/`. Las variantes disponibles son:
 - [Plan de trabajo](docs/PLAN_DE_TRABAJO.md).
 - [Prioridades y dependencias de frontend](docs/PLAN_FRONTEND.md).
 - [Revisión de consumo del contrato API — FE 1.1](docs/REVISION_CONTRATO_FRONTEND.md).
-- [Contrato API único — borrador BE 3.1 y política de versiones](docs/contracts/README.md).
+- [Revisión semántica — ALG 2.1](docs/REVISION_SEMANTICA_ALG.md).
+- [Interfaces internas de análisis y puertos de proveedores](docs/INTERFACES_ANALISIS.md).
+- [Contrato API único — acuerdo 1.0.0 y política de versiones](docs/contracts/README.md).
 - [Arquitectura C4](docs/ARQUITECTURA_C4.md).
 - [Sistema visual y de interfaz](DESIGN.md).
 - [Contexto del producto para diseño](PRODUCT.md).
@@ -40,11 +42,11 @@ openspec --version
 
 La configuración del proyecto y las skills ya están en `openspec/` y `.agents/skills/`; no hace falta repetir la inicialización al clonar el repositorio.
 
-Para revisar o resolver dudas en Codex, usar `openspec-explore`. Tras preparar [BE 3.1](docs/contracts/openapi.json), se autorizó FE 1.1 documental y se emitió la [revisión con observaciones](docs/REVISION_CONTRATO_FRONTEND.md): conformidad pendiente de H01–H03, aclaración H04, ALG 2.1 y versión común. G0 sigue abierto. La última confirmación no inicia automáticamente Next.js 1.2 ni otras tareas BE. Las tareas conservan sus dueños y dependencias. [Documentación de la integración](https://openspec.dev/docs/supported-tools#codex).
+Para revisar o resolver dudas en Codex, usar `openspec-explore`. El usuario autorizó ALG 2.1 y el acuerdo definitivo: el [contrato único](docs/contracts/openapi.json) queda acordado en `1.0.0`, con revisión semántica, interfaces y [consumo documental FE](docs/REVISION_CONTRATO_FRONTEND.md) registrados. ALG 2.1 y BE 3.1 se cierran y G0 contractual queda cerrado mediante revisión asistida por Codex; no se atribuyen firmas a otros integrantes ni pruebas reales de servicios. La siguiente construcción es **FE 1.2**, después el hito técnico de tipos/validación FE 1.1 y FE 1.3. Las proyecciones temporales no completan ese hito. BE 3.2 sigue pendiente antes de pruebas pagadas. Este acuerdo no inicia automáticamente código; las tareas conservan dueños y dependencias. [Documentación de la integración](https://openspec.dev/docs/supported-tools#codex).
 
 El contexto y las reglas de SENIALON están en [openspec/config.yaml](openspec/config.yaml). El trabajo comienza por las especificaciones antes de implementar el producto.
 
-Al sincronizar `main` se incorporó el commit remoto `ae6b1a0`, con [otro borrador API de Backend](openspec/contract/backend-contract-openapi.json). Se conserva sin cambios: difiere del contrato revisado en autenticación, rutas y modelos, y presenta un error de sintaxis JSON al final del archivo. BE debe corregirlo y conciliar ambas propuestas antes de acordar una única versión de integración. La revisión FE y las comprobaciones documentadas cubren exclusivamente `docs/contracts/openapi.json`; no validan ese archivo remoto ni cierran G0.
+La conciliación mantiene una sola fuente de integración: [docs/contracts/openapi.json](docs/contracts/openapi.json). El borrador competidor incorporado en `ae6b1a0` se retiró del árbol activo; sus diferencias, decisiones de migración y recuperación desde Git están en [openspec/contract/README.md](openspec/contract/README.md). Las comprobaciones se refieren exclusivamente a la versión y hash del contrato actual.
 
 ### Entorno local
 

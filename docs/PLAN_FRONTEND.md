@@ -1,21 +1,23 @@
 # Plan de frontend de SENIALON
 
-**Responsable confirmado:** tú, como integrante FE del equipo. **Estado:** revisión documental FE 1.1 emitida con observaciones; conformidad y G0 todavía pendientes, sin código del producto implementado. La última confirmación autoriza esa revisión, sin iniciar automáticamente Next.js 1.2 ni el segundo hito técnico. La entrega sigue siendo el 18 de octubre de 2026 antes de las 12:00, America/Bogota; no se asignan duraciones sin disponibilidad confirmada.
+**Responsable confirmado:** tú, como integrante FE del equipo. **Estado:** contrato único acordado **`1.0.0`**, revisión documental FE favorable y revisión semántica/interfaces ALG 2.1 registradas por revisión asistida autorizada por el usuario. **G0 contractual está cerrado**; no hay código del producto implementado. FE 1.1 completa sigue pendiente de 1.2 y su hito técnico. Este ajuste no inicia Next.js ni acredita acceso o gasto; BE 3.2 sigue pendiente antes de cualquier consumo pagado. La entrega sigue siendo el 18 de octubre de 2026 antes de las 12:00, America/Bogota; no se asignan duraciones sin disponibilidad confirmada.
 
 Las doce tareas y sus casillas siguen en [tasks.md](../openspec/changes/definir-mvp-senialon/tasks.md). Este documento prepara su prioridad, dependencias y orden; no crea otra lista de estados ni cambia sus IDs. Referencias: [plan del equipo](PLAN_DE_TRABAJO.md), [diseño técnico](../openspec/changes/definir-mvp-senialon/design.md), [C4](ARQUITECTURA_C4.md) y [DESIGN.md](../DESIGN.md).
 
 ## Por cuál empezar
 
-**Empieza por 1.1: revisión documental del contrato API con Backend.** La primera acción es preparar el inventario de datos, estados y operaciones que necesita la interfaz y contrastarlo con el borrador de BE 3.1. ALG revisa la semántica en 2.1; BE publica la versión acordada. No esperar a que BE cierre 3.1 para comenzar a revisar su borrador.
+**La siguiente tarea de construcción es 1.2: base de Next.js y sistema visual.** El primer hito documental de 1.1 ya es favorable y el contrato 1.0.0 cierra G0 contractual. Después de 1.2 se completa el hito técnico de 1.1 —tipos y validación de respuestas— y se continúa con 1.3 —acceso y conexión—. Esa es la secuencia preparada; no se ejecuta construcción en este ajuste documental.
 
-Tras la inspección inicial sin contrato se preparó el [borrador API `0.1.0-draft.1`](contracts/README.md). Su [revisión FE](REVISION_CONTRATO_FRONTEND.md) ya contrasta diez necesidades, veinte casos y ocho observaciones: la mayor parte del transporte es consumible, pero quedan recuperación de operación retenida (H01), procedencia de agrupación (H02), traza parcial JEV (H03) y aclaración de capacidades históricas con pauta FE (H04). ALG 2.1 y la versión común siguen pendientes; el contrato no fue editado en la revisión y no hay frontend/backend implementados.
+Tras la inspección inicial sin contrato se preparó draft.1 y se emitió la [revisión FE](REVISION_CONTRATO_FRONTEND.md) de diez necesidades, veinte casos y ocho observaciones. Draft.2 incorporó H01–H04; son antecedentes preservados en el contrato activo [1.0.0](contracts/README.md), SHA-256 `d7e0b018263658e686da00997ddffbd19ba96e6e73de5b08e3f8917b95375956`, con 94 esquemas y 74 ejemplos sintéticos. La [revisión semántica](REVISION_SEMANTICA_ALG.md) y las [interfaces ALG–BE](INTERFACES_ANALISIS.md) cierran el acuerdo documental, sin atribuir una firma a otros integrantes ni acreditar calidad empírica o implementación.
+
+El [patch de 46 cambios](FE_1_1_CAMBIOS_PROPUESTOS.patch.json) fue aplicado por autorización del usuario en draft.2 y sus resoluciones se conservan en 1.0.0. Queda como registro histórico sobre la base draft.1: **no volver a aplicarlo sobre draft.2 ni 1.0.0**. El segundo borrador remoto fue retirado del árbol activo con [registro y referencia Git](../openspec/contract/README.md); la comparación inicial se conserva como antecedente. Los tipos proyectados para comprobar el contrato no completan el segundo hito técnico de 1.1.
 
 Para evitar un ciclo, **1.1 tiene dos hitos dentro de la misma tarea**:
 
 - **Revisión documental:** inventario, ejemplos, campos, estados y conformidad de FE sobre el borrador. Esto es lo que necesita el cierre del contrato G0; no requiere código ni crear tipos TypeScript.
 - **Consumo técnico:** después de 1.2, preparar tipos y validación de respuestas del contrato acordado y comprobar su consumo. La casilla 1.1 se completa al verificar ambos hitos; no tiene que estar marcada completa para cerrar G0.
 
-Después de G0 y cuando se inicie el desarrollo, la primera tarea de construcción es **1.2: base de Next.js y aplicación del sistema visual**. No necesita esperar a que YouTube, JEV o Gemini funcionen; sí respeta el stack y el contrato acordados.
+Con G0 contractual cerrado, la primera tarea de construcción sigue siendo **1.2: base de Next.js y aplicación del sistema visual**. No necesita esperar a que YouTube, JEV o Gemini funcionen; respeta el stack y el contrato acordados. Las pruebas pagadas mantienen como requisito BE 3.2 y las llamadas de la aplicación BE 3.10; el acuerdo del contrato no habilita esos consumos.
 
 ## Prioridad y orden recomendado
 
@@ -25,7 +27,7 @@ Después de G0 y cuando se inicie el desarrollo, la primera tarea de construcci�
 
 | Orden sugerido | Prioridad | Tarea existente | Resultado que debes entregar |
 | --- | --- | --- | --- |
-| 1 | P0 | 1.1, revisión documental | Necesidades de la interfaz revisadas contra el borrador, con dudas resueltas y versión de contrato registrada por BE. |
+| 1 | P0 | 1.1, revisión documental | Revisión favorable sobre 1.0.0, H01–H04 preservados y acuerdo ALG/BE documentado; G0 contractual cerrado. |
 | 2 | P0 | 1.2, base frontend | Next.js/App Router, React, TypeScript, estilos y logos; arranque/build locales y comandos entregados a BE. |
 | 3 | P0 | 1.1, consumo técnico | Tipos y validación durante la ejecución para respuestas, estados y errores. Es la misma tarea 1.1, no otra casilla. |
 | 4 | P0 | 1.3, acceso y conexión | Páginas y Route Handlers protegidos; comunicación autenticada con FastAPI por el binding interno. |
@@ -47,8 +49,8 @@ La preparación visual o las pruebas con ejemplos no equivalen a integración re
 
 | Tarea FE | Base de frontend necesaria | Entrega externa para integración y cierre |
 | --- | --- | --- |
-| **1.1** | Revisión documental primero; 1.2 antes de completar tipos/validación. | Borrador de **BE 3.1**; revisión semántica de **ALG 2.1** para acordar la versión. BE cierra G0 con la revisión documental, sin esperar los tipos programados. |
-| **1.2** | G0 cerrado antes de construcción. Se puede preparar el inventario de componentes y requisitos de entorno durante la revisión documental. | No necesita APIs de proveedores. Entrega comandos de arranque/build y nombres de variables a **BE 3.3**; el despliegue no es condición para terminar el arranque local de esta tarea. |
+| **1.1** | Revisión documental favorable en 1.0.0; 1.2 antes de completar tipos/validación. | Semántica/interfaces **ALG 2.1** y versión común de **BE 3.1** registradas. La aplicación consumidora y su validación durante la ejecución siguen pendientes. |
+| **1.2** | G0 contractual ya cerrado. Requiere el stack y sistema visual acordados. | No necesita APIs de proveedores. Entrega comandos de arranque/build y nombres de variables a **BE 3.3**; el despliegue no es condición para terminar el arranque local de esta tarea. |
 | **1.3** | Base 1.2 y consumo técnico de 1.1. | Contrato de autorización de **BE 3.1**, binding/servicios de **BE 3.3** y autenticación FastAPI de **BE 3.6**. El cierre exige probar ambos servicios, no solo Next con un ejemplo local. |
 | **1.4** | Acceso y cliente API de 1.3. | Operaciones de ejecución/estado de **BE 3.11**, persistencia **3.5**, cobertura **3.9** y pasos **3.10**; ventanas de **ALG 2.2**. No espera grupos o análisis audiovisual para mostrar avance y fallos disponibles. |
 | **1.5** | Contexto y navegación de 1.4, más acceso/cliente API. | Grupos de **ALG 2.3–2.4** expuestos por **BE 3.11** y operación de confirmación de **BE 3.12**. Requiere inspección y confirmación reales para cerrar su recorrido. |
@@ -66,8 +68,8 @@ Este diagrama muestra las precedencias de integración del frontend. Los nodos d
 
 ```mermaid
 flowchart TD
-    review["1.1 — Revisión documental sobre el borrador BE 3.1"]
-    contract["G0 — BE cierra la versión con las revisiones FE y ALG"]
+    review["1.1 — Revisión documental favorable sobre 1.0.0"]
+    contract["G0 contractual cerrado — acuerdo FE, ALG y BE"]
     base["1.2 — Base Next.js y sistema visual"]
     types["1.1 — Tipos y validación del contrato acordado"]
     access["1.3 — Acceso y conexión con backend"]
@@ -99,29 +101,29 @@ flowchart TD
 
 La ruta de catálogo/ficha/revisión no depende de que existan resultados de comparación. La condición funcional «confirmar grupos antes de calcular» sigue aplicando a la otra ruta. El orden del frontend no cambia las reglas analíticas.
 
-## Primer entregable de 1.1: inventario para revisar con BE
+## Inventario utilizado en el primer hito de 1.1
 
-Preparar y contrastar estos puntos con el borrador único de Backend; no crear URLs, nombres de campos o enums definitivos por cuenta del frontend:
+Estos puntos se contrastaron con la fuente única de Backend y se conservan para el posterior consumidor técnico. No crear URLs, nombres de campos o enums distintos por cuenta del frontend:
 
 | Operación o dato requerido | Qué debe quedar resuelto en el contrato |
 | --- | --- |
 | Ejecuciones | Crear, recuperar y distinguir una ejecución anterior; IDs, fechas y ventanas devueltas por el servidor. |
-| Cobertura y estado | Once canales previstos, datos consultados/fallidos, etapa, motivo, último paso confirmado y acción de avance permitida. |
-| Grupos | Consultar propuesta y pertenencias; confirmar una versión con fecha sin edición manual de clasificaciones. |
+| Cobertura y estado | Once canales previstos, datos consultados/fallidos, etapa, motivo, último paso confirmado, referencias recuperables `operations_to_inspect` y acción de avance permitida. |
+| Grupos | Consultar propuesta y pertenencias, con `generation_trace` efectivo; confirmar una versión con fecha sin edición manual de clasificaciones. |
 | Comparación | A/B conocidos o desconocidos, diferencia permitida, porcentaje aplicable o motivo de pendiente y fuentes/contribución por canal. |
 | Catálogo y selección | Publicaciones elegibles y sus IDs/URLs, fecha/duración, candidato corto o Short confirmado; operación explícita de análisis. |
-| Ficha | Métricas/captura, señal, observaciones con marcas y revisión, hipótesis, decisiones JEV de valor/afinidad y adaptación. |
+| Ficha | Métricas/captura, señal, observaciones con marcas y revisión, hipótesis, decisiones JEV de valor/afinidad y adaptación. Usar `current_actions` del envelope; preservar los resultados del snapshot y su revisión exacta. |
 | Revisión editorial | Identidad/versiones del análisis, decisiones permitidas, motivo, guardado confirmado y lectura posterior. No inventar una taxonomía desde el diseño. |
 | Acceso y errores | Credencial compartida, autorización entre servicios, formato de error/insuficiencia, caché privada y tratamiento de fallos. Secretos fuera de documentos y repositorio. |
 | Reintentos | Identidad de operaciones, consultas que no consumen, estados en proceso/inciertos y cuándo corresponde reintentar. El frontend no crea un ciclo de llamadas pagadas. |
 
-La evidencia de este primer hito es una revisión documental con observaciones resueltas y versión acordada por BE. Un ejemplo de JSON sirve para acordar el formato; no acredita adquisición o inferencia real ni completa por sí solo 1.1.
+La evidencia FE de este primer hito es la revisión favorable de 1.0.0 y las resoluciones preservadas de H01–H04. Los registros ALG/BE completan el acuerdo común y cierran G0 contractual. Los ejemplos de JSON permiten contrastar el formato; no acreditan adquisición o inferencia real ni completan por sí solos 1.1.
 
 ## Cómo avanzar si otra entrega no está lista
 
 | Falta | Trabajo que puedes preparar sin invadir otra área | Qué no se considera terminado |
 | --- | --- | --- |
-| Borrador de contrato | Inventario anterior; mapa de pantallas, acciones y estados; revisión de DESIGN.md y requisitos de Node/npm. | G0, tipos consumidores finales y conexión con endpoints no definidos. El inicio está autorizado; esta dependencia documental debe resolverse antes de 1.2. |
+| Cambio posterior al contrato acordado | Registrar la necesidad al dueño BE y revisar su versión antes de adaptar el consumidor. | No mantener otra API ni asumir compatibilidad de campos/enums nuevos; el acuerdo actual 1.0.0 ya tiene G0 contractual cerrado. |
 | Backend operativo, con G0 cerrado y desarrollo iniciado | Componentes, estados vacíos/error/parcial y pruebas con ejemplos identificados del contrato. | Acceso entre servicios, persistencia, consumos reales y cierre integrado de la tarea. |
 | Grupos o señales | Catálogo elegible, selección y ficha con comparación pendiente si sus operaciones ya están disponibles. | Resultados de comparación, confirmación o crecimiento que el servidor no haya producido. |
 | Audiovisual/JEV | Estructura de ficha, estados de información insuficiente/error y formulario de revisión con ejemplos de prueba. | Evidencia observada, evaluación real o decisión guardada sobre un análisis inexistente. |
@@ -133,7 +135,7 @@ Los ejemplos de desarrollo deben respetar el contrato y quedar identificados. No
 
 Cada pantalla incorpora su comprobación al construirse: teclado/foco, lectura en móvil, estados de carga/error/parcial, desconocido distinto de cero y accesos protegidos. 1.10 consolida esas comprobaciones y el recorrido real; no es el momento de empezar todas las pruebas.
 
-FE es dueño del frontend, sus Route Handlers, validación del consumidor, DESIGN.md, pruebas E2E y playbook. Backend conserva FastAPI, secretos, proveedores, base de datos, control de gasto y despliegue; Algoritmia conserva criterios y cálculos. Solicitar el cambio a su dueño en vez de escribir un reemplazo dentro del frontend. No se han enviado mensajes a otras personas. La primera tarea ha comenzado con su entregable documental; la casilla permanece abierta hasta completar sus dos hitos.
+FE es dueño del frontend, sus Route Handlers, validación del consumidor, DESIGN.md, pruebas E2E y playbook. Backend conserva FastAPI, secretos, proveedores, base de datos, control de gasto y despliegue; Algoritmia conserva criterios y cálculos. Solicitar el cambio a su dueño en vez de escribir un reemplazo dentro del frontend. No se han enviado mensajes a otras personas. La revisión documental FE es favorable y G0 contractual está cerrado; la casilla 1.1 permanece abierta por el hito técnico posterior a 1.2. BE 3.2 y las comprobaciones de acceso, gasto e integración siguen sus tareas propias.
 
 El núcleo y la entrega requieren **1.1–1.11**; Notion **1.12** es la única tarea opcional de frontend. Si el tiempo no alcanza, simplificar acabado secundario y diferir Notion, conservando acceso, evidencia, cobertura, revisión recuperable y pruebas esenciales. El estado se actualiza en las casillas originales de OpenSpec.
 
@@ -141,6 +143,6 @@ El núcleo y la entrega requieren **1.1–1.11**; Notion **1.12** es la única t
 
 Se inspeccionó en modo de solo lectura el orquestador local de personal-finance-assistant: skill local-orchestration, configuración de agentes, reconciliador y tracker. No es una dependencia genérica instalada por paquete: utiliza fuentes y tareas de Spec Kit, cuatro agentes, políticas y rutas específicas del proyecto financiero.
 
-**Decisión para esta entrega: continuar sin portarlo.** Reutilizarlo exigiría adaptar la fuente de tareas a OpenSpec, fronteras de archivos y políticas de ejecución. La inspección no aporta una medición de ahorro de tiempo o calidad que justifique ese trabajo, y el portado no resuelve la dependencia de BE 3.1. No se instaló, ejecutó ni copió el tracker financiero.
+**Decisión para esta entrega: continuar sin portarlo.** Reutilizarlo exigiría adaptar la fuente de tareas a OpenSpec, fronteras de archivos y políticas de ejecución. La inspección no aporta una medición de ahorro de tiempo o calidad que justifique ese trabajo; el acuerdo común de BE/ALG quedó resuelto mediante los registros documentales del proyecto. No se instaló, ejecutó ni copió el tracker financiero.
 
 Se conservan los controles aplicables mediante el flujo actual: una tarea acotada, propiedad exclusiva de archivos, criterios de aceptación, comprobaciones pertinentes y revisión independiente. No se garantiza una reducción de tiempo sin medición.

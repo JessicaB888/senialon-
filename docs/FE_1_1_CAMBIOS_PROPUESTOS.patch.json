@@ -1,0 +1,1743 @@
+[
+  {
+    "op": "test",
+    "path": "/info/version",
+    "value": "0.1.0-draft.1"
+  },
+  {
+    "op": "add",
+    "path": "/components/schemas/OperationReference",
+    "value": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "run_id",
+        "analysis_id",
+        "state",
+        "stage",
+        "updated_at"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "analysis_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "running",
+            "blocked",
+            "uncertain",
+            "failed"
+          ]
+        },
+        "stage": {
+          "type": "string",
+          "minLength": 1
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": ".*(Z|[+-]\\d{2}:\\d{2})$"
+        }
+      },
+      "description": "Referencia a una operación persistida consultable mediante GET de la operación dentro de run_id. La identidad no depende de una respuesta POST recibida ni de memoria local. state/updated_at reflejan la lectura actual. No autoriza reintento, avance o liberación de reserva; consultar el detalle y su retry_policy."
+    }
+  },
+  {
+    "op": "add",
+    "path": "/components/schemas/Run/properties/operations_to_inspect",
+    "value": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/OperationReference"
+      },
+      "uniqueItems": true,
+      "description": "Todas las operaciones activas o con incidencia pendiente de esta ejecución, incluidas las de piezas seleccionadas. Incluye running/uncertain y failed/blocked sin resolver, aun sin checkpoint. Pares run_id/operation_id únicos, orden updated_at descendente e ID como desempate. [] solo si no hay tales operaciones. GET no las reconoce, resuelve ni elimina: cambian por transición persistida de BE. No sustituye el historial duradero ni la consulta de cada operación."
+    }
+  },
+  {
+    "op": "add",
+    "path": "/components/schemas/Run/required/-",
+    "value": "operations_to_inspect"
+  },
+  {
+    "op": "add",
+    "path": "/components/schemas/AnalysisResponse/properties/operations_to_inspect",
+    "value": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/OperationReference"
+      },
+      "uniqueItems": true,
+      "description": "En el envelope de la ficha actual, operaciones activas o con incidencia pendiente de este analysis_id y run_id, recuperables por GET aun tras perder la respuesta o cerrar el navegador. No incluir operaciones de otras piezas. Para una versión histórica devuelve []; consultar Run o la ficha actual para el estado operativo. Son metadatos actuales fuera de data, no campos del snapshot. No autoriza reintento de consumo."
+    }
+  },
+  {
+    "op": "add",
+    "path": "/components/schemas/AnalysisResponse/required/-",
+    "value": "operations_to_inspect"
+  },
+  {
+    "op": "add",
+    "path": "/components/schemas/Groups/properties/generation_trace",
+    "value": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ModelUse"
+      },
+      "allOf": [
+        {
+          "items": {
+            "type": "object",
+            "required": [
+              "provider"
+            ],
+            "properties": {
+              "provider": {
+                "type": "string",
+                "const": "gemini"
+              }
+            }
+          }
+        }
+      ],
+      "description": "Llamadas efectivas de Gemini que produjeron la propuesta canónica, incluidas propuestas por lote y conciliación si las hubo. Una propuesta con temas exige al menos una entrada; sin temas la lista puede estar vacía si no hubo llamada, sin inventar generación. Conservar modelo, versión del prompt, criterios y momento efectivos; ID/uso null solo cuando no fueron informados. No rellenar con un modelo supuesto ni con configuración futura. La traza forma parte del snapshot de esta versión de grupos."
+    }
+  },
+  {
+    "op": "add",
+    "path": "/components/schemas/Groups/required/-",
+    "value": "generation_trace"
+  },
+  {
+    "op": "add",
+    "path": "/components/schemas/Groups/allOf",
+    "value": [
+      {
+        "if": {
+          "required": [
+            "topics"
+          ],
+          "properties": {
+            "topics": {
+              "type": "array",
+              "minItems": 1
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "generation_trace": {
+              "type": "array",
+              "minItems": 1
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/components/schemas/JevAttemptTrace",
+    "value": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider",
+        "submission_state",
+        "attempted_at",
+        "model",
+        "provider_request_id",
+        "question",
+        "input_text",
+        "raw_response_text",
+        "criteria_version",
+        "question_version"
+      ],
+      "properties": {
+        "provider": {
+          "type": "string",
+          "const": "jev"
+        },
+        "submission_state": {
+          "type": "string",
+          "enum": [
+            "not_sent",
+            "sent",
+            "unknown"
+          ]
+        },
+        "attempted_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": ".*(Z|[+-]\\d{2}:\\d{2})$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "provider_request_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "question": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "input_text": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "raw_response_text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "criteria_version": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "question_version": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "submission_state"
+            ],
+            "properties": {
+              "submission_state": {
+                "const": "not_sent"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "provider_request_id": {
+                "type": "null"
+              },
+              "raw_response_text": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ],
+      "description": "Metadatos conocidos del intento sin una decisión tipada válida. null significa desconocido/no disponible, nunca modelo, petición, pregunta o respuesta inventados. not_sent significa que BE sabe que no se envió; sent que conoce el envío, sin afirmar recepción ni cargo; unknown que no puede confirmarlo. Conservar solo material seguro sin claves ni cabeceras de autorización. No implica autorización para reintentar ni sustituye Operation/uso/reserva."
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/components/schemas/UnavailableAssessment/properties/trace",
+    "value": {
+      "anyOf": [
+        {
+          "$ref": "#/components/schemas/JevAttemptTrace"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/components/schemas/UnavailableAssessment/description",
+    "value": "Fallo técnico conserva decision=null. No convertirlo en no pertinente, utilidad no sustentada o información insuficiente como si JEV hubiera respondido. trace conserva los metadatos parciales conocidos del intento, incluso si falló antes del envío; null solo cuando no hay traza recuperable. Una respuesta inválida no se representa como decisión auténtica; decision sigue null. No se pierden entradas o versiones conocidas por faltar modelo, ID o respuesta."
+  },
+  {
+    "op": "add",
+    "path": "/components/schemas/AnalysisResponse/properties/current_actions",
+    "value": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "advance_analysis",
+          "record_review"
+        ]
+      },
+      "uniqueItems": true,
+      "description": "Capacidades actuales del envelope, fuera del snapshot data. Si data.analysis_version es anterior a la última devuelve []; no ofrece avance ni guardado editorial sobre ese histórico. Para la versión actual solo acciones permitidas ahora. FE usa esta lista, nunca data.allowed_actions, para habilitar controles. La ausencia no autoriza inferir otra transición; controles optimistas obligatorios si cambia el estado tras leer."
+    }
+  },
+  {
+    "op": "add",
+    "path": "/components/schemas/AnalysisResponse/required/-",
+    "value": "current_actions"
+  },
+  {
+    "op": "add",
+    "path": "/components/schemas/Analysis/properties/allowed_actions/description",
+    "value": "Capacidades capturadas en esta versión de resultados, preservadas para contexto histórico; no autorizan acciones en el estado presente. FE habilita controles solo desde AnalysisResponse.current_actions. Conservar el valor persistido al recuperar históricos, sin reescribirlo desde GET."
+  },
+  {
+    "op": "replace",
+    "path": "/components/schemas/Analysis/description",
+    "value": "Identidad de selección estable. Cada checkpoint de resultados agrega analysis_version inmutable; revisión vinculada a versión exacta y su propio revision. Nuevas versiones no heredan aprobación/revisión de evidencia. Una captura no acredita éxito ni crecimiento de desempeño. Los resultados, material, criterios, SignalReference y capacidades capturadas no se reescriben al leer. Las operaciones y capacidades presentes se exponen fuera de data, en AnalysisResponse.operations_to_inspect/current_actions. La revisión sigue su revisión propia y vínculo de versión exacta; no se transfiere a otra versión."
+  },
+  {
+    "op": "add",
+    "path": "/components/schemas/AnalysisResponse/description",
+    "value": "data conserva el contexto de la versión solicitada. current_actions y operations_to_inspect son metadatos de entrega derivados del estado persistido actual, fuera del snapshot y sin efectos de escritura. Para una versión histórica ambas listas son []; la ficha y revisión exactas permanecen consultables. No recalcular resultados, inferir o mutar al leer."
+  },
+  {
+    "op": "replace",
+    "path": "/paths/~1api~1v1~1runs~1{run_id}~1analyses~1{analysis_id}/get/description",
+    "value": "Consultar ficha y contexto exacto de análisis. analysis_version anterior a la última es solo lectura. La revisión recuperada pertenece a esa versión exacta; no implica que pueda escribirse. El envelope de la ficha histórica devuelve current_actions=[] y operations_to_inspect=[]; data permanece intacto. Recuperar Run o la ficha actual para capacidades u operaciones presentes. No recalcular ni actualizar resultados al consultar."
+  },
+  {
+    "op": "replace",
+    "path": "/paths/~1api~1v1~1runs~1{run_id}~1analyses~1{analysis_id}~1review/get/description",
+    "value": "Recuperar revisión de una versión exacta. analysis_version anterior a la última es solo lectura. La revisión recuperada pertenece a esa versión exacta; no implica que pueda escribirse. El envelope de la ficha histórica devuelve current_actions=[] y operations_to_inspect=[]; data permanece intacto. Recuperar Run o la ficha actual para capacidades u operaciones presentes. No recalcular ni actualizar resultados al consultar."
+  },
+  {
+    "op": "add",
+    "path": "/components/examples/CreatedRun/value/data/operations_to_inspect",
+    "value": []
+  },
+  {
+    "op": "add",
+    "path": "/components/examples/RunList/value/items/0/operations_to_inspect",
+    "value": []
+  },
+  {
+    "op": "add",
+    "path": "/components/examples/ProposedGroups/value/data/proposal/generation_trace",
+    "value": [
+      {
+        "provider": "gemini",
+        "model": "fixture-grouping-model-observed",
+        "provider_request_id": null,
+        "prompt_or_question_version": "fixture-grouping-prompt-v1",
+        "criteria_version": "fixture-criteria-v1",
+        "processed_at": "2026-10-17T12:00:00-05:00",
+        "usage_report": null
+      }
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/components/examples/ConfirmedGroups/value/data/proposal/generation_trace",
+    "value": [
+      {
+        "provider": "gemini",
+        "model": "fixture-grouping-model-observed",
+        "provider_request_id": null,
+        "prompt_or_question_version": "fixture-grouping-prompt-v1",
+        "criteria_version": "fixture-criteria-v1",
+        "processed_at": "2026-10-17T12:00:00-05:00",
+        "usage_report": null
+      }
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/components/examples/SelectedAnalysis/value/operations_to_inspect",
+    "value": []
+  },
+  {
+    "op": "add",
+    "path": "/components/examples/SelectedAnalysis/value/current_actions",
+    "value": [
+      "advance_analysis",
+      "record_review"
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/components/examples/AudiovisualFailure/value/operations_to_inspect",
+    "value": []
+  },
+  {
+    "op": "add",
+    "path": "/components/examples/AudiovisualFailure/value/current_actions",
+    "value": [
+      "advance_analysis",
+      "record_review"
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/components/examples/AnalysisWithEvidence/value/operations_to_inspect",
+    "value": []
+  },
+  {
+    "op": "add",
+    "path": "/components/examples/AnalysisWithEvidence/value/current_actions",
+    "value": [
+      "record_review"
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/components/examples/RunAfterLostResponse",
+    "value": {
+      "summary": "SINTÉTICO — Recarga tras perder POST: recuperar operación activa sin checkpoint ni nueva mutación.",
+      "description": "Ejemplo de propuesta FE para revisión BE/ALG; no es una consulta ni una decisión real. No usar como datos de demo.",
+      "x-schema": "RunResponse",
+      "value": {
+        "meta": {
+          "contract_version": "0.1.0-draft.1",
+          "request_id": "fixture-request-001",
+          "served_at": "2026-10-17T12:00:00-05:00"
+        },
+        "data": {
+          "run_id": "fixture-run-001",
+          "revision": 2,
+          "started_at": "2026-10-17T12:00:00-05:00",
+          "updated_at": "2026-10-17T12:00:00-05:00",
+          "windows": {
+            "timezone": "America/Bogota",
+            "previous": {
+              "start_inclusive": "2026-10-03T00:00:00-05:00",
+              "end_exclusive": "2026-10-10T00:00:00-05:00",
+              "days": 7
+            },
+            "recent": {
+              "start_inclusive": "2026-10-10T00:00:00-05:00",
+              "end_exclusive": "2026-10-17T00:00:00-05:00",
+              "days": 7
+            }
+          },
+          "corpus": [
+            {
+              "source_id": "c01",
+              "original_url": "https://www.youtube.com/@30X_by_Andres_Bilbao",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            },
+            {
+              "source_id": "c02",
+              "original_url": "https://www.youtube.com/@30XDevs",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            },
+            {
+              "source_id": "c03",
+              "original_url": "https://www.youtube.com/@Platzi",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            },
+            {
+              "source_id": "c04",
+              "original_url": "https://www.youtube.com/@EloisaWolf",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            },
+            {
+              "source_id": "c05",
+              "original_url": "https://www.youtube.com/@manuelavillegas",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            },
+            {
+              "source_id": "c06",
+              "original_url": "https://www.youtube.com/@Gartnervideo",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            },
+            {
+              "source_id": "c07",
+              "original_url": "https://www.youtube.com/@AdrianSaenz",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            },
+            {
+              "source_id": "c08",
+              "original_url": "https://www.youtube.com/@EDteam",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            },
+            {
+              "source_id": "c09",
+              "original_url": "https://www.youtube.com/@KimiMoonshot",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            },
+            {
+              "source_id": "c10",
+              "original_url": "https://www.youtube.com/user/TheRANDCorporation",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            },
+            {
+              "source_id": "c11",
+              "original_url": "https://www.youtube.com/channel/UChugFTK0KyrES9terTid8vA",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            }
+          ],
+          "versions": {
+            "rules_version": "fixture-rules-v1",
+            "classification_version": "fixture-classification-v1",
+            "criteria_version": "fixture-criteria-v1"
+          },
+          "workflow": {
+            "state": "running",
+            "reason": null
+          },
+          "current_stage": "acquisition",
+          "last_checkpoint": null,
+          "allowed_actions": [],
+          "budget": {
+            "currency": "USD",
+            "incremental_limit": "20.00",
+            "state": "check_required",
+            "reason": "Fixture: presupuesto no verificado; no autoriza llamadas.",
+            "confirmed_new_charges": null,
+            "reserved": null,
+            "available_for_new_calls": null
+          },
+          "operations_to_inspect": [
+            {
+              "operation_id": "fixture-operation-001",
+              "run_id": "fixture-run-001",
+              "analysis_id": null,
+              "state": "running",
+              "stage": "acquisition",
+              "updated_at": "2026-10-17T12:00:00-05:00"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1api~1v1~1runs~1{run_id}/get/responses/200/content/application~1json/examples/RunAfterLostResponse",
+    "value": {
+      "$ref": "#/components/examples/RunAfterLostResponse"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/components/examples/RunWithUncertainOperation",
+    "value": {
+      "summary": "SINTÉTICO — Recarga tras respuesta incierta: operación identificable, sin repetir gasto ni liberar reserva.",
+      "description": "Ejemplo de propuesta FE para revisión BE/ALG; no es una consulta ni una decisión real. No usar como datos de demo.",
+      "x-schema": "RunResponse",
+      "value": {
+        "meta": {
+          "contract_version": "0.1.0-draft.1",
+          "request_id": "fixture-request-001",
+          "served_at": "2026-10-17T12:00:00-05:00"
+        },
+        "data": {
+          "run_id": "fixture-run-001",
+          "revision": 2,
+          "started_at": "2026-10-17T12:00:00-05:00",
+          "updated_at": "2026-10-17T12:00:00-05:00",
+          "windows": {
+            "timezone": "America/Bogota",
+            "previous": {
+              "start_inclusive": "2026-10-03T00:00:00-05:00",
+              "end_exclusive": "2026-10-10T00:00:00-05:00",
+              "days": 7
+            },
+            "recent": {
+              "start_inclusive": "2026-10-10T00:00:00-05:00",
+              "end_exclusive": "2026-10-17T00:00:00-05:00",
+              "days": 7
+            }
+          },
+          "corpus": [
+            {
+              "source_id": "c01",
+              "original_url": "https://www.youtube.com/@30X_by_Andres_Bilbao",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            },
+            {
+              "source_id": "c02",
+              "original_url": "https://www.youtube.com/@30XDevs",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            },
+            {
+              "source_id": "c03",
+              "original_url": "https://www.youtube.com/@Platzi",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            },
+            {
+              "source_id": "c04",
+              "original_url": "https://www.youtube.com/@EloisaWolf",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            },
+            {
+              "source_id": "c05",
+              "original_url": "https://www.youtube.com/@manuelavillegas",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            },
+            {
+              "source_id": "c06",
+              "original_url": "https://www.youtube.com/@Gartnervideo",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            },
+            {
+              "source_id": "c07",
+              "original_url": "https://www.youtube.com/@AdrianSaenz",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            },
+            {
+              "source_id": "c08",
+              "original_url": "https://www.youtube.com/@EDteam",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            },
+            {
+              "source_id": "c09",
+              "original_url": "https://www.youtube.com/@KimiMoonshot",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            },
+            {
+              "source_id": "c10",
+              "original_url": "https://www.youtube.com/user/TheRANDCorporation",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            },
+            {
+              "source_id": "c11",
+              "original_url": "https://www.youtube.com/channel/UChugFTK0KyrES9terTid8vA",
+              "resolved_channel_id": null,
+              "resolution": {
+                "state": "not_requested",
+                "reason": null
+              }
+            }
+          ],
+          "versions": {
+            "rules_version": "fixture-rules-v1",
+            "classification_version": "fixture-classification-v1",
+            "criteria_version": "fixture-criteria-v1"
+          },
+          "workflow": {
+            "state": "uncertain",
+            "reason": "Recarga tras respuesta incierta: operación identificable, sin repetir gasto ni liberar reserva."
+          },
+          "current_stage": "acquisition",
+          "last_checkpoint": null,
+          "allowed_actions": [],
+          "budget": {
+            "currency": "USD",
+            "incremental_limit": "20.00",
+            "state": "uncertain",
+            "reason": "Reserva retenida hasta reconciliar uso; no repetir automáticamente.",
+            "confirmed_new_charges": null,
+            "reserved": null,
+            "available_for_new_calls": null
+          },
+          "operations_to_inspect": [
+            {
+              "operation_id": "fixture-operation-001",
+              "run_id": "fixture-run-001",
+              "analysis_id": null,
+              "state": "uncertain",
+              "stage": "acquisition",
+              "updated_at": "2026-10-17T12:00:00-05:00"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1api~1v1~1runs~1{run_id}/get/responses/200/content/application~1json/examples/RunWithUncertainOperation",
+    "value": {
+      "$ref": "#/components/examples/RunWithUncertainOperation"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/components/examples/AnalysisWithRetainedOperation",
+    "value": {
+      "summary": "SINTÉTICO — Ficha actual recupera operación incierta de su pieza por GET.",
+      "description": "Ejemplo de propuesta FE para revisión BE/ALG; no es una consulta ni una decisión real. No usar como datos de demo.",
+      "x-schema": "AnalysisResponse",
+      "value": {
+        "meta": {
+          "contract_version": "0.1.0-draft.1",
+          "request_id": "fixture-request-001",
+          "served_at": "2026-10-17T12:00:00-05:00"
+        },
+        "data": {
+          "analysis_id": "fixture-analysis-001",
+          "analysis_version": 1,
+          "run_id": "fixture-run-001",
+          "created_at": "2026-10-17T12:00:00-05:00",
+          "version_created_at": "2026-10-17T12:00:00-05:00",
+          "publication": {
+            "run_id": "fixture-run-001",
+            "video_id": "demoB000001",
+            "capture_id": "fixture-capture-001",
+            "source_id": "c01",
+            "url": "https://example.invalid/watch/demoB000001",
+            "title": "Fixture de aplicación comercial de IA",
+            "description": "Fixture: una aplicación concreta de IA, sin afirmaciones reales.",
+            "published_at": "2026-10-14T10:00:00-05:00",
+            "captured_at": "2026-10-17T12:00:00-05:00",
+            "public_state": "confirmed_public",
+            "duration": {
+              "state": "known",
+              "seconds": 180,
+              "reason": null
+            },
+            "window": "recent",
+            "short_status": "candidate_short",
+            "short_evidence": null,
+            "eligibility": "eligible",
+            "eligibility_reason": "Fixture público de 180 s y pertinente; duración no confirma Short.",
+            "statistics": {
+              "views": {
+                "state": "known",
+                "value": "0",
+                "reason": null
+              },
+              "likes": {
+                "state": "unknown",
+                "value": null,
+                "reason": "Proveedor no informó esta métrica en el fixture."
+              },
+              "comments": {
+                "state": "unknown",
+                "value": null,
+                "reason": "Proveedor no informó esta métrica en el fixture."
+              }
+            },
+            "ai_relevance": {
+              "state": "decided",
+              "decision": "relevant",
+              "explanation": "Fixture: explicación separada de la decisión tipada.",
+              "explanation_source": "evidence_summary",
+              "evidence_ids": [
+                "fixture-text-demoB000001"
+              ],
+              "trace": {
+                "provider": "jev",
+                "model": "fixture-model-not-selected",
+                "provider_request_id": "fixture-provider-request",
+                "question": "Fixture: pregunta tipada pendiente de revisión de ALG.",
+                "input_text": "Fixture: material de prueba, no publicación recolectada.",
+                "raw_response_text": "{\"choice\": \"relevant\"}",
+                "criteria_version": "fixture-criteria-v1",
+                "question_version": "fixture-question-v1",
+                "decided_at": "2026-10-17T12:00:00-05:00",
+                "probabilities": null
+              }
+            },
+            "main_topic_id": null,
+            "secondary_topic_ids": [],
+            "evidence": [
+              {
+                "evidence_id": "fixture-text-demoB000001",
+                "kind": "text",
+                "video_id": "demoB000001",
+                "dimension": "main_topic",
+                "source_url": "https://example.invalid/watch/demoB000001",
+                "field": "description",
+                "excerpt": "Fixture: explicación de una aplicación de IA a una tarea comercial.",
+                "captured_at": "2026-10-17T12:00:00-05:00"
+              }
+            ]
+          },
+          "windows": {
+            "timezone": "America/Bogota",
+            "previous": {
+              "start_inclusive": "2026-10-03T00:00:00-05:00",
+              "end_exclusive": "2026-10-10T00:00:00-05:00",
+              "days": 7
+            },
+            "recent": {
+              "start_inclusive": "2026-10-10T00:00:00-05:00",
+              "end_exclusive": "2026-10-17T00:00:00-05:00",
+              "days": 7
+            }
+          },
+          "versions": {
+            "rules_version": "fixture-rules-v1",
+            "classification_version": "fixture-classification-v1",
+            "criteria_version": "fixture-criteria-v1"
+          },
+          "groups_id": null,
+          "groups_version": null,
+          "signal": {
+            "state": "pending",
+            "comparison_revision": null,
+            "topic_id": null,
+            "signal": null
+          },
+          "performance": {
+            "state": "not_evaluable",
+            "reason": "Solo una captura de estadísticas; sin base de desempeño.",
+            "capture_id": "fixture-capture-001"
+          },
+          "material": [],
+          "audiovisual": {
+            "state": "pending",
+            "reason": "Selección registrada; falta solicitar avance."
+          },
+          "dimensions": [
+            {
+              "dimension": "format",
+              "stage": {
+                "state": "not_requested",
+                "reason": null
+              },
+              "description": null,
+              "evidence_ids": []
+            },
+            {
+              "dimension": "verbal_hook",
+              "stage": {
+                "state": "not_requested",
+                "reason": null
+              },
+              "description": null,
+              "evidence_ids": []
+            },
+            {
+              "dimension": "visual_hook",
+              "stage": {
+                "state": "not_requested",
+                "reason": null
+              },
+              "description": null,
+              "evidence_ids": []
+            },
+            {
+              "dimension": "audio_hook",
+              "stage": {
+                "state": "not_requested",
+                "reason": null
+              },
+              "description": null,
+              "evidence_ids": []
+            },
+            {
+              "dimension": "structure",
+              "stage": {
+                "state": "not_requested",
+                "reason": null
+              },
+              "description": null,
+              "evidence_ids": []
+            },
+            {
+              "dimension": "problem",
+              "stage": {
+                "state": "not_requested",
+                "reason": null
+              },
+              "description": null,
+              "evidence_ids": []
+            }
+          ],
+          "evidence": [
+            {
+              "evidence_id": "fixture-text-demoB000001",
+              "kind": "text",
+              "video_id": "demoB000001",
+              "dimension": "main_topic",
+              "source_url": "https://example.invalid/watch/demoB000001",
+              "field": "description",
+              "excerpt": "Fixture: explicación de una aplicación de IA a una tarea comercial.",
+              "captured_at": "2026-10-17T12:00:00-05:00"
+            }
+          ],
+          "problem_or_learning": null,
+          "value": {
+            "state": "not_requested",
+            "reason": "No solicitado en este ejemplo.",
+            "decision": null,
+            "trace": null,
+            "evidence_ids": []
+          },
+          "affinity": {
+            "persona": {
+              "state": "not_requested",
+              "reason": "No solicitado en este ejemplo.",
+              "decision": null,
+              "trace": null,
+              "evidence_ids": []
+            },
+            "company_context": {
+              "state": "not_requested",
+              "reason": "No solicitado en este ejemplo.",
+              "decision": null,
+              "trace": null,
+              "evidence_ids": []
+            },
+            "pillar": {
+              "state": "not_requested",
+              "reason": "No solicitado en este ejemplo.",
+              "decision": null,
+              "trace": null,
+              "evidence_ids": []
+            }
+          },
+          "hypotheses": [],
+          "adaptation": {
+            "stage": {
+              "state": "not_requested",
+              "reason": null
+            },
+            "angle": null,
+            "expected_contribution": null,
+            "proposed_hook": null,
+            "proposed_structure": [],
+            "proposed_cta": null,
+            "limitations": []
+          },
+          "model_uses": [],
+          "allowed_actions": [
+            "advance_analysis",
+            "record_review"
+          ],
+          "review": {
+            "review_id": "fixture-review-001",
+            "run_id": "fixture-run-001",
+            "analysis_id": "fixture-analysis-001",
+            "analysis_version": 1,
+            "revision": 1,
+            "decision": "pending_review",
+            "reason": null,
+            "evidence_reviews": [
+              {
+                "evidence_id": "fixture-text-demoB000001",
+                "state": "pending_review",
+                "note": null
+              }
+            ],
+            "updated_at": "2026-10-17T12:00:00-05:00",
+            "actor": "shared_demo_operator"
+          }
+        },
+        "operations_to_inspect": [
+          {
+            "operation_id": "fixture-analysis-operation-001",
+            "run_id": "fixture-run-001",
+            "analysis_id": "fixture-analysis-001",
+            "state": "uncertain",
+            "stage": "audiovisual",
+            "updated_at": "2026-10-17T12:00:00-05:00"
+          }
+        ],
+        "current_actions": [
+          "record_review"
+        ]
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/components/examples/RetainedAnalysisOperation",
+    "value": {
+      "summary": "SINTÉTICO — Detalle consultable de la operación incierta descubierta en la ficha.",
+      "description": "Ejemplo de propuesta FE para revisión BE/ALG; no es una consulta ni una decisión real. No usar como datos de demo.",
+      "x-schema": "OperationResponse",
+      "value": {
+        "meta": {
+          "contract_version": "0.1.0-draft.1",
+          "request_id": "fixture-request-001",
+          "served_at": "2026-10-17T12:00:00-05:00"
+        },
+        "data": {
+          "operation_id": "fixture-analysis-operation-001",
+          "run_id": "fixture-run-001",
+          "analysis_id": "fixture-analysis-001",
+          "stage": "audiovisual",
+          "item_id": "demoB000001",
+          "input_version": "fixture-rules-v1",
+          "state": "uncertain",
+          "requested_at": "2026-10-17T12:00:00-05:00",
+          "updated_at": "2026-10-17T12:00:00-05:00",
+          "reason": "Fixture de uncertain",
+          "last_checkpoint": null,
+          "run_revision": 2,
+          "analysis_version": 1,
+          "retry_policy": "manual_reconciliation_required",
+          "budget": {
+            "currency": "USD",
+            "incremental_limit": "20.00",
+            "state": "uncertain",
+            "reason": "Reserva retenida hasta reconciliar uso; no repetir automáticamente.",
+            "confirmed_new_charges": null,
+            "reserved": null,
+            "available_for_new_calls": null
+          }
+        }
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1api~1v1~1runs~1{run_id}~1analyses~1{analysis_id}/get/responses/200/content/application~1json/examples/AnalysisWithRetainedOperation",
+    "value": {
+      "$ref": "#/components/examples/AnalysisWithRetainedOperation"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1api~1v1~1runs~1{run_id}~1operations~1{operation_id}/get/responses/200/content/application~1json/examples/RetainedAnalysisOperation",
+    "value": {
+      "$ref": "#/components/examples/RetainedAnalysisOperation"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/components/examples/GroupsWithGenerationTrace",
+    "value": {
+      "summary": "SINTÉTICO — Propuesta muestra modelo/prompt/criterios de generación efectivos ilustrativos.",
+      "description": "Ejemplo de propuesta FE para revisión BE/ALG; no es una consulta ni una decisión real. No usar como datos de demo.",
+      "x-schema": "GroupsResponse",
+      "value": {
+        "meta": {
+          "contract_version": "0.1.0-draft.1",
+          "request_id": "fixture-request-001",
+          "served_at": "2026-10-17T12:00:00-05:00"
+        },
+        "data": {
+          "run_id": "fixture-run-001",
+          "stage": {
+            "state": "complete",
+            "reason": null
+          },
+          "proposal": {
+            "run_id": "fixture-run-001",
+            "groups_id": "fixture-groups-001",
+            "groups_version": 1,
+            "created_at": "2026-10-17T12:00:00-05:00",
+            "versions": {
+              "rules_version": "fixture-rules-v1",
+              "classification_version": "fixture-classification-v1",
+              "criteria_version": "fixture-criteria-v1"
+            },
+            "state": "proposed",
+            "input_windows": {
+              "timezone": "America/Bogota",
+              "previous": {
+                "start_inclusive": "2026-10-03T00:00:00-05:00",
+                "end_exclusive": "2026-10-10T00:00:00-05:00",
+                "days": 7
+              },
+              "recent": {
+                "start_inclusive": "2026-10-10T00:00:00-05:00",
+                "end_exclusive": "2026-10-17T00:00:00-05:00",
+                "days": 7
+              }
+            },
+            "topics": [
+              {
+                "topic_id": "fixture-topic-001",
+                "name": "Aplicación comercial de IA — fixture",
+                "description": "Tema ilustrativo, no pilar editorial.",
+                "variants": [
+                  "Variante ilustrativa"
+                ],
+                "equivalence_evidence_ids": [
+                  "fixture-text-demoA000001",
+                  "fixture-text-demoA000002",
+                  "fixture-text-demoB000001",
+                  "fixture-text-demoB000002",
+                  "fixture-text-demoB000003",
+                  "fixture-text-demoB000004"
+                ]
+              }
+            ],
+            "assignments": [
+              {
+                "video_id": "demoA000001",
+                "main_topic_id": "fixture-topic-001",
+                "secondary_topic_ids": [],
+                "evidence_ids": [
+                  "fixture-text-demoA000001"
+                ]
+              },
+              {
+                "video_id": "demoA000002",
+                "main_topic_id": "fixture-topic-001",
+                "secondary_topic_ids": [],
+                "evidence_ids": [
+                  "fixture-text-demoA000002"
+                ]
+              },
+              {
+                "video_id": "demoB000001",
+                "main_topic_id": "fixture-topic-001",
+                "secondary_topic_ids": [],
+                "evidence_ids": [
+                  "fixture-text-demoB000001"
+                ]
+              },
+              {
+                "video_id": "demoB000002",
+                "main_topic_id": "fixture-topic-001",
+                "secondary_topic_ids": [],
+                "evidence_ids": [
+                  "fixture-text-demoB000002"
+                ]
+              },
+              {
+                "video_id": "demoB000003",
+                "main_topic_id": "fixture-topic-001",
+                "secondary_topic_ids": [],
+                "evidence_ids": [
+                  "fixture-text-demoB000003"
+                ]
+              },
+              {
+                "video_id": "demoB000004",
+                "main_topic_id": "fixture-topic-001",
+                "secondary_topic_ids": [],
+                "evidence_ids": [
+                  "fixture-text-demoB000004"
+                ]
+              }
+            ],
+            "unresolved_video_ids": [],
+            "limitations": [],
+            "evidence": [
+              {
+                "evidence_id": "fixture-text-demoA000001",
+                "kind": "text",
+                "video_id": "demoA000001",
+                "dimension": "main_topic",
+                "source_url": "https://example.invalid/watch/demoA000001",
+                "field": "description",
+                "excerpt": "Fixture: explicación de una aplicación de IA a una tarea comercial.",
+                "captured_at": "2026-10-17T12:00:00-05:00"
+              },
+              {
+                "evidence_id": "fixture-text-demoA000002",
+                "kind": "text",
+                "video_id": "demoA000002",
+                "dimension": "main_topic",
+                "source_url": "https://example.invalid/watch/demoA000002",
+                "field": "description",
+                "excerpt": "Fixture: explicación de una aplicación de IA a una tarea comercial.",
+                "captured_at": "2026-10-17T12:00:00-05:00"
+              },
+              {
+                "evidence_id": "fixture-text-demoB000001",
+                "kind": "text",
+                "video_id": "demoB000001",
+                "dimension": "main_topic",
+                "source_url": "https://example.invalid/watch/demoB000001",
+                "field": "description",
+                "excerpt": "Fixture: explicación de una aplicación de IA a una tarea comercial.",
+                "captured_at": "2026-10-17T12:00:00-05:00"
+              },
+              {
+                "evidence_id": "fixture-text-demoB000002",
+                "kind": "text",
+                "video_id": "demoB000002",
+                "dimension": "main_topic",
+                "source_url": "https://example.invalid/watch/demoB000002",
+                "field": "description",
+                "excerpt": "Fixture: explicación de una aplicación de IA a una tarea comercial.",
+                "captured_at": "2026-10-17T12:00:00-05:00"
+              },
+              {
+                "evidence_id": "fixture-text-demoB000003",
+                "kind": "text",
+                "video_id": "demoB000003",
+                "dimension": "main_topic",
+                "source_url": "https://example.invalid/watch/demoB000003",
+                "field": "description",
+                "excerpt": "Fixture: explicación de una aplicación de IA a una tarea comercial.",
+                "captured_at": "2026-10-17T12:00:00-05:00"
+              },
+              {
+                "evidence_id": "fixture-text-demoB000004",
+                "kind": "text",
+                "video_id": "demoB000004",
+                "dimension": "main_topic",
+                "source_url": "https://example.invalid/watch/demoB000004",
+                "field": "description",
+                "excerpt": "Fixture: explicación de una aplicación de IA a una tarea comercial.",
+                "captured_at": "2026-10-17T12:00:00-05:00"
+              }
+            ],
+            "confirmation": null,
+            "generation_trace": [
+              {
+                "provider": "gemini",
+                "model": "fixture-grouping-model-observed",
+                "provider_request_id": null,
+                "prompt_or_question_version": "fixture-grouping-prompt-v1",
+                "criteria_version": "fixture-criteria-v1",
+                "processed_at": "2026-10-17T12:00:00-05:00",
+                "usage_report": null
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1api~1v1~1runs~1{run_id}~1groups/get/responses/200/content/application~1json/examples/GroupsWithGenerationTrace",
+    "value": {
+      "$ref": "#/components/examples/GroupsWithGenerationTrace"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/components/examples/JevFailureBeforeSend",
+    "value": {
+      "summary": "SINTÉTICO — Fallo previo al envío conserva intento sin inventar modelo o ID.",
+      "description": "Ejemplo de propuesta FE para revisión BE/ALG; no es una consulta ni una decisión real. No usar como datos de demo.",
+      "x-schema": "AiAssessment",
+      "value": {
+        "state": "failed",
+        "reason": "Fixture: validación de configuración falló antes del envío; no hubo decisión JEV.",
+        "decision": null,
+        "trace": {
+          "provider": "jev",
+          "submission_state": "not_sent",
+          "attempted_at": "2026-10-17T12:00:00-05:00",
+          "model": null,
+          "provider_request_id": null,
+          "question": null,
+          "input_text": null,
+          "raw_response_text": null,
+          "criteria_version": null,
+          "question_version": null
+        },
+        "evidence_ids": []
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/components/examples/JevFailureAfterSend",
+    "value": {
+      "summary": "SINTÉTICO — Respuesta perdida tras envío conserva entrada/versiones conocidas y decisión nula.",
+      "description": "Ejemplo de propuesta FE para revisión BE/ALG; no es una consulta ni una decisión real. No usar como datos de demo.",
+      "x-schema": "AiAssessment",
+      "value": {
+        "state": "uncertain",
+        "reason": "Fixture: envío confirmado y respuesta no disponible; conservar reserva y consultar operación.",
+        "decision": null,
+        "trace": {
+          "provider": "jev",
+          "submission_state": "sent",
+          "attempted_at": "2026-10-17T12:00:00-05:00",
+          "model": "fixture-jev-model-observed",
+          "provider_request_id": null,
+          "question": "Fixture: ¿la IA es central?",
+          "input_text": "Fixture: material que se preparó y envió, no una publicación recolectada.",
+          "raw_response_text": null,
+          "criteria_version": "fixture-criteria-v1",
+          "question_version": "fixture-question-v1"
+        },
+        "evidence_ids": []
+      }
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/components/examples/JevFailure/value/trace",
+    "value": {
+      "provider": "jev",
+      "submission_state": "sent",
+      "attempted_at": "2026-10-17T12:00:00-05:00",
+      "model": "fixture-jev-model-observed",
+      "provider_request_id": null,
+      "question": "Fixture: ¿la IA es central?",
+      "input_text": "Fixture: material que se preparó y envió, no una publicación recolectada.",
+      "raw_response_text": null,
+      "criteria_version": "fixture-criteria-v1",
+      "question_version": "fixture-question-v1"
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/components/examples/JevFailure/value/state",
+    "value": "uncertain"
+  },
+  {
+    "op": "replace",
+    "path": "/components/examples/JevFailure/value/reason",
+    "value": "Fixture: envío confirmado y respuesta no disponible; conservar reserva y consultar operación."
+  },
+  {
+    "op": "add",
+    "path": "/components/examples/AnalysisHistoricalReadOnly",
+    "value": {
+      "summary": "SINTÉTICO — Versión 1 histórica tras existir versión 2: resultados/revisión conservados y capacidades vacías.",
+      "description": "Ejemplo de propuesta FE para revisión BE/ALG; no es una consulta ni una decisión real. No usar como datos de demo.",
+      "x-schema": "AnalysisResponse",
+      "value": {
+        "meta": {
+          "contract_version": "0.1.0-draft.1",
+          "request_id": "fixture-request-001",
+          "served_at": "2026-10-17T12:00:00-05:00"
+        },
+        "data": {
+          "analysis_id": "fixture-analysis-001",
+          "analysis_version": 1,
+          "run_id": "fixture-run-001",
+          "created_at": "2026-10-17T12:00:00-05:00",
+          "version_created_at": "2026-10-17T12:00:00-05:00",
+          "publication": {
+            "run_id": "fixture-run-001",
+            "video_id": "demoB000001",
+            "capture_id": "fixture-capture-001",
+            "source_id": "c01",
+            "url": "https://example.invalid/watch/demoB000001",
+            "title": "Fixture de aplicación comercial de IA",
+            "description": "Fixture: una aplicación concreta de IA, sin afirmaciones reales.",
+            "published_at": "2026-10-14T10:00:00-05:00",
+            "captured_at": "2026-10-17T12:00:00-05:00",
+            "public_state": "confirmed_public",
+            "duration": {
+              "state": "known",
+              "seconds": 180,
+              "reason": null
+            },
+            "window": "recent",
+            "short_status": "candidate_short",
+            "short_evidence": null,
+            "eligibility": "eligible",
+            "eligibility_reason": "Fixture público de 180 s y pertinente; duración no confirma Short.",
+            "statistics": {
+              "views": {
+                "state": "known",
+                "value": "0",
+                "reason": null
+              },
+              "likes": {
+                "state": "unknown",
+                "value": null,
+                "reason": "Proveedor no informó esta métrica en el fixture."
+              },
+              "comments": {
+                "state": "unknown",
+                "value": null,
+                "reason": "Proveedor no informó esta métrica en el fixture."
+              }
+            },
+            "ai_relevance": {
+              "state": "decided",
+              "decision": "relevant",
+              "explanation": "Fixture: explicación separada de la decisión tipada.",
+              "explanation_source": "evidence_summary",
+              "evidence_ids": [
+                "fixture-text-demoB000001"
+              ],
+              "trace": {
+                "provider": "jev",
+                "model": "fixture-model-not-selected",
+                "provider_request_id": "fixture-provider-request",
+                "question": "Fixture: pregunta tipada pendiente de revisión de ALG.",
+                "input_text": "Fixture: material de prueba, no publicación recolectada.",
+                "raw_response_text": "{\"choice\": \"relevant\"}",
+                "criteria_version": "fixture-criteria-v1",
+                "question_version": "fixture-question-v1",
+                "decided_at": "2026-10-17T12:00:00-05:00",
+                "probabilities": null
+              }
+            },
+            "main_topic_id": "fixture-topic-001",
+            "secondary_topic_ids": [],
+            "evidence": [
+              {
+                "evidence_id": "fixture-text-demoB000001",
+                "kind": "text",
+                "video_id": "demoB000001",
+                "dimension": "main_topic",
+                "source_url": "https://example.invalid/watch/demoB000001",
+                "field": "description",
+                "excerpt": "Fixture: explicación de una aplicación de IA a una tarea comercial.",
+                "captured_at": "2026-10-17T12:00:00-05:00"
+              }
+            ]
+          },
+          "windows": {
+            "timezone": "America/Bogota",
+            "previous": {
+              "start_inclusive": "2026-10-03T00:00:00-05:00",
+              "end_exclusive": "2026-10-10T00:00:00-05:00",
+              "days": 7
+            },
+            "recent": {
+              "start_inclusive": "2026-10-10T00:00:00-05:00",
+              "end_exclusive": "2026-10-17T00:00:00-05:00",
+              "days": 7
+            }
+          },
+          "versions": {
+            "rules_version": "fixture-rules-v1",
+            "classification_version": "fixture-classification-v1",
+            "criteria_version": "fixture-criteria-v1"
+          },
+          "groups_id": "fixture-groups-001",
+          "groups_version": 1,
+          "signal": {
+            "state": "available",
+            "comparison_revision": 1,
+            "topic_id": "fixture-topic-001",
+            "signal": {
+              "kind": "comparable",
+              "direction": "increase",
+              "topic_id": "fixture-topic-001",
+              "groups_id": "fixture-groups-001",
+              "groups_version": 1,
+              "previous": {
+                "state": "known",
+                "total_count": 2,
+                "reason": null,
+                "observed_count": 2,
+                "video_ids": [
+                  "demoA000001",
+                  "demoA000002"
+                ],
+                "by_source": [
+                  {
+                    "source_id": "c01",
+                    "video_ids": [
+                      "demoA000001",
+                      "demoA000002"
+                    ],
+                    "observed_count": 2
+                  }
+                ]
+              },
+              "recent": {
+                "state": "known",
+                "total_count": 4,
+                "reason": null,
+                "observed_count": 4,
+                "video_ids": [
+                  "demoB000001",
+                  "demoB000002",
+                  "demoB000003",
+                  "demoB000004"
+                ],
+                "by_source": [
+                  {
+                    "source_id": "c01",
+                    "video_ids": [
+                      "demoB000001",
+                      "demoB000002",
+                      "demoB000003",
+                      "demoB000004"
+                    ],
+                    "observed_count": 4
+                  }
+                ]
+              },
+              "delta": 2,
+              "percentage_change": 100.0,
+              "percentage_reason": null
+            }
+          },
+          "performance": {
+            "state": "not_evaluable",
+            "reason": "Solo una captura de estadísticas; sin base de desempeño.",
+            "capture_id": "fixture-capture-001"
+          },
+          "material": [],
+          "audiovisual": {
+            "state": "failed",
+            "reason": "Fixture de timeout audiovisual; se conservan metadatos y señal."
+          },
+          "dimensions": [
+            {
+              "dimension": "format",
+              "stage": {
+                "state": "insufficient",
+                "reason": "No se observó el material audiovisual."
+              },
+              "description": null,
+              "evidence_ids": []
+            },
+            {
+              "dimension": "verbal_hook",
+              "stage": {
+                "state": "insufficient",
+                "reason": "No se observó el material audiovisual."
+              },
+              "description": null,
+              "evidence_ids": []
+            },
+            {
+              "dimension": "visual_hook",
+              "stage": {
+                "state": "insufficient",
+                "reason": "No se observó el material audiovisual."
+              },
+              "description": null,
+              "evidence_ids": []
+            },
+            {
+              "dimension": "audio_hook",
+              "stage": {
+                "state": "insufficient",
+                "reason": "No se observó el material audiovisual."
+              },
+              "description": null,
+              "evidence_ids": []
+            },
+            {
+              "dimension": "structure",
+              "stage": {
+                "state": "insufficient",
+                "reason": "No se observó el material audiovisual."
+              },
+              "description": null,
+              "evidence_ids": []
+            },
+            {
+              "dimension": "problem",
+              "stage": {
+                "state": "insufficient",
+                "reason": "No se observó el material audiovisual."
+              },
+              "description": null,
+              "evidence_ids": []
+            }
+          ],
+          "evidence": [
+            {
+              "evidence_id": "fixture-text-demoB000001",
+              "kind": "text",
+              "video_id": "demoB000001",
+              "dimension": "main_topic",
+              "source_url": "https://example.invalid/watch/demoB000001",
+              "field": "description",
+              "excerpt": "Fixture: explicación de una aplicación de IA a una tarea comercial.",
+              "captured_at": "2026-10-17T12:00:00-05:00"
+            }
+          ],
+          "problem_or_learning": null,
+          "value": {
+            "state": "not_requested",
+            "reason": "No solicitado en este ejemplo.",
+            "decision": null,
+            "trace": null,
+            "evidence_ids": []
+          },
+          "affinity": {
+            "persona": {
+              "state": "not_requested",
+              "reason": "No solicitado en este ejemplo.",
+              "decision": null,
+              "trace": null,
+              "evidence_ids": []
+            },
+            "company_context": {
+              "state": "not_requested",
+              "reason": "No solicitado en este ejemplo.",
+              "decision": null,
+              "trace": null,
+              "evidence_ids": []
+            },
+            "pillar": {
+              "state": "not_requested",
+              "reason": "No solicitado en este ejemplo.",
+              "decision": null,
+              "trace": null,
+              "evidence_ids": []
+            }
+          },
+          "hypotheses": [],
+          "adaptation": {
+            "stage": {
+              "state": "not_requested",
+              "reason": null
+            },
+            "angle": null,
+            "expected_contribution": null,
+            "proposed_hook": null,
+            "proposed_structure": [],
+            "proposed_cta": null,
+            "limitations": []
+          },
+          "model_uses": [],
+          "allowed_actions": [
+            "advance_analysis",
+            "record_review"
+          ],
+          "review": {
+            "review_id": "fixture-review-001",
+            "run_id": "fixture-run-001",
+            "analysis_id": "fixture-analysis-001",
+            "analysis_version": 1,
+            "revision": 1,
+            "decision": "pending_review",
+            "reason": null,
+            "evidence_reviews": [
+              {
+                "evidence_id": "fixture-text-demoB000001",
+                "state": "pending_review",
+                "note": null
+              }
+            ],
+            "updated_at": "2026-10-17T12:00:00-05:00",
+            "actor": "shared_demo_operator"
+          }
+        },
+        "operations_to_inspect": [],
+        "current_actions": []
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1api~1v1~1runs~1{run_id}~1analyses~1{analysis_id}/get/responses/200/content/application~1json/examples/AnalysisHistoricalReadOnly",
+    "value": {
+      "$ref": "#/components/examples/AnalysisHistoricalReadOnly"
+    }
+  }
+]
