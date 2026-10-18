@@ -11,17 +11,16 @@ function Navigation() {
         <Icon name="runs" />
         Ejecuciones
       </Link>
-      <span className={styles.unavailableLink} aria-disabled="true">
+      <a href="#comparacion">
         <Icon name="comparison" />
         Comparación temática
-      </span>
+      </a>
       <span className={styles.unavailableLink} aria-disabled="true">
         <Icon name="publications" />
         Publicaciones
       </span>
       <p className={styles.navHint}>
-        La comparación y las publicaciones se habilitan con una ejecución
-        disponible.
+        La comparación conserva el contexto de la ejecución seleccionada.
       </p>
     </nav>
   );

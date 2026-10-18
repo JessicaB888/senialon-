@@ -22,6 +22,37 @@ let created = false;
 let operation = null;
 let requests = [];
 let groupProposal = null;
+let comparison = null;
+
+function comparisonState() {
+  const value = example(
+    scenario === "comparison-partial"
+      ? "PartialComparison"
+      : "CompleteComparison",
+  ).data;
+  value.groups_id = groupProposal.groups_id;
+  value.groups_version = groupProposal.groups_version;
+  value.confirmation_id = groupProposal.confirmation?.confirmation_id ?? null;
+  value.limitations = [
+    "Escenario sintético de prueba de FE 1.6; no son resultados reales de SENIALON.",
+  ];
+  if (
+    scenario === "comparison-unconfirmed" ||
+    !["comparison-complete", "comparison-partial"].includes(scenario)
+  ) {
+    value.state =
+      scenario === "comparison-unconfirmed"
+        ? "groups_unconfirmed"
+        : "not_requested";
+    value.signals = [];
+    value.computed_at = null;
+    value.comparison_revision = null;
+  } else {
+    value.computed_at = "2026-10-17T12:30:00-05:00";
+    value.comparison_revision = revision;
+  }
+  return value;
+}
 
 function run(runId = "fixture-run-001") {
   const value = example("CreatedRun").data;
@@ -53,6 +84,24 @@ function run(runId = "fixture-run-001") {
         : scenario === "groups-pending"
           ? []
           : ["confirm_groups", "select_analysis"];
+  }
+  if (scenario.startsWith("comparison-")) {
+    value.current_stage = comparison?.computed_at
+      ? "idle"
+      : groupProposal.state === "confirmed"
+        ? "comparison"
+        : "awaiting_confirmation";
+    value.allowed_actions = comparison?.computed_at
+      ? ["select_analysis"]
+      : groupProposal.state === "confirmed"
+        ? ["advance_comparison", "select_analysis"]
+        : ["confirm_groups", "select_analysis"];
+    value.corpus.forEach((source) => {
+      source.resolution = { state: "complete", reason: null };
+      source.resolved_channel_id = "synthetic-" + source.source_id;
+    });
+    if (operation?.state === "succeeded")
+      value.last_checkpoint = operation.last_checkpoint;
   }
   if (operation && operation.state !== "succeeded") {
     value.allowed_actions = [];
@@ -91,7 +140,9 @@ function send(request, response, status, body) {
   value.meta = {
     contract_version: "1.0.0",
     request_id: identity,
-    served_at: "2026-10-17T12:00:00-05:00",
+    served_at: scenario.startsWith("comparison-")
+      ? "2026-10-18T10:00:00-05:00"
+      : "2026-10-17T12:00:00-05:00",
   };
   response.writeHead(status, {
     "Content-Type": "application/json",
@@ -131,6 +182,15 @@ const server = createServer(async (request, response) => {
               : "ProposedGroups",
           ).data.proposal
         : null;
+      comparison = null;
+      if (scenario.startsWith("comparison-")) {
+        groupProposal = example(
+          scenario === "comparison-unconfirmed"
+            ? "ProposedGroups"
+            : "ConfirmedGroups",
+        ).data.proposal;
+        comparison = comparisonState();
+      }
       if (scenario === "lost") operation = makeOperation("running");
       if (scenario === "uncertain")
         operation = makeOperation(
@@ -170,6 +230,7 @@ const server = createServer(async (request, response) => {
       request.method === "GET" &&
       (failReads === "all" ||
         (failReads === "groups" && url.pathname.endsWith("/groups")) ||
+        (failReads === "comparison" && url.pathname.endsWith("/comparison")) ||
         (failReads === "coverage" && url.pathname.endsWith("/coverage")))
     ) {
       send(request, response, 500, example("Error_INTERNAL_ERROR"));
@@ -214,6 +275,22 @@ const server = createServer(async (request, response) => {
         return;
       }
       if (segments[5] === "coverage" && request.method === "GET") {
+        if (
+          scenario.startsWith("comparison-") &&
+          scenario !== "comparison-partial"
+        ) {
+          const value = example("CompleteCoverage");
+          value.data.run_revision = revision;
+          value.data.cells.forEach((cell) => {
+            cell.discovered_video_ids = comparison.signals.flatMap((signal) =>
+              signal[cell.window].by_source
+                .filter((source) => source.source_id === cell.source_id)
+                .flatMap((source) => source.video_ids),
+            );
+          });
+          send(request, response, 200, value);
+          return;
+        }
         const value = example("PartialCoverage");
         value.data.run_id = runId;
         value.data.run_revision = revision;
@@ -221,6 +298,14 @@ const server = createServer(async (request, response) => {
           "Escenario sintético de prueba: c02/anterior no consultable.",
         ];
         send(request, response, 200, value);
+        return;
+      }
+      if (
+        segments[5] === "comparison" &&
+        request.method === "GET" &&
+        comparison
+      ) {
+        send(request, response, 200, { data: comparison });
         return;
       }
       if (segments[5] === "groups" && groupProposal) {
@@ -320,6 +405,61 @@ const server = createServer(async (request, response) => {
         return;
       }
       if (segments[5] === "advance" && request.method === "POST") {
+        if (scenario.startsWith("comparison-")) {
+          if (
+            body.target?.scope !== "comparison" ||
+            groupProposal.state !== "confirmed"
+          ) {
+            send(request, response, 409, example("Error_GROUPS_NOT_CONFIRMED"));
+            return;
+          }
+          const attempts = requests.filter(
+            (item) => item.method === "POST" && item.path.endsWith("/advance"),
+          );
+          revision++;
+          const state =
+            scenario === "comparison-uncertain"
+              ? "uncertain"
+              : scenario === "comparison-retry" && attempts.length === 1
+                ? "failed"
+                : "succeeded";
+          operation = makeOperation(
+            state,
+            state === "uncertain"
+              ? "manual_reconciliation_required"
+              : state === "failed"
+                ? "same_request_after_status_read"
+                : "none",
+          );
+          operation.stage = "comparison";
+          operation.item_id = groupProposal.groups_id;
+          operation.input_version = String(groupProposal.groups_version);
+          operation.last_checkpoint =
+            state === "succeeded"
+              ? {
+                  operation_id: operation.operation_id,
+                  stage: "comparison",
+                  item_id: operation.item_id,
+                  committed_at: "2026-10-17T12:30:00-05:00",
+                }
+              : null;
+          if (state === "succeeded") {
+            comparison = example("CompleteComparison").data;
+            comparison.comparison_revision = revision;
+            comparison.confirmation_id =
+              groupProposal.confirmation.confirmation_id;
+            comparison.computed_at = "2026-10-17T12:30:00-05:00";
+            comparison.limitations = [
+              "Escenario sintético de prueba de FE 1.6; no son resultados reales de SENIALON.",
+            ];
+          }
+          if (scenario === "comparison-lost") {
+            request.socket.destroy();
+            return;
+          }
+          send(request, response, 200, { data: operation });
+          return;
+        }
         revision++;
         if (scenario === "lost-after-send") {
           operation = makeOperation(
@@ -346,7 +486,10 @@ const server = createServer(async (request, response) => {
     response.end();
   }
 });
-server.listen(3341, "127.0.0.1");
+server.listen(
+  Number(process.env.SENIALON_SYNTHETIC_PORT ?? "3341"),
+  "127.0.0.1",
+);
 process.on("SIGTERM", () => {
   server.closeAllConnections();
   server.close();

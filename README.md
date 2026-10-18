@@ -37,6 +37,7 @@ Los logos actuales están en `branding/`. Las variantes disponibles son:
 - [Acceso compartido, BFF y pruebas Next–FastAPI — avance FE 1.3](frontend/ACCESO.md).
 - [Interfaz de ejecuciones, cobertura y recuperación — avance FE 1.4](frontend/EJECUCIONES.md).
 - [Inspección y confirmación de grupos — avance FE 1.5 y pendientes](frontend/GRUPOS.md).
+- [Comparación temática, respaldo por canal y recuperación — avance FE 1.6](frontend/COMPARACION.md).
 
 ## OpenSpec
 

@@ -2,9 +2,11 @@
 
 Base local verificable de la aplicación. Incluye App Router, TypeScript estricto, fuentes locales, estilos de `DESIGN.md`, logos Fluido y una pantalla inicial sin resultados de análisis. La recolección permanece deshabilitada hasta implementar sus operaciones.
 
-FE 1.1 añade [tipos generados y validación del contrato](CONTRATO_API.md). FE 1.3 implementa [acceso compartido y transporte autenticado](ACCESO.md), comprobados localmente entre Next y FastAPI. FE 1.4 incorpora [ejecuciones, cobertura y recuperación](EJECUCIONES.md): interfaz sobre el contrato, verificada con escenarios sintéticos mientras BE entrega las operaciones reales. La fuente única sigue en `docs/contracts/openapi.json`; el proyecto y despliegue de Vercel aún no existen.
+FE 1.1 añade [tipos generados y validación del contrato](CONTRATO_API.md). FE 1.3 implementa [acceso compartido y transporte autenticado](ACCESO.md), comprobados localmente entre Next y FastAPI. FE 1.4 incorpora [ejecuciones, cobertura y recuperación](EJECUCIONES.md): interfaz sobre el contrato, verificada con escenarios sintéticos. La fuente única sigue en `docs/contracts/openapi.json`. El usuario confirmó un proyecto Vercel Hobby de albcamargo con despliegue nativo desde `main`; la comprobación del recorrido protegido y de las operaciones reales sigue pendiente.
 
 FE 1.5 prepara [inspección y confirmación de grupos](GRUPOS.md), con versión/evidencia y recuperación sin reenvío automático. Conserva pendientes la integración real y la repetición de dos pruebas corregidas cuya ejecución fue rechazada. Las pruebas sintéticas no forman parte de la demo.
+
+FE 1.6 incorpora [comparación temática y respaldo por canal](COMPARACION.md), con conteos recibidos, cobertura parcial explícita y cálculo separado de las consultas. Se verificaron 431 pruebas unitarias y 8 pruebas nuevas de navegador exclusivas de comparación. El cierre integrado conserva pendiente el recorrido con servicios reales.
 
 ## Requisitos y arranque
 

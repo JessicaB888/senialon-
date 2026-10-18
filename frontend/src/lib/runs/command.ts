@@ -14,6 +14,14 @@ export type CommandReceipt = {
       groupsId: string;
       groupsVersion: number;
     }
+  | {
+      kind: "compare";
+      runId: string;
+      revision: number;
+      groupsId: string;
+      groupsVersion: number;
+      confirmationId: string;
+    }
 );
 
 // Only delivery metadata is stored. Run/results, credentials and budget remain
@@ -50,7 +58,9 @@ export function parseReceipt(text: string | null): CommandReceipt | null {
   if (value.kind === "create" && Object.keys(value).length === 5)
     return { ...base, kind: "create" };
   if (
-    (value.kind === "advance" || value.kind === "confirm_groups") &&
+    (value.kind === "advance" ||
+      value.kind === "confirm_groups" ||
+      value.kind === "compare") &&
     "runId" in value &&
     typeof value.runId === "string" &&
     value.runId.length > 0 &&
@@ -68,8 +78,8 @@ export function parseReceipt(text: string | null): CommandReceipt | null {
         revision: value.revision,
       };
     if (
-      value.kind === "confirm_groups" &&
-      Object.keys(value).length === 9 &&
+      (value.kind === "confirm_groups" || value.kind === "compare") &&
+      Object.keys(value).length === (value.kind === "compare" ? 10 : 9) &&
       "groupsId" in value &&
       typeof value.groupsId === "string" &&
       value.groupsId.length > 0 &&
@@ -78,7 +88,25 @@ export function parseReceipt(text: string | null): CommandReceipt | null {
       typeof value.groupsVersion === "number" &&
       Number.isSafeInteger(value.groupsVersion) &&
       value.groupsVersion > 0
-    )
+    ) {
+      if (value.kind === "compare") {
+        if (
+          !("confirmationId" in value) ||
+          typeof value.confirmationId !== "string" ||
+          !value.confirmationId.length ||
+          value.confirmationId.length > 128
+        )
+          throw new Error("Registro local no válido.");
+        return {
+          ...base,
+          kind: "compare",
+          runId: value.runId,
+          revision: value.revision,
+          groupsId: value.groupsId,
+          groupsVersion: value.groupsVersion,
+          confirmationId: value.confirmationId,
+        };
+      }
       return {
         ...base,
         kind: "confirm_groups",
@@ -87,6 +115,7 @@ export function parseReceipt(text: string | null): CommandReceipt | null {
         groupsId: value.groupsId,
         groupsVersion: value.groupsVersion,
       };
+    }
   }
   throw new Error("Registro local no válido.");
 }

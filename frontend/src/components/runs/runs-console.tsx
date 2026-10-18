@@ -19,6 +19,7 @@ import {
 } from "@/lib/runs/command";
 import { changedReceipt, useReceipt } from "@/lib/runs/use-receipt";
 import { GroupPanel } from "@/components/groups/group-panel";
+import { ComparisonPanel } from "@/components/comparison/comparison-panel";
 import { expectedCorpus, sourceLabel } from "@/lib/runs/corpus";
 import {
   canAdvance,
@@ -460,6 +461,14 @@ export function RunsConsole({
               await refreshRun();
             }}
           />
+          <ComparisonPanel
+            run={run}
+            disabled={!!busy || stale || navigating}
+            refreshContext={async () => {
+              setStale(true);
+              await refreshRun();
+            }}
+          />
           <section className={styles.advance} aria-labelledby="advance-title">
             <div>
               <h2 id="advance-title">Continuar desde el último paso</h2>
@@ -597,6 +606,19 @@ export function RunsConsole({
         </>
       ) : null}
 
+      {!run ? (
+        <section
+          id="comparacion"
+          className={styles.context}
+          aria-labelledby="comparison-empty-title"
+        >
+          <h2 id="comparison-empty-title">Comparación temática</h2>
+          <p className={styles.secondary}>
+            Selecciona una ejecución guardada para consultar sus grupos y su
+            comparación. Sin una ejecución no se presumen conteos ni resultados.
+          </p>
+        </section>
+      ) : null}
       <details className={styles.sources}>
         <summary>Ver los 11 canales previstos</summary>
         <p className={styles.secondary}>

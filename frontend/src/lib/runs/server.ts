@@ -16,6 +16,7 @@ type RunOperation = Extract<
   | "getOperation"
   | "getGroups"
   | "confirmGroups"
+  | "getComparison"
 >;
 type SuccessBody = {
   listRuns: Schema<"RunsResponse">;
@@ -26,6 +27,7 @@ type SuccessBody = {
   getOperation: Schema<"OperationResponse">;
   getGroups: Schema<"GroupsResponse">;
   confirmGroups: Schema<"GroupsResponse">;
+  getComparison: Schema<"ComparisonResponse">;
 };
 
 export function resourceSegment(id: string): string {

@@ -1,0 +1,181 @@
+.panel {
+  margin-top: var(--space-section);
+  padding-block: var(--space-panel);
+  border-block: 1px solid var(--color-border);
+  scroll-margin-top: var(--space-panel);
+  min-width: 0;
+}
+.panel > p,
+.results > p {
+  margin-top: var(--space-control);
+  max-width: 72ch;
+}
+.live {
+  min-height: 1.5em;
+  color: var(--color-text-secondary);
+  font-size: var(--text-small);
+}
+.state {
+  font-weight: 600;
+}
+.empty {
+  padding-block: var(--space-panel);
+  color: var(--color-text-secondary);
+}
+.hint {
+  font-size: var(--text-small);
+  color: var(--color-text-secondary);
+}
+.tableScroll {
+  margin-top: var(--space-medium);
+  overflow-x: auto;
+}
+.tableScroll table {
+  width: 100%;
+  min-width: 58rem;
+  border-collapse: collapse;
+  font-size: var(--text-small);
+}
+.tableScroll caption {
+  text-align: left;
+  padding-bottom: var(--space-medium);
+  color: var(--color-text-secondary);
+}
+.tableScroll th,
+.tableScroll td {
+  padding: var(--space-medium);
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--color-border);
+}
+.tableScroll thead th {
+  background: var(--color-surface-raised);
+  font-weight: 600;
+}
+.tableScroll th:first-child {
+  min-width: 12rem;
+}
+.tableScroll thead th:nth-child(2),
+.tableScroll thead th:nth-child(3) {
+  min-width: 13rem;
+}
+.tableScroll small {
+  display: block;
+  margin-top: var(--space-small);
+  font-weight: 400;
+  font-size: var(--text-small);
+  color: var(--color-text-secondary);
+}
+.tableScroll strong {
+  font-weight: 600;
+}
+.tableScroll .numeric {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.tableScroll .evidenceRow td {
+  padding-block: 0;
+}
+.panel summary {
+  cursor: pointer;
+  min-height: 44px;
+  align-content: center;
+  font-size: var(--text-small);
+}
+.panel summary:hover {
+  color: var(--color-primary-hover);
+}
+.evidenceRow details[open] {
+  padding-bottom: var(--space-medium);
+}
+.breakdown {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-panel);
+  margin-top: var(--space-medium);
+}
+.contributions {
+  min-width: 0;
+}
+.contributions h4 {
+  font-size: var(--text-small);
+  font-weight: 600;
+}
+.contributions p {
+  margin-top: var(--space-small);
+}
+.contributions ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.contributions > ul > li {
+  padding-block: var(--space-control);
+  border-bottom: 1px solid var(--color-border);
+}
+.contributions ul ul {
+  padding-left: var(--space-medium);
+}
+.contributions a,
+.results > p > a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+.contributions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.contributions a:hover,
+.results > p > a:hover {
+  color: var(--color-primary-hover);
+}
+.sourceHeading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-small) var(--space-medium);
+}
+.sourceHeading span {
+  color: var(--color-text-secondary);
+}
+.limitations {
+  padding-left: var(--space-panel);
+  margin-top: var(--space-medium);
+  color: var(--color-warning);
+}
+.provenance {
+  margin-block: var(--space-medium);
+}
+.provenance dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-medium);
+  margin-top: var(--space-medium);
+}
+.provenance dt {
+  color: var(--color-text-secondary);
+  font-size: var(--text-small);
+}
+.provenance dd {
+  margin: var(--space-small) 0 0;
+  overflow-wrap: anywhere;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-control);
+  margin-top: var(--space-panel);
+}
+@media (max-width: 767px) {
+  .actions > button {
+    width: 100%;
+  }
+  .breakdown,
+  .provenance dl {
+    grid-template-columns: 1fr;
+  }
+}
