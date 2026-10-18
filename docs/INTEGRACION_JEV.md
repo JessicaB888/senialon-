@@ -47,7 +47,7 @@ Seguir [backend/README.md](../backend/README.md) y completar su plantilla privad
 
 Las operaciones retenidas requieren conciliación administrativa antes de repetir su unidad; no se añade un endpoint ajeno al contrato ni se libera gasto automáticamente. La propuesta temática procesa el material disponible en una unidad: lotes grandes y evaluación real conservan sus pendientes. La aceptación del MVP completo, la UI futura de comparación/fichas y las pruebas reales en Vercel no se cierran por integrar estos módulos.
 
-La transferencia del repositorio y la nueva URL de Vercel siguen siendo acciones separadas pendientes de confirmación. Esta integración no publica ni hace push automáticamente.
+Actualización de despliegue: el usuario confirmó que albcamargo creó un proyecto Vercel Hobby conectado al repositorio original y compartió `https://corefex-psi.vercel.app`. Vercel despliega `main` por integración Git; [Actions conserva solo las comprobaciones](DESPLIEGUE_GITHUB_ACTIONS.md). La configuración de acceso, persistencia y proveedores reales conserva sus verificaciones pendientes; la URL no acredita el cierre de esas tareas.
 
 ## Referencias de compatibilidad
 

@@ -1,4 +1,4 @@
-name: SENIALON · producción en Vercel
+name: SENIALON · comprobaciones
 
 "on":
   push:
@@ -8,10 +8,10 @@ name: SENIALON · producción en Vercel
 permissions:
   contents: read
 
-# No interrumpir un despliegue enviado. GitHub conserva el último pendiente.
+# Solo comprobaciones: Vercel despliega main mediante su integración Git.
 concurrency:
-  group: senialon-vercel-production
-  cancel-in-progress: false
+  group: senialon-checks-${{ github.ref }}
+  cancel-in-progress: true
 
 defaults:
   run:
@@ -63,71 +63,3 @@ jobs:
         run: |
           uv sync --locked
           uv run --locked python -B -m pytest -q tests analysis/tests
-
-  deploy:
-    name: Desplegar main en tu proyecto Vercel
-    needs: verify
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    steps:
-      - name: Obtener el commit comprobado
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-
-      - name: Comprobar que el commit sigue siendo el último de main
-        id: current
-        run: |
-          current_sha="$(git ls-remote --exit-code origin refs/heads/main | cut -f1)"
-          if [[ "$current_sha" != "$GITHUB_SHA" ]]; then
-            echo 'deploy=false' >> "$GITHUB_OUTPUT"
-            echo 'Se omite este commit: main ya tiene una versión posterior.' >> "$GITHUB_STEP_SUMMARY"
-            exit 0
-          fi
-          echo 'deploy=true' >> "$GITHUB_OUTPUT"
-
-      - name: Comprobar configuración de despliegue
-        if: steps.current.outputs.deploy == 'true'
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: |
-          for variable in VERCEL_TOKEN VERCEL_ORG_ID VERCEL_PROJECT_ID; do
-            if [[ -z "${!variable:-}" ]]; then
-              printf '::error::Configura el secreto %s del repositorio antes de desplegar.\n' "$variable"
-              exit 1
-            fi
-          done
-
-      - name: Preparar Node de SENIALON
-        if: steps.current.outputs.deploy == 'true'
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
-        with:
-          node-version-file: frontend/.nvmrc
-          package-manager-cache: false
-
-      - name: Instalar la CLI verificada para Services
-        if: steps.current.outputs.deploy == 'true'
-        run: npm install --global vercel@64.5.0
-
-      - name: Recuperar configuración del proyecto existente
-        if: steps.current.outputs.deploy == 'true'
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
-
-      # El build remoto usa vercel.json y construye ambos servicios juntos.
-      - name: Desplegar el código desde la raíz
-        if: steps.current.outputs.deploy == 'true'
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: |
-          vercel deploy --prod --yes --token="$VERCEL_TOKEN" \
-            --meta "senialonCommit=$GITHUB_SHA" \
-            --meta "senialonWorkflowRun=$GITHUB_RUN_ID"
-          printf 'Despliegue confirmado por la CLI para el commit `%s`. La URL aparece en el paso de despliegue.\n' "$GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
