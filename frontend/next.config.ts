@@ -3,6 +3,8 @@ import type { NextConfig } from "next";
 const config: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
+  // Per-page defense in addition to the HTTP Basic challenge in proxy.ts.
+  experimental: { authInterrupts: true },
   async headers() {
     return [
       {

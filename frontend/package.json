@@ -15,6 +15,9 @@
     "contract:generate": "node scripts/generate-contract.mjs",
     "contract:check": "node scripts/generate-contract.mjs --check",
     "test": "vitest run",
+    "pretest:e2e": "node scripts/build-e2e.mjs",
+    "test:e2e": "playwright test",
+    "security:client": "node scripts/check-client-boundary.mjs",
     "test:types": "node scripts/check-contract-types.mjs",
     "lint": "eslint .",
     "format:check": "prettier --check .",
@@ -31,6 +34,7 @@
     "server-only": "0.0.1"
   },
   "devDependencies": {
+    "@playwright/test": "1.63.0",
     "@types/node": "24.13.6",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",

@@ -68,8 +68,9 @@ function project(value) {
 }
 
 const responses = {};
-for (const methods of Object.values(document.paths)) {
-  for (const operation of Object.values(methods)) {
+const requests = {};
+for (const [path, methods] of Object.entries(document.paths)) {
+  for (const [method, operation] of Object.entries(methods)) {
     if (!operation || !Object.hasOwn(operation, "operationId")) continue;
     if (Object.hasOwn(responses, operation.operationId)) {
       throw new Error("operationId duplicado en el contrato.");
@@ -85,6 +86,44 @@ for (const methods of Object.values(document.paths)) {
         return [status, definitionName(ref)];
       }),
     );
+    const properties = {};
+    for (const location of ["path", "query", "header"]) {
+      const parameters = (operation.parameters ?? []).filter(
+        (item) => item.in === location,
+      );
+      properties[location] = {
+        type: "object",
+        additionalProperties: false,
+        required: parameters
+          .filter((item) => item.required)
+          .map((item) =>
+            location === "header" ? item.name.toLowerCase() : item.name,
+          ),
+        properties: Object.fromEntries(
+          parameters.map((item) => [
+            location === "header" ? item.name.toLowerCase() : item.name,
+            project(item.schema),
+          ]),
+        ),
+      };
+    }
+    const required = ["path", "query", "header"];
+    if (operation.requestBody) {
+      const body = operation.requestBody.content?.["application/json"]?.schema;
+      definitionName(body?.$ref);
+      properties.body = project(body);
+      if (operation.requestBody.required) required.push("body");
+    }
+    requests[operation.operationId] = {
+      method: method.toUpperCase(),
+      path,
+      schema: {
+        type: "object",
+        additionalProperties: false,
+        required,
+        properties,
+      },
+    };
   }
 }
 
@@ -93,6 +132,7 @@ const data = {
   version: document.info.version,
   sha256,
   responses,
+  requests,
   schema: {
     $id: "urn:senialon:frontend:contract",
     $schema: dialect,

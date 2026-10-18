@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { Workspace } from "@/components/workspace";
+import { requirePageAccess } from "@/lib/auth/page-access";
 
-export default function NotFound() {
+export default async function NotFound() {
+  await requirePageAccess();
   return (
     <Workspace>
       <h1>No encontramos esta página</h1>

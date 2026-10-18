@@ -2,6 +2,8 @@
 
 **Estado:** ambos hitos de FE 1.1 completos: [revisión documental](../docs/REVISION_CONTRATO_FRONTEND.md) y consumidor técnico local. **Fecha:** 18 de octubre de 2026, America/Bogota. El transporte HTTP, el acceso compartido y la conexión con FastAPI se implementan después, en FE 1.3 con BE 3.3/3.6.
 
+**Implementación posterior FE 1.3:** acceso y transporte ya comprobados localmente en [ACCESO.md](ACCESO.md). El generador añade métodos/paths y esquemas de entrada derivados para validar requests; conserva los 94 esquemas canónicos, tipos, versión y hash de fuente. La validación de este módulo continúa sin realizar llamadas HTTP. El despliegue sigue pendiente.
+
 La única autoridad sigue siendo [`docs/contracts/openapi.json`](../docs/contracts/openapi.json), versión **1.0.0**, SHA-256 **`d7e0b018263658e686da00997ddffbd19ba96e6e73de5b08e3f8917b95375956`**. Esta tarea no modifica el contrato ni introduce rutas, campos o enums de API.
 
 ## Archivos y regeneración
@@ -85,6 +87,6 @@ La prueba inicial de nota de evidencia se corrigió para distinguir una revisió
 
 La validación de esquemas no prueba sumas entre entidades, fórmulas, correspondencia general de IDs/versiones, cobertura real, autorización, persistencia ni fidelidad audiovisual. Esas invariantes siguen perteneciendo a ALG/BE y a las pruebas integradas. La matriz comprueba el esquema de cada respuesta; no sustituye la política del servidor para elegir el código HTTP/error apropiado.
 
-FE 1.3 conectará este consumidor a Route Handlers protegidos y al binding autenticado. Debe comprobar credencial, origen y cabeceras privadas/versionadas; tratar un `ContractResponseError` sin exponer el cuerpo recibido y sin reintentar consumos. No usar un cast `as` sobre JSON sin validar. Ninguna función de este módulo hace llamadas, recolección, pagos, guardados o reintentos.
+FE 1.3 conecta este consumidor a Route Handlers protegidos y al binding autenticado; su [evidencia local](ACCESO.md) comprueba credencial, origen y cabeceras privadas/versionadas y trata `ContractResponseError` sin exponer el cuerpo recibido ni reintentar consumos. No usar un cast `as` sobre JSON sin validar. Ninguna función del módulo de validación hace llamadas, recolección, pagos, guardados o reintentos.
 
-BE 3.2 sigue pendiente de verificar las cuentas antes de pruebas pagadas. El código y los tests de esta entrega no consumieron APIs del producto. La suite E2E protegida y el cierre de FE 1.10 permanecen pendientes.
+BE 3.2 sigue pendiente de verificar las cuentas antes de pruebas pagadas. El código y los tests de esta entrega no consumieron APIs del producto. FE 1.3 incorpora nueve pruebas del acceso protegido local; el recorrido editorial completo, el despliegue y el cierre de FE 1.10 permanecen pendientes.

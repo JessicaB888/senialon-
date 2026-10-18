@@ -171,6 +171,668 @@
       "503": "ErrorResponse"
     }
   },
+  "requests": {
+    "getCapabilities": {
+      "method": "GET",
+      "path": "/api/v1/meta",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "query", "header"],
+        "properties": {
+          "path": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          },
+          "query": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          },
+          "header": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          }
+        }
+      }
+    },
+    "listRuns": {
+      "method": "GET",
+      "path": "/api/v1/runs",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "query", "header"],
+        "properties": {
+          "path": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          },
+          "query": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {
+              "cursor": { "type": "string", "minLength": 1, "maxLength": 128 },
+              "limit": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20
+              }
+            }
+          },
+          "header": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          }
+        }
+      }
+    },
+    "createRun": {
+      "method": "POST",
+      "path": "/api/v1/runs",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "query", "header", "body"],
+        "properties": {
+          "path": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          },
+          "query": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          },
+          "header": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["idempotency-key", "origin"],
+            "properties": {
+              "idempotency-key": {
+                "type": "string",
+                "minLength": 16,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9._:-]+$"
+              },
+              "origin": { "type": "string", "format": "uri" }
+            }
+          },
+          "body": { "$ref": "#/$defs/CreateRunRequest" }
+        }
+      }
+    },
+    "getRun": {
+      "method": "GET",
+      "path": "/api/v1/runs/{run_id}",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "query", "header"],
+        "properties": {
+          "path": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["run_id"],
+            "properties": {
+              "run_id": { "type": "string", "minLength": 1, "maxLength": 128 }
+            }
+          },
+          "query": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          },
+          "header": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          }
+        }
+      }
+    },
+    "getCoverage": {
+      "method": "GET",
+      "path": "/api/v1/runs/{run_id}/coverage",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "query", "header"],
+        "properties": {
+          "path": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["run_id"],
+            "properties": {
+              "run_id": { "type": "string", "minLength": 1, "maxLength": 128 }
+            }
+          },
+          "query": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          },
+          "header": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          }
+        }
+      }
+    },
+    "listEligibleVideos": {
+      "method": "GET",
+      "path": "/api/v1/runs/{run_id}/videos",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "query", "header"],
+        "properties": {
+          "path": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["run_id"],
+            "properties": {
+              "run_id": { "type": "string", "minLength": 1, "maxLength": 128 }
+            }
+          },
+          "query": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {
+              "cursor": { "type": "string", "minLength": 1, "maxLength": 128 },
+              "limit": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20
+              }
+            }
+          },
+          "header": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          }
+        }
+      }
+    },
+    "getVideo": {
+      "method": "GET",
+      "path": "/api/v1/runs/{run_id}/videos/{video_id}",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "query", "header"],
+        "properties": {
+          "path": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["run_id", "video_id"],
+            "properties": {
+              "run_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+              "video_id": { "$ref": "#/$defs/VideoId" }
+            }
+          },
+          "query": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          },
+          "header": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          }
+        }
+      }
+    },
+    "advanceRun": {
+      "method": "POST",
+      "path": "/api/v1/runs/{run_id}/advance",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "query", "header", "body"],
+        "properties": {
+          "path": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["run_id"],
+            "properties": {
+              "run_id": { "type": "string", "minLength": 1, "maxLength": 128 }
+            }
+          },
+          "query": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          },
+          "header": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["idempotency-key", "origin"],
+            "properties": {
+              "idempotency-key": {
+                "type": "string",
+                "minLength": 16,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9._:-]+$"
+              },
+              "origin": { "type": "string", "format": "uri" }
+            }
+          },
+          "body": { "$ref": "#/$defs/AdvanceRequest" }
+        }
+      }
+    },
+    "getOperation": {
+      "method": "GET",
+      "path": "/api/v1/runs/{run_id}/operations/{operation_id}",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "query", "header"],
+        "properties": {
+          "path": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["run_id", "operation_id"],
+            "properties": {
+              "run_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+              "operation_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            }
+          },
+          "query": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          },
+          "header": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          }
+        }
+      }
+    },
+    "getGroups": {
+      "method": "GET",
+      "path": "/api/v1/runs/{run_id}/groups",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "query", "header"],
+        "properties": {
+          "path": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["run_id"],
+            "properties": {
+              "run_id": { "type": "string", "minLength": 1, "maxLength": 128 }
+            }
+          },
+          "query": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          },
+          "header": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          }
+        }
+      }
+    },
+    "confirmGroups": {
+      "method": "POST",
+      "path": "/api/v1/runs/{run_id}/groups/confirmation",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "query", "header", "body"],
+        "properties": {
+          "path": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["run_id"],
+            "properties": {
+              "run_id": { "type": "string", "minLength": 1, "maxLength": 128 }
+            }
+          },
+          "query": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          },
+          "header": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["idempotency-key", "origin"],
+            "properties": {
+              "idempotency-key": {
+                "type": "string",
+                "minLength": 16,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9._:-]+$"
+              },
+              "origin": { "type": "string", "format": "uri" }
+            }
+          },
+          "body": { "$ref": "#/$defs/ConfirmGroupsRequest" }
+        }
+      }
+    },
+    "getComparison": {
+      "method": "GET",
+      "path": "/api/v1/runs/{run_id}/comparison",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "query", "header"],
+        "properties": {
+          "path": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["run_id"],
+            "properties": {
+              "run_id": { "type": "string", "minLength": 1, "maxLength": 128 }
+            }
+          },
+          "query": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          },
+          "header": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          }
+        }
+      }
+    },
+    "listAnalyses": {
+      "method": "GET",
+      "path": "/api/v1/runs/{run_id}/analyses",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "query", "header"],
+        "properties": {
+          "path": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["run_id"],
+            "properties": {
+              "run_id": { "type": "string", "minLength": 1, "maxLength": 128 }
+            }
+          },
+          "query": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {
+              "cursor": { "type": "string", "minLength": 1, "maxLength": 128 },
+              "limit": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20
+              }
+            }
+          },
+          "header": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          }
+        }
+      }
+    },
+    "selectAnalysis": {
+      "method": "POST",
+      "path": "/api/v1/runs/{run_id}/analyses",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "query", "header", "body"],
+        "properties": {
+          "path": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["run_id"],
+            "properties": {
+              "run_id": { "type": "string", "minLength": 1, "maxLength": 128 }
+            }
+          },
+          "query": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          },
+          "header": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["idempotency-key", "origin"],
+            "properties": {
+              "idempotency-key": {
+                "type": "string",
+                "minLength": 16,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9._:-]+$"
+              },
+              "origin": { "type": "string", "format": "uri" }
+            }
+          },
+          "body": { "$ref": "#/$defs/SelectAnalysisRequest" }
+        }
+      }
+    },
+    "getAnalysis": {
+      "method": "GET",
+      "path": "/api/v1/runs/{run_id}/analyses/{analysis_id}",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "query", "header"],
+        "properties": {
+          "path": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["run_id", "analysis_id"],
+            "properties": {
+              "run_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+              "analysis_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            }
+          },
+          "query": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {
+              "analysis_version": { "type": "integer", "minimum": 1 }
+            }
+          },
+          "header": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          }
+        }
+      }
+    },
+    "getReview": {
+      "method": "GET",
+      "path": "/api/v1/runs/{run_id}/analyses/{analysis_id}/review",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "query", "header"],
+        "properties": {
+          "path": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["run_id", "analysis_id"],
+            "properties": {
+              "run_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+              "analysis_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            }
+          },
+          "query": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {
+              "analysis_version": { "type": "integer", "minimum": 1 }
+            }
+          },
+          "header": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          }
+        }
+      }
+    },
+    "recordReview": {
+      "method": "PUT",
+      "path": "/api/v1/runs/{run_id}/analyses/{analysis_id}/review",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "query", "header", "body"],
+        "properties": {
+          "path": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["run_id", "analysis_id"],
+            "properties": {
+              "run_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+              "analysis_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            }
+          },
+          "query": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          },
+          "header": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["idempotency-key", "origin"],
+            "properties": {
+              "idempotency-key": {
+                "type": "string",
+                "minLength": 16,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9._:-]+$"
+              },
+              "origin": { "type": "string", "format": "uri" }
+            }
+          },
+          "body": { "$ref": "#/$defs/ReviewRequest" }
+        }
+      }
+    },
+    "exportNotion": {
+      "method": "POST",
+      "path": "/api/v1/runs/{run_id}/analyses/{analysis_id}/notion-export",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "query", "header", "body"],
+        "properties": {
+          "path": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["run_id", "analysis_id"],
+            "properties": {
+              "run_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+              "analysis_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            }
+          },
+          "query": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {}
+          },
+          "header": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["idempotency-key", "origin"],
+            "properties": {
+              "idempotency-key": {
+                "type": "string",
+                "minLength": 16,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9._:-]+$"
+              },
+              "origin": { "type": "string", "format": "uri" }
+            }
+          },
+          "body": { "$ref": "#/$defs/NotionExportRequest" }
+        }
+      }
+    }
+  },
   "schema": {
     "$id": "urn:senialon:frontend:contract",
     "$schema": "https://json-schema.org/draft/2020-12/schema",

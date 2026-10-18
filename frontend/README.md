@@ -2,7 +2,7 @@
 
 Base local verificable de la aplicación. Incluye App Router, TypeScript estricto, fuentes locales, estilos de `DESIGN.md`, logos Fluido y una pantalla inicial sin resultados de análisis. La recolección permanece deshabilitada hasta implementar sus operaciones.
 
-FE 1.1 añade [tipos generados y validación del contrato](CONTRATO_API.md), con pruebas Vitest locales. La fuente única sigue en `docs/contracts/openapi.json`; el transporte autenticado se implementará en FE 1.3.
+FE 1.1 añade [tipos generados y validación del contrato](CONTRATO_API.md). FE 1.3 implementa [acceso compartido y transporte autenticado](ACCESO.md), comprobados localmente entre Next y FastAPI. La fuente única sigue en `docs/contracts/openapi.json`; el proyecto y despliegue de Vercel aún no existen.
 
 ## Requisitos y arranque
 
@@ -15,6 +15,7 @@ Desde la raíz del repositorio:
 ```sh
 cd frontend
 npm ci
+cp -n .env.example .env.local
 npm run dev
 ```
 
@@ -25,26 +26,26 @@ npm run build
 npm run start -- --hostname 127.0.0.1 --port 3100
 ```
 
-Abrir `http://127.0.0.1:3100`. Estos comandos no necesitan credenciales, una base de datos ni llamadas a proveedores. No ejecutan análisis ni generan cargos de APIs.
+Completar las tres variables de servidor antes de entrar; sin configuración válida, el acceso queda cerrado. El build no necesita credenciales, base de datos o llamadas a proveedores. Para el recorrido conectado, usar Services y el mismo entorno en ambos servidores según [ACCESO.md](ACCESO.md). No se ejecutan análisis desde lecturas.
 
 ## Entrega a Backend / BE 3.3
 
-| Propiedad                         | Valor entregado                                     |
-| --------------------------------- | --------------------------------------------------- |
-| Directorio del servicio           | `frontend/`                                         |
-| Instalación                       | `npm ci`                                            |
-| Desarrollo local                  | `npm run dev`                                       |
-| Build                             | `npm run build`                                     |
-| Arranque de producción local      | `npm run start -- --hostname 127.0.0.1 --port 3100` |
-| Framework                         | Next.js / App Router                                |
-| Variables necesarias en esta base | Ninguna                                             |
-| Artefactos generados              | `.next/`, excluido de Git                           |
+| Propiedad                        | Valor entregado                                                                                    |
+| -------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Directorio del servicio          | `frontend/`                                                                                        |
+| Instalación                      | `npm ci`                                                                                           |
+| Desarrollo local                 | `npm run dev`                                                                                      |
+| Build                            | `npm run build`                                                                                    |
+| Arranque de producción local     | `npm run start -- --hostname 127.0.0.1 --port 3100`                                                |
+| Framework                        | Next.js / App Router                                                                               |
+| Variables necesarias al ejecutar | `DEMO_USERNAME`, `DEMO_PASSWORD`, `DEMO_ALLOWED_ORIGIN`; binding generado para conectar con Python |
+| Artefactos generados             | `.next/`, excluido de Git                                                                          |
 
 El build ejecuta `contract:check` antes de Next. Su contexto debe incluir `../docs/contracts/openapi.json`; mantener el checkout completo al configurar BE 3.3.
 
-La configuración de Vercel Services, su binding y el primer despliegue corresponden a BE 3.3. FE 1.3 implementará el acceso y el cliente del contrato [OpenAPI 1.0.0](../docs/contracts/README.md). Los nombres ya acordados para ese paso están en `.env.example`: `DEMO_USERNAME`, `DEMO_PASSWORD` y `DEMO_ALLOWED_ORIGIN`, solo de servidor y sin valores. Ninguno se consume todavía. El binding se acordará con BE; no se inventa una URL pública para Python ni una variable `NEXT_PUBLIC_*` para secretos.
+La configuración de Vercel Services, su binding y el primer despliegue corresponden a BE 3.3. FE 1.3 usa `SENIALON_BACKEND_URL` generado y el contrato [OpenAPI 1.0.0](../docs/contracts/README.md). Las tres variables de `.env.example` son de servidor y deben coincidir con FastAPI; no se incluyen valores ni se usa `NEXT_PUBLIC_*` para secretos. [Entrega y pruebas](ACCESO.md).
 
-Esta base todavía no autentica peticiones. Su revisión se realiza localmente; el despliegue accesible a otras personas requiere FE 1.3 y BE 3.6. Los documentos privados tendrán renderizado por solicitud y `Cache-Control: private, no-store`; esto no sustituye la autenticación.
+La base autentica páginas y Route Handlers y conserva comprobaciones independientes en Python. Las páginas privadas renderizan por solicitud; API privada sin caché compartida. La URL accesible a otras personas sigue pendiente: aún no existe proyecto Vercel y se requiere cerrar las verificaciones de FE 1.3/BE 3.3/3.6.
 
 ## Sistema visual y activos
 
@@ -64,10 +65,12 @@ npm run typecheck
 npm run lint
 npm run format:check
 npm run build
+npm run security:client
+npm run test:e2e
 npm audit --omit=dev
 ```
 
-La evidencia de la base visual está en [VERIFICACION.md](VERIFICACION.md) y la del consumidor en [CONTRATO_API.md](CONTRATO_API.md). Vitest 5.0.1 comprueba el consumo local; Playwright para el recorrido protegido y el cierre de FE 1.10 siguen pendientes. Las pruebas locales no acreditan integración o persistencia.
+La evidencia visual está en [VERIFICACION.md](VERIFICACION.md), la del consumidor en [CONTRATO_API.md](CONTRATO_API.md) y la de acceso/transporte en [ACCESO.md](ACCESO.md). Playwright 1.63.0 comprueba el acceso protegido local; el recorrido editorial completo y el cierre de FE 1.10 siguen pendientes. Estas pruebas no acreditan despliegue, persistencia o proveedores operativos.
 
 ## Parche de seguridad del stack de referencia
 

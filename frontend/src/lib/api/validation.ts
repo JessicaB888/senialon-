@@ -20,6 +20,28 @@ addFormats(ajv, { mode: "full" });
 ajv.addKeyword({ keyword: "discriminator", schemaType: "object", valid: true });
 ajv.addSchema(contract.schema);
 
+// These are derived HTTP envelopes, compiled once; no request data is retained.
+const requestValidators = new Map(
+  Object.entries(contract.requests).map(([name, definition]) => [
+    name,
+    ajv.compile({
+      $schema: contract.schema.$schema,
+      $defs: contract.schema.$defs,
+      ...definition.schema,
+    }),
+  ]),
+);
+
+export function validateTransportRequest(
+  operation: OperationId,
+  value: unknown,
+): void {
+  const validate = requestValidators.get(operation);
+  if (!validate || !validate(value)) {
+    throw new ContractResponseError("schema_mismatch");
+  }
+}
+
 export const contractIdentity = Object.freeze({
   version: contract.version,
   sha256: contract.sha256,

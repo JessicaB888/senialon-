@@ -1,5 +1,6 @@
 import { Icon } from "@/components/icon";
 import { Workspace } from "@/components/workspace";
+import { requirePageAccess } from "@/lib/auth/page-access";
 import styles from "./page.module.css";
 
 // Fixed, user-confirmed source URLs. This is configuration, not fetched results.
@@ -17,7 +18,8 @@ const corpus = [
   "https://www.youtube.com/channel/UChugFTK0KyrES9terTid8vA",
 ] as const;
 
-export default function Home() {
+export default async function Home() {
+  await requirePageAccess();
   return (
     <Workspace>
       <div className={styles.heading}>

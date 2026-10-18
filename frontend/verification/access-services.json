@@ -1,0 +1,71 @@
+{
+  "label": "VERIFICACIÓN TÉCNICA LOCAL CON CREDENCIAL SINTÉTICA; NO ES UNA EJECUCIÓN DE ANÁLISIS",
+  "checked_at": "2026-10-18T06:09:32.348Z",
+  "mode": "vercel dev -L; Route Handler Next → binding generado → FastAPI",
+  "contract_version": "1.0.0",
+  "contract_sha256": "d7e0b018263658e686da00997ddffbd19ba96e6e73de5b08e3f8917b95375956",
+  "deployed": false,
+  "provider_calls": false,
+  "results": [
+    {
+      "path": "/",
+      "method": "GET",
+      "authenticated": false,
+      "expected_status": 401,
+      "actual_status": 401,
+      "schema": null,
+      "content_type": "text/plain; charset=utf-8",
+      "passed": true
+    },
+    {
+      "path": "/api/v1/meta",
+      "method": "GET",
+      "authenticated": false,
+      "expected_status": 401,
+      "actual_status": 401,
+      "schema": "ErrorResponse",
+      "content_type": "application/json",
+      "passed": true
+    },
+    {
+      "path": "/",
+      "method": "GET",
+      "authenticated": true,
+      "expected_status": 200,
+      "actual_status": 200,
+      "schema": null,
+      "content_type": "text/html; charset=utf-8",
+      "passed": true
+    },
+    {
+      "path": "/api/v1/meta",
+      "method": "GET",
+      "authenticated": true,
+      "expected_status": 200,
+      "actual_status": 200,
+      "schema": "CapabilitiesResponse",
+      "content_type": "application/json",
+      "passed": true
+    },
+    {
+      "path": "/backend/api/v1/meta",
+      "method": "GET",
+      "authenticated": true,
+      "expected_status": 404,
+      "actual_status": 404,
+      "schema": null,
+      "content_type": "text/html; charset=utf-8",
+      "passed": true
+    },
+    {
+      "path": "/api/v1/runs",
+      "method": "POST",
+      "authenticated": true,
+      "expected_status": 403,
+      "actual_status": 403,
+      "schema": "ErrorResponse",
+      "content_type": "application/json",
+      "passed": true
+    }
+  ]
+}
