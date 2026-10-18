@@ -1,0 +1,363 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "SENIALON Backend API (Draft)",
+    "version": "0.1.0",
+    "description": "Borrador del contrato JSON/API del backend SENIALON.\nObjetivos principales: exponer ejecuciones (runs), adquisición de publicaciones,\ncobertura por canal y ventana, propuestas de grupos (ALG), confirmación por el operador (FE),\nseñales temporales (conteos/diferencias/porcentajes), operaciones de análisis profundo (Gemini/JEV)\ny registro de evidencias. Todas las rutas protegidas por la credencial de demo compartida."
+  },
+  "servers": [
+    {
+      "url": "https://{host}/api",
+      "variables": {
+        "host": {
+          "default": "example.com"
+        }
+      }
+    }
+  ],
+  "tags": [
+    { "name": "health" },
+    { "name": "executions" },
+    { "name": "acquisition" },
+    { "name": "groups" },
+    { "name": "signals" },
+    { "name": "videos" },
+    { "name": "notion" }
+  ],
+  "components": {
+    "securitySchemes": {
+      "DemoApiKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-DEMO-CRED",
+        "description": "Credencial de demo compartida (usar en todas las llamadas autenticadas)."
+      }
+    },
+    "schemas": {
+      "ErrorResponse": {
+        "type": "object",
+        "required": ["code", "message"],
+        "properties": {
+          "code": { "type": "string", "description": "Código interno de error (machine-readable)." },
+          "message": { "type": "string", "description": "Mensaje legible para humanos." },
+          "details": { "type": "object", "description": "Campos opcionales con información adicional (ej. validation errors)." },
+          "trace_id": { "type": "string", "description": "Trace ID para correlación (opcional)." }
+        }
+      },
+      "Window": {
+        "type": "object",
+        "required": ["start", "end", "label", "timezone"],
+        "properties": {
+          "start": { "type": "string", "format": "date-time", "description": "Inicio inclusive (ISO 8601)." },
+          "end": { "type": "string", "format": "date-time", "description": "Fin exclusive (ISO 8601)." },
+          "label": { "type": "string", "description": "Etiqueta humana de la ventana (ej. 'previous_week')." },
+          "timezone": { "type": "string", "example": "America/Bogota" }
+        }
+      },
+      "Execution": {
+        "type": "object",
+        "required": ["id", "status", "created_at", "reference_time", "windows"],
+        "properties": {
+          "id": { "type": "string", "description": "UUID de ejecución." },
+          "status": { "type": "string", "enum": ["pending", "acquiring", "acquired", "groups_proposed", "confirmed", "completed", "error"] },
+          "created_at": { "type": "string", "format": "date-time" },
+          "reference_time": { "type": "string", "format": "date-time", "description": "Instante usado para calcular las ventanas (determinista)." },
+          "windows": { "type": "array", "items": { "$ref": "#/components/schemas/Window" } },
+          "channels": { "type": "array", "items": { "$ref": "#/components/schemas/Channel" } },
+          "metadata": { "type": "object", "description": "Campos libres para trazabilidad (por ejemplo: triggered_by).", "properties": { "trace_id": { "type": "string" } } },
+          "trace_id": { "type": "string", "description": "Trace ID para correlación (opcional)." }
+        }
+      },
+      "Channel": {
+        "type": "object",
+        "required": ["id", "url"],
+        "properties": {
+          "id": { "type": "string", "description": "ID interno del canal (ordenado por la definición del MVP)." },
+          "url": { "type": "string", "format": "uri" },
+          "title": { "type": "string" },
+          "resolved": { "type": "boolean", "description": "Si la URL ya fue resuelta con éxito a un canal público." }
+        }
+      },
+      "ChannelCoverage": {
+        "type": "object",
+        "required": ["channel_id", "window_label"],
+        "properties": {
+          "channel_id": { "type": "string" },
+          "window_label": { "type": "string" },
+          "retrieved": { "type": "boolean" },
+          "item_count": { "type": "integer" },
+          "errors": { "type": "array", "items": { "$ref": "#/components/schemas/ErrorResponse" } }
+        }
+      },
+      "VideoMeta": {
+        "type": "object",
+        "required": ["video_id", "channel_id", "published_at", "duration_seconds"],
+        "properties": {
+          "video_id": { "type": "string" },
+          "channel_id": { "type": "string" },
+          "url": { "type": "string", "format": "uri" },
+          "title": { "type": "string" },
+          "published_at": { "type": "string", "format": "date-time" },
+          "duration_seconds": { "type": "integer" },
+          "is_public": { "type": "boolean" },
+          "candidate_short": { "type": "boolean" }
+        }
+      },
+      "GroupProposal": {
+        "type": "object",
+        "required": ["id", "label", "version", "members"],
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "type": "string" },
+          "version": { "type": "string" },
+          "provenance": { "type": "string", "description": "Algoritmo/adapter que generó la propuesta (ej. 'gemini-v1')." },
+          "members": { "type": "array", "items": { "$ref": "#/components/schemas/VideoMeta" } },
+          "rationale": { "type": "string", "description": "Texto explicativo / evidencia breve." }
+        }
+      },
+      "GroupConfirmation": {
+        "type": "object",
+        "required": ["group_id", "confirmed_by", "confirmed_at"],
+        "properties": {
+          "group_id": { "type": "string" },
+          "confirmed_by": { "type": "string" },
+          "confirmed_at": { "type": "string", "format": "date-time" },
+          "comment": { "type": "string" }
+        }
+      },
+      "Signal": {
+        "type": "object",
+        "required": ["topic", "window_a_count", "window_b_count"],
+        "properties": {
+          "topic": { "type": "string" },
+          "window_a_count": { "type": "integer" },
+          "window_b_count": { "type": "integer" },
+          "difference": { "type": "integer" },
+          "percentage": { "type": "number", "description": "Solo si window_a_count > 0 y comparación evaluable." },
+          "reason": { "type": "string", "description": "Motivo por el que no se pudo calcular percentage (ej. missing_coverage)." }
+        }
+      },
+      "JEVDecision": {
+        "type": "object",
+        "properties": {
+          "pertinent": { "type": "boolean" },
+          "value_state": { "type": "string", "enum": ["contribuye_respaldo", "utilidad_no_sustentada", "informacion_insuficiente"] },
+          "affinity": { "type": "object", "properties": { "persona": { "type": "string" }, "contexto": { "type": "string" }, "pilar": { "type": "string" } } },
+          "model": { "type": "string" },
+          "model_version": { "type": "string" },
+          "rationale": { "type": "string" }
+        }
+      },
+      "GeminiObservation": {
+        "type": "object",
+        "properties": {
+          "summary": { "type": "string" },
+          "timestamps": { "type": "array", "items": { "type": "string", "format": "date-time" } },
+          "format_observations": { "type": "object", "description": "E.g. hooks, visual, audio notes." }
+        }
+      },
+      "AnalysisResult": {
+        "type": "object",
+        "properties": {
+          "video_id": { "type": "string" },
+          "jev": { "$ref": "#/components/schemas/JEVDecision" },
+          "gemini": { "$ref": "#/components/schemas/GeminiObservation" },
+          "generated_at": { "type": "string", "format": "date-time" },
+          "trace_id": { "type": "string", "description": "Trace ID para correlación (opcional)." }
+        }
+      },
+      "Evidence": {
+        "type": "object",
+        "required": ["id", "execution_id", "video_id", "created_at", "kind"],
+        "properties": {
+          "id": { "type": "string" },
+          "execution_id": { "type": "string" },
+          "video_id": { "type": "string" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "kind": { "type": "string", "enum": ["audio_excerpt", "visual_excerpt", "transcript", "note"] },
+          "pointer": { "type": "string", "description": "URL interna o referencia al recurso almacenado." },
+          "metadata": { "type": "object", "description": "Campos libres con estructura comprobable (start_sec, end_sec, confidence)." },
+          "trace_id": { "type": "string", "description": "Trace ID para correlación (opcional)." }
+        }
+      }
+    }
+  },
+  "security": [ { "DemoApiKey": [] } ],
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": ["health"],
+        "summary": "Estado del servicio",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "status": { "type": "string", "example": "ok" } }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/executions": {
+      "post": {
+        "tags": ["executions"],
+        "summary": "Crear una nueva ejecución (run)",
+        "description": "Crea una ejecución que calcula las ventanas a partir de reference_time (si se omite, el servidor decide). El backend debe devolver las ventanas deterministas usadas y la lista prevista de canales.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reference_time": { "type": "string", "format": "date-time", "description": "Opcional: instant que define las ventanas." },
+                  "trigger": { "type": "string", "description": "Ej. 'manual' o 'scheduled'." }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Ejecución creada",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Execution" } } }
+          },
+          "4XX": {
+            "description": "Error de validación",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } } }
+          }
+        }
+      },
+      "get": {
+        "tags": ["executions"],
+        "summary": "Listar ejecuciones (paginado)",
+        "parameters": [
+          { "in": "query", "name": "limit", "schema": { "type": "integer", "default": 25 } },
+          { "in": "query", "name": "offset", "schema": { "type": "integer", "default": 0 } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado de ejecuciones",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object", "properties": { "items": { "type": "array", "items": { "$ref": "#/components/schemas/Execution" } }, "total": { "type": "integer" } } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/executions/{execution_id}": {
+      "parameters": [ { "in": "path", "name": "execution_id", "required": true, "schema": { "type": "string" } } ],
+      "get": {
+        "tags": ["executions"],
+        "summary": "Obtener estado y metadatos de una ejecución",
+        "responses": {
+          "200": { "description": "Ejecución", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Execution" } } } },
+          "404": { "description": "No encontrada", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } } } }
+        }
+      }
+    },
+    "/executions/{execution_id}/acquire": {
+      "post": {
+        "tags": ["acquisition"],
+        "summary": "Iniciar adquisición para la ejecución (YouTube)",
+        "description": "Dispara la adquisición paginada de las once URLs usando las ventanas acordadas. Debe registrar cobertura por canal y ventana en la persistencia.",
+        "requestBody": { "required": false },
+        "responses": { "202": { "description": "Adquisición encolada/ejecutando", "content": { "application/json": { "schema": { "type": "object", "properties": { "status": { "type": "string", "example": "acquiring" }, "note": { "type": "string" } } } } } } }
+      }
+    },
+    "/executions/{execution_id}/coverage": {
+      "get": {
+        "tags": ["acquisition"],
+        "summary": "Cobertura por canal y ventana",
+        "responses": {
+          "200": {
+            "description": "Cobertura por canal",
+            "content": { "application/json": { "schema": { "type": "object", "properties": { "execution_id": { "type": "string" }, "coverages": { "type": "array", "items": { "$ref": "#/components/schemas/ChannelCoverage" } } } } } }
+          }
+        }
+      }
+    },
+    "/executions/{execution_id}/groups": {
+      "get": {
+        "tags": ["groups"],
+        "summary": "Obtener propuestas de grupos automáticos (por ALG)",
+        "description": "Devuelve propuestas de grupos generadas por el adaptador de ALG/ Gemini y su versión.",
+        "responses": {
+          "200": {
+            "description": "Propuestas",
+            "content": { "application/json": { "schema": { "type": "object", "properties": { "execution_id": { "type": "string" }, "proposals": { "type": "array", "items": { "$ref": "#/components/schemas/GroupProposal" } } } } } }
+          }
+        }
+      }
+    },
+    "/executions/{execution_id}/groups/{group_id}/confirm": {
+      "post": {
+        "tags": ["groups"],
+        "summary": "Confirmar un grupo propuesto (acción del operador vía FE)",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GroupConfirmation" } } }
+        },
+        "responses": { "200": { "description": "Confirmación registrada", "content": { "application/json": { "schema": { "type": "object", "properties": { "confirmed": { "type": "boolean" }, "saved_at": { "type": "string", "format": "date-time" } } } } } }
+      }
+    },
+    "/executions/{execution_id}/signals": {
+      "get": {
+        "tags": ["signals"],
+        "summary": "Obtener señales (conteos, diferencia, porcentaje) según grupos confirmados",
+        "parameters": [ { "in": "query", "name": "include_coverage", "schema": { "type": "boolean" }, "description": "Incluir detalles de cobertura en la respuesta." } ],
+        "responses": { "200": { "description": "Señales calculadas", "content": { "application/json": { "schema": { "type": "object", "properties": { "execution_id": { "type": "string" }, "signals": { "type": "array", "items": { "$ref": "#/components/schemas/Signal" } } } } } } }
+      }
+    },
+    "/videos/{video_id}/analysis": {
+      "post": {
+        "tags": ["videos"],
+        "summary": "Solicitar análisis profundo (Gemini + JEV) para un video",
+        "description": "Inicia una operación de análisis audiovisual y decisiones JEV. Debe registrarse como operación ligada a execution_id, video_id y versión de modelos.",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object", "required": ["execution_id", "video_id"], "properties": { "execution_id": { "type": "string" }, "video_id": { "type": "string" }, "requestor": { "type": "string", "description": "Ej. 'frontend' o 'operator'." } } } } }
+        },
+        "responses": { "202": { "description": "Análisis encolado", "content": { "application/json": { "schema": { "type": "object", "properties": { "task_id": { "type": "string" }, "status": { "type": "string", "example": "queued" } } } } } }
+      },
+      "get": {
+        "tags": ["videos"],
+        "summary": "Obtener resultado de análisis si está disponible",
+        "parameters": [ { "in": "path", "name": "video_id", "required": true, "schema": { "type": "string" } } ],
+        "responses": { "200": { "description": "Resultado de análisis", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AnalysisResult" } } } }, "404": { "description": "No disponible", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } } } }
+      }
+    },
+    "/executions/{execution_id}/evidence": {
+      "post": {
+        "tags": ["videos"],
+        "summary": "Registrar evidencia asociada a una ejecución/video",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Evidence" } } } },
+        "responses": { "201": { "description": "Evidencia registrada", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Evidence" } } } }
+      }
+    },
+    "/notion/save": {
+      "post": {
+        "tags": ["notion"],
+        "summary": "Guardado manual en Notion (opcional)",
+        "description": "Operación condicional; solo disponible si 3.15/3.16 se activan.",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["execution_id", "video_id"], "properties": { "execution_id": { "type": "string" }, "video_id": { "type": "string" }, "notion_base_id": { "type": "string" } } } } } },
+        "responses": { "200": { "description": "Guardado verificado en Notion", "content": { "application/json": { "schema": { "type": "object", "properties": { "notion_page_url": { "type": "string" } } } } } }
+      }
+    },
+    "/contracts": {
+      "get": {
+        "tags": ["executions"],
+        "summary": "Obtener la versión actual del contrato publicado por BE",
+        "responses": { "200": { "description": "Contrato (OpenAPI fragment o metadata)", "content": { "application/json": { "schema": { "type": "object", "properties": { "version": { "type": "string" }, "url": { "type": "string" }, "published_at": { "type": "string", "format": "date-time" } } } } } }
+      }
+    }
+  },
+  "externalDocs": { "description": "Notas de diseño: revisar openspec/config.yaml y tasks.md para trazabilidad.", "url": "https://github.com/albcamargo/senialon-/blob/main/openspec/changes/definir-mvp-senialon/tasks.md" }
+}
