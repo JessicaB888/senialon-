@@ -67,6 +67,14 @@ FE debe comprobar acceso en páginas y cada Route Handler, validar la respuesta 
 
 La base incorpora el guard necesario para comprobar la conexión privada y adelanta BE 3.6. Su casilla permanece abierta para la entrega/revisión conjunta con FE 1.3. No se modificó `backend/analysis/` ni el código del frontend.
 
+## Transporte de proveedores — avance parcial BE 3.7
+
+`senialon_api.providers.http.JsonHttpTransport` proporciona transporte JSON genérico para YouTube, JEV y Gemini. Recibe el cliente HTTP, el endpoint, el método, credenciales/cabeceras y el cuerpo desde su llamador; no define esquemas externos, nombres de modelos, autenticación ni transformación de solicitudes/respuestas de cada proveedor. Conserva propósito, IDs de operación/subpaso, versión de entrada, cuerpo de respuesta original, JSON recibido e ID de proveedor solo cuando el llamador especifica la cabecera correspondiente.
+
+Cada envío exige una implementación inyectada de `CallGate.claim_and_reserve` antes de la red. El gate recibe solo la identidad de la llamada, nunca URLs, cuerpos o cabeceras con secretos. La capa no reintenta ni sigue redirects; los errores tipados distinguen rechazo HTTP, JSON inválido, timeout incierto y fallo de transporte, sin incluir texto de respuesta o credenciales en su mensaje. Los endpoints exigen HTTPS y el cliente se inyecta explícitamente; por tanto, el servicio FastAPI no tiene un camino de llamada externa creado por esta entrega.
+
+Las pruebas de `tests/test_provider_http.py` usan exclusivamente `httpx.MockTransport`; no tienen salida a red. Esto es una base sintética para mappers futuros, no cumple aún los formatos/API de proveedor, uso/modelo normalizados ni integración durable con BE 3.10. BE 3.7 permanece abierta hasta confirmar contratos en 3.4 y conectar cada llamada con la reserva transaccional.
+
 ## Despliegue pendiente
 
 El proyecto Vercel debe usar **la raíz de este repositorio**, con `vercel.json`; no configurar `frontend/` como Project Root Directory. El build de Next necesita también `docs/contracts/openapi.json`, fuera de su directorio. Verificar ese contexto en el primer build de Services.
