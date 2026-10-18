@@ -77,6 +77,8 @@ Las pruebas de `tests/test_provider_http.py` usan exclusivamente `httpx.MockTran
 
 ## Despliegue pendiente
 
+El usuario eligió [GitHub Actions desde main del repositorio original](../docs/DESPLIEGUE_GITHUB_ACTIONS.md), usando un proyecto de su cuenta Vercel sin contratar otro puesto. El workflow prepara comprobaciones y despliegue por CLI desde la raíz, con tres secretos de GitHub y configuración de aplicación en Vercel. Está preparado localmente; crear/vincular el proyecto, registrar secretos y verificar el primer despliegue siguen pendientes. Los tests y guías de `analysis/` también se excluyen ahora del bundle Python; sus funciones de producto se conservan.
+
 El proyecto Vercel debe usar **la raíz de este repositorio**, con `vercel.json`; no configurar `frontend/` como Project Root Directory. El build de Next necesita también `docs/contracts/openapi.json`, fuera de su directorio. Verificar ese contexto en el primer build de Services.
 
 Antes de desplegar: resolver el proyecto/equipo Vercel, verificar límites y margen de gasto de BE 3.2, completar FE 1.3 y revisar BE 3.6, configurar secretos en servidor y comprobar protección de páginas/rutas. Después, verificar desde la URL protegida: rechazo sin credencial, metadatos por Next/binding, ausencia de ingreso público a Python y los límites aplicados a ambas funciones. No activar planes o extras para resolver un fallo.

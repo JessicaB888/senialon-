@@ -26,7 +26,7 @@
       "functions": {
         "main.py": {
           "maxDuration": 60,
-          "excludeFiles": "{tests/**,.pytest_cache/**,README.md,VERIFICACION.md}"
+          "excludeFiles": "{tests/**,analysis/tests/**,.pytest_cache/**,README.md,VERIFICACION.md,analysis/README.md,analysis/verification.json}"
         }
       }
     }

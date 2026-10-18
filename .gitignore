@@ -232,3 +232,5 @@ test-results/
 
 # TypeScript source: the Python lib/ rule must not exclude the API consumer.
 !frontend/src/lib/
+.vercel
+.env*
