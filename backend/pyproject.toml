@@ -5,6 +5,7 @@ description = "Servicio interno de SENIALON; transporte y operación, sin reglas
 requires-python = ">=3.12,<3.13"
 dependencies = [
     "fastapi==0.143.3",
+    "httpx==0.28.1",
     "pydantic==2.14.1",
     "uvicorn==0.54.0",
 ]
@@ -21,6 +22,5 @@ pythonpath = ["."]
 
 [dependency-groups]
 dev = [
-    "httpx==0.28.1",
     "pytest==9.1.1",
 ]

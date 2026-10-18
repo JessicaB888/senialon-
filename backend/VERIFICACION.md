@@ -8,7 +8,7 @@ Registro del **18 de octubre de 2026, America/Bogota**, sobre trabajo local post
 | --- | --- |
 | Entorno | CPython **3.12.14**, uv **0.11.26**, Node **24.21.0**, npm **11.19.0**, Vercel CLI **64.5.0**. |
 | Dependencias | `uv.lock` resuelto desde PyPI; FastAPI **0.143.3**, Pydantic **2.14.1**, Uvicorn **0.54.0**. pytest **9.1.1** y HTTPX **0.28.1** solo para desarrollo. |
-| Backend | **52 pruebas aprobadas**: 41 de acceso/transporte y las 11 existentes de presupuesto. Configuración ausente/insegura, credencial incorrecta/malformada/UTF-8, origen de mutaciones, metadatos, request ID, docs desactivadas, rutas sin implementar y errores saneados. |
+| Backend | **64 pruebas aprobadas**: 41 de acceso/transporte, 11 de presupuesto y 12 del transporte HTTP sintético. Incluye configuración ausente/insegura, credenciales incorrectas/malformadas/UTF-8, origen de mutaciones, metadatos, request ID, docs desactivadas, rutas sin implementar, errores saneados, gate previo a envío, serialización JSON, timeout sin reintento y rechazo de redirects. |
 | Binding local real | `vercel dev -L` reconoció Next y FastAPI. El proceso Node recibió la URL generada y realizó cuatro lecturas a Python: **401, 401, 200, 404**, aceptadas por los esquemas canónicos mediante Ajv. No es solo un mock de fetch o TestClient. |
 | Entrada pública local | Puerto **3200**: `/` → 200 HTML de Next; `/api/v1/meta`, `/backend/api/v1/meta` y `/openapi.json` → 404 HTML de Next. La API de Python solo se alcanzó por el servicio interno. La página local aún responde sin credencial; FE 1.3 está pendiente. |
 | Caché | Las cuatro respuestas Python conservan `private, no-store`, versión, identidad de solicitud y fecha zonificada. Next en modo desarrollo respondió `no-cache, must-revalidate`; eso no acredita la política privada de un despliegue. |
@@ -46,3 +46,9 @@ Las llamadas internas y el cómputo pueden facturarse; el abono existente no ver
 5. Verificar la URL desde otro equipo, la lectura por un Route Handler real y que Python no tiene ruta pública, también con credenciales válidas.
 
 La preparación local permite comenzar FE 1.3; no sustituye las verificaciones pendientes del despliegue. Las tareas de datos, persistencia y proveedores conservan su propio alcance.
+
+## Avance sintético de BE 3.7
+
+Se añadió `senialon_api.providers.http.JsonHttpTransport`, un transporte JSON sin mapeos específicos para YouTube, JEV o Gemini. Recibe un gate obligatorio antes de cada envío y lo limita a la identidad de la llamada; las credenciales, URLs y cuerpos no se entregan al gate. Las pruebas de `tests/test_provider_http.py` se ejecutaron con `httpx.MockTransport`, por lo que no contactaron servicios externos ni consumieron cuotas.
+
+Esta prueba se ejecutó en CPython **3.12.3** con dependencias de `uv.lock` y uv **0.11.26**. No vuelve a verificar Node/Vercel ni cambia la evidencia de binding descrita arriba. Los formatos externos, modelos, extracción normalizada de uso/evidencia y gate durable de BE 3.10 siguen pendientes; BE 3.2 sigue bloqueando cualquier prueba pagada.
