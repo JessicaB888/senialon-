@@ -6,8 +6,10 @@ context: |
   Keep OpenSpec structural headings and SHALL/MUST keywords in English.
   Proyecto SENIALON: radar de oportunidades editoriales de IA para líderes y equipos de LatAm.
   Leer docs/DEFINICION_MVP.md, docs/PLAN_DE_TRABAJO.md y los artefactos del cambio definir-mvp-senialon.
-  Fase actual: completar especificaciones y planificación; no implementar código del producto ni ejecutar el prototipo de referencia.
+  Tras preparar BE 3.1, el usuario confirmó continuar FE 1.1 documental. Revisión emitida con observaciones en docs/REVISION_CONTRATO_FRONTEND.md: H01–H03 pendientes y pauta H04; sin conformidad final, aprobación ALG 2.1 o cierre de G0. El contrato único docs/contracts/openapi.json conserva autoridad BE y no se modifica desde esta revisión. La última confirmación no autoriza iniciar automáticamente Next.js 1.2, consumidores definitivos, otras tareas BE/ALG ni reintentar la instalación cancelada de validadores. No ejecutar el prototipo.
+  Al sincronizar main se incorporó ae6b1a0 con otro borrador en openspec/contract/backend-contract-openapi.json, preservado sin cambios: tiene sintaxis JSON inválida y transporte distinto. BE debe corregirlo y conciliar ambas propuestas antes de acordar la versión común; la revisión y validaciones FE solo cubren el hash declarado de docs/contracts/openapi.json. No consumir ambos contratos como autoridades simultáneas.
   Equipo confirmado de tres integrantes: Frontend (FE), Algoritmia/JEV (ALG) y Backend/infraestructura (BE). Cada tarea tiene un único dueño; revisiones y dependencias no transfieren propiedad.
+  El usuario asume FE. Leer docs/PLAN_FRONTEND.md para sus prioridades y dependencias. 1.1 tiene revisión documental antes de G0 y tipos/validación después de 1.2; G0 no espera la casilla 1.1 completa. Mantener independientes catálogo/análisis de pieza y comparación temática; QA y borrador de playbook son continuos.
   FE posee frontend, Next Route Handlers y autenticación web, UI/pruebas E2E y playbook. ALG posee backend/analysis, ventanas, reglas, prompts/rúbricas JEV/Gemini, cálculos y evaluación, sin HTTP/BD/secretos directos. BE posee resto backend, adquisición técnica, adaptadores, contrato API, persistencia/gasto, infraestructura, README operativo y paquete/envío humano.
   BE publica el borrador del contrato; ALG revisa semántica y FE consumo; BE cierra una versión común. ALG usa adaptadores autenticados inyectados por BE. Ventanas y conteos se implementan una sola vez en ALG.
   Corpus fijo de 11 canales: conservar las URLs exactas de la definición y youtube-corpus.
@@ -55,4 +57,5 @@ rules:
 operations:
   apply:
     guidance:
-      - Esta fase solo prepara especificaciones y planificación. Esperar una nueva instrucción del usuario para implementar el producto.
+      - >-
+        El alcance actual es FE 1.1 documental: revisión emitida con observaciones H01–H03 y pauta H04 en docs/REVISION_CONTRATO_FRONTEND.md. No editar contrato BE para resolverlas ni aprobar ALG 2.1/G0. No marcar FE 1.1 completa sin su segundo hito técnico; esta confirmación no inicia automáticamente 1.2 ni autoriza reintentar instalaciones canceladas. Mantener las casillas y dependencias originales.

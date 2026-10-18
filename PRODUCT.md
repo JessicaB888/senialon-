@@ -30,7 +30,7 @@ SENIALON conecta una comparación de publicaciones por tema dentro de un corpus 
 
 El recorrido comprende adquisición y cobertura, grupos propuestos, confirmación, comparación temática, selección libre de piezas elegibles, análisis profundo y revisión editorial recuperable. La selección no depende de que aumente el tema ni de que la comparación esté completa.
 
-La entrega prevista es el 18 de octubre de 2026 antes de las 12:00, America/Bogota. El equipo confirmó tres integrantes: Frontend, Algoritmia/JEV y Backend/infraestructura, con tareas de dueño único en el [plan de trabajo](docs/PLAN_DE_TRABAJO.md). Nombres, experiencia y horas disponibles no están confirmados. El presupuesto es de 20 USD de nuevos consumos; la suscripción activa de Vercel está pagada aparte.
+La entrega prevista es el 18 de octubre de 2026 antes de las 12:00, America/Bogota. El equipo confirmó tres integrantes: Frontend, Algoritmia/JEV y Backend/infraestructura, con tareas de dueño único en el [plan de trabajo](docs/PLAN_DE_TRABAJO.md). El usuario asume Frontend, cuyo orden está en [PLAN_FRONTEND.md](docs/PLAN_FRONTEND.md); las identidades nominales de los otros integrantes, la experiencia y las horas disponibles siguen sin confirmar. El presupuesto es de 20 USD de nuevos consumos; la suscripción activa de Vercel está pagada aparte.
 
 ## Capabilities and Constraints
 

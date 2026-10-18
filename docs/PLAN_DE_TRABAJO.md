@@ -1,10 +1,10 @@
 # Plan de trabajo del MVP SENIALON
 
-El equipo de **tres personas** queda organizado en **tres áreas, con un responsable único por área: Frontend; Algoritmia/JEV para análisis de tendencias; Backend e infraestructura**. Los nombres, experiencia individual y horas disponibles siguen sin confirmar.
+El equipo de **tres personas** queda organizado en **tres áreas, con un responsable único por área: Frontend; Algoritmia/JEV para análisis de tendencias; Backend e infraestructura**. El usuario solicitante confirmó que asume Frontend; las identidades nominales de los otros integrantes, la experiencia individual y las horas disponibles siguen sin confirmar. Su orden de trabajo y dependencias están en [PLAN_FRONTEND.md](PLAN_FRONTEND.md).
 
 La entrega oficial es el **18 de octubre de 2026 antes de las 12:00 del mediodía, America/Bogota**. Se conserva como objetivo interno propuesto el envío a las **11:00**, para dejar margen; no representa una disponibilidad confirmada.
 
-La fase actual sigue siendo de especificaciones: **no generar código ni crear las carpetas futuras descritas aquí**. La [definición del MVP](DEFINICION_MVP.md) fija el alcance; la [propuesta](../openspec/changes/definir-mvp-senialon/proposal.md), las seis specs, el [diseño técnico](../openspec/changes/definir-mvp-senialon/design.md) y las [tareas OpenSpec](../openspec/changes/definir-mvp-senialon/tasks.md) formalizan su construcción. Las tareas y sus estados se mantienen en ese último archivo; este plan define responsables, fronteras, entregables y orden de integración, sin duplicar su lista.
+Después de preparar el [borrador BE 3.1](contracts/README.md), se autorizó continuar con **FE 1.1 documental**: [revisión emitida con observaciones](REVISION_CONTRATO_FRONTEND.md). La conformidad queda pendiente de resolver H01–H03 y aclarar H04, además de ALG 2.1 y versión común; G0 permanece abierto. La última confirmación no inicia automáticamente Next.js 1.2, otras tareas de Backend ni instalaciones canceladas. La [definición del MVP](DEFINICION_MVP.md) fija el alcance; la [propuesta](../openspec/changes/definir-mvp-senialon/proposal.md), las seis specs, el [diseño técnico](../openspec/changes/definir-mvp-senialon/design.md) y las [tareas OpenSpec](../openspec/changes/definir-mvp-senialon/tasks.md) formalizan su construcción. Las tareas y sus estados se mantienen en ese último archivo; este plan define responsables, fronteras, entregables y orden de integración, sin duplicar su lista.
 
 ## Alcance que las tres áreas deben conservar
 
@@ -70,7 +70,7 @@ BE es dueño de pruebas de API, adquisición, deduplicación, persistencia, idem
 
 ## Contrato y transferencia entre áreas
 
-**Antes de implementar**, se cierra la puerta G0 del contrato en esta secuencia: **BE publica un borrador en 3.1 → ALG revisa semántica y ejemplos en 2.1 → FE comprueba su consumo y representación en 1.1 → BE incorpora observaciones y cierra una v1 en 3.1**. Las revisiones empiezan con el borrador; no esperan que 3.1 esté terminado, para evitar una dependencia circular. Los tres registran su conformidad sobre esa misma versión antes de construir en paralelo. La revisión no implica coedición ni cambia la autoría: BE mantiene el contrato API; ALG mantiene la semántica del módulo.
+**Antes de implementar**, se cierra la puerta G0 del contrato en esta secuencia: **BE publica un borrador en 3.1 → ALG revisa semántica y ejemplos en 2.1 → FE revisa documentalmente su consumo y representación en el primer hito de 1.1 → BE incorpora observaciones y cierra una v1 en 3.1**. Las revisiones empiezan con el borrador; no esperan que 3.1 esté terminado. G0 tampoco espera la casilla 1.1 completa: el segundo hito de tipos/validación se programa después de 1.2. Así se evita que el cierre del contrato espere código que depende de ese mismo cierre. Los tres registran conformidad sobre la misma versión antes de construir en paralelo. La revisión no implica coedición ni cambia la autoría: BE mantiene el contrato API; ALG mantiene la semántica del módulo.
 
 Las tareas formales se agrupan por dueño: **1.1–1.12 FE, 2.1–2.12 ALG y 3.1–3.18 BE**. Esta referencia permite localizar el trabajo sin duplicar sus casillas o estados en el plan.
 
@@ -114,7 +114,7 @@ No asignar horas sin conocer disponibilidad. Los hitos fijan dependencias y evid
 
 | Puerta | Evidencia necesaria | Responsable del cierre |
 | --- | --- | --- |
-| **1. Especificaciones y contrato (G0)** | Tres dueños identificados por área; alcance y fronteras revisados; borrador 3.1 revisado por ALG 2.1 y FE 1.1, y v1 cerrada por BE 3.1. No iniciar código durante esta fase. | BE consolida; ALG y FE revisan el borrador sin esperar el cierre de 3.1. |
+| **1. Especificaciones y contrato (G0)** | Tres dueños identificados por área; alcance y fronteras revisados; borrador 3.1 revisado semánticamente por ALG 2.1 y documentalmente por FE en el primer hito 1.1, y v1 cerrada por BE 3.1. No requiere tipos programados ni la casilla 1.1 completa. No iniciar código durante esta fase. | BE consolida; ALG y FE revisan el borrador sin esperar el cierre de 3.1. |
 | **2. Dependencias reales** | YouTube, JEV y Gemini probados; primer despliegue protegido de ambos servicios, binding y persistencia verificados, o bloqueo concreto registrado. Uso medido frente a USD 20. | BE; ALG valida salidas y FE acceso web. |
 | **3. Primer recorrido integrado** | Adquisición → pertinencia JEV → grupos automáticos → confirmación → conteos con cobertura → selección libre de pieza → evidencia, valor/afinidad JEV → decisión duradera. | BE integra; FE entrega recorrido y ALG resultados analíticos. |
 | **4. Evaluación del núcleo** | Ventanas, deduplicación, base cero/desconocidos y cobertura comprobadas; fidelidad audiovisual, clasificación y utilidad evaluadas sin forzar crecimiento. Persistencia y acceso directo protegidos. | ALG 2.10–2.12 cierra evaluación semántica; FE 1.10 verifica E2E; BE consolida evidencia técnica de los tres dueños. |

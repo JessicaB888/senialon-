@@ -2,9 +2,11 @@
 
 ## Fase de trabajo
 
-El trabajo actual consiste en definir el producto y generar sus especificaciones con OpenSpec. No desarrollar código del producto antes de contar con las especificaciones. La configuración de herramientas no equivale a iniciar implementación.
+El usuario autorizó preparar el borrador BE 3.1 y después continuar específicamente con FE 1.1 documental. La revisión está emitida con observaciones en `docs/REVISION_CONTRATO_FRONTEND.md`: H01–H03 pendientes y pauta histórica H04; no hay conformidad final, aprobación ALG 2.1 o cierre de G0. El contrato único sigue en `docs/contracts/openapi.json`, con autoridad BE y política en `docs/contracts/README.md`. El alcance de la última confirmación no autoriza iniciar automáticamente Next.js 1.2, implementar el resto del backend ni reintentar la instalación cancelada de validadores. No ejecutar el prototipo ni modificar el contrato bajo la revisión FE. La configuración y las proyecciones temporales de tipos/modelos no completan el segundo hito técnico de FE 1.1.
 
 ## Contexto del producto
+
+La sincronización de main incorporó `ae6b1a0` con otro borrador en `openspec/contract/backend-contract-openapi.json`, preservado sin cambios y pendiente de corregir sintaxis JSON y conciliar por BE. No usar ambos contratos como fuentes simultáneas ni atribuir al remoto las validaciones de `docs/contracts/openapi.json`. La revisión FE especifica su hash y alcance; no hay acuerdo de G0.
 
 Leer `docs/DEFINICION_MVP.md`, `docs/PLAN_DE_TRABAJO.md` y `openspec/config.yaml`. Distinguir las decisiones confirmadas de las propuestas y preguntas pendientes. No inventar datos, accesos, métricas ni tendencias.
 

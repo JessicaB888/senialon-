@@ -30,7 +30,7 @@ La viralidad no acredita valor; el crecimiento de publicaciones tampoco acredita
 - Se permite una demo con cobertura parcial explícita. Si faltan datos, la comparación completa de los once canales queda pendiente; aceptar esa demo no acredita cobertura ni crecimiento completos.
 - LatAm es el mercado editorial, no una medición de la ubicación de los espectadores.
 - Notion: guardado manual opcional, última prioridad y sin condicionar la entrega esencial.
-- Tres integrantes confirmados: Frontend, Algoritmia/JEV y Backend/infraestructura, con tareas y fronteras de responsabilidad en el [plan de trabajo](PLAN_DE_TRABAJO.md). Entrega el 18 de octubre de 2026 antes de las 12:00, hora de Colombia. Nombres, experiencia individual y horas disponibles siguen sin confirmar.
+- Tres integrantes confirmados: Frontend, Algoritmia/JEV y Backend/infraestructura, con tareas y fronteras de responsabilidad en el [plan de trabajo](PLAN_DE_TRABAJO.md). El usuario asume Frontend, con prioridades en [PLAN_FRONTEND.md](PLAN_FRONTEND.md). Entrega el 18 de octubre de 2026 antes de las 12:00, hora de Colombia. Las identidades nominales de los demás integrantes, la experiencia individual y las horas disponibles siguen sin confirmar.
 - Vercel tiene un plan de pago activo ya abonado aparte. El máximo para **nuevos consumos de APIs y extras de la demo es USD 20**; no incluye ese abono existente. El límite no garantiza un volumen procesable sin pruebas.
 
 ## Corpus de referencia
