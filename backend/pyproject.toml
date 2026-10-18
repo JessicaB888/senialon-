@@ -1,0 +1,26 @@
+[project]
+name = "senialon-backend"
+version = "0.1.0"
+description = "Servicio interno de SENIALON; transporte y operación, sin reglas de ALG."
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi==0.143.3",
+    "pydantic==2.14.1",
+    "uvicorn==0.54.0",
+]
+
+[tool.uv]
+package = false
+
+[tool.vercel]
+entrypoint = "main:app"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[dependency-groups]
+dev = [
+    "httpx==0.28.1",
+    "pytest==9.1.1",
+]
