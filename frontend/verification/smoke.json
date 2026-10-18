@@ -1,0 +1,61 @@
+{
+  "checkedAt": "2026-10-18T05:05:58.352Z",
+  "checks": [
+    {
+      "name": "desktop",
+      "status": 200,
+      "privateNoStore": true,
+      "noPageErrors": true,
+      "sources": 11,
+      "noHorizontalOverflow": true
+    },
+    {
+      "name": "mobile",
+      "status": 200,
+      "privateNoStore": true,
+      "noPageErrors": true,
+      "sources": 11,
+      "noHorizontalOverflow": true
+    },
+    {
+      "name": "404-with-return",
+      "status": 404,
+      "returnWorks": true
+    }
+  ],
+  "requests": [
+    "http://127.0.0.1:3100/",
+    "http://127.0.0.1:3100/_next/static/media/sora_latin_wght_normal-s.p.2o7d_x-bmx02y.woff2",
+    "http://127.0.0.1:3100/_next/static/media/work_sans_latin_wght_normal-s.p.2xhghglq35dij.woff2",
+    "http://127.0.0.1:3100/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsenialon-dark.2kqkos8fgho4z.png&w=256&q=75",
+    "http://127.0.0.1:3100/_next/static/chunks/1hqblbeqbb1jf.css",
+    "http://127.0.0.1:3100/_next/static/chunks/2f16dnkpcsw55.css",
+    "http://127.0.0.1:3100/_next/static/chunks/3s6nzrbk-8mnv.js",
+    "http://127.0.0.1:3100/_next/static/chunks/19mx3mg6lkumu.js",
+    "http://127.0.0.1:3100/_next/static/chunks/3g4px251sg85e.js",
+    "http://127.0.0.1:3100/_next/static/chunks/2z-e6jheq0ftu.js",
+    "http://127.0.0.1:3100/_next/static/chunks/turbopack-03rfayxv7ep_b.js",
+    "http://127.0.0.1:3100/_next/static/chunks/3fntmmi971322.js",
+    "http://127.0.0.1:3100/_next/static/chunks/38k2_7amoczom.js",
+    "http://127.0.0.1:3100/_next/static/media/sora_latin_wght_normal-s.p.2o7d_x-bmx02y.woff2",
+    "http://127.0.0.1:3100/_next/static/media/work_sans_latin_wght_normal-s.p.2xhghglq35dij.woff2",
+    "http://127.0.0.1:3100/?_rsc=tXyZJ52UQVBCVsD3",
+    "http://127.0.0.1:3100/",
+    "http://127.0.0.1:3100/_next/static/media/sora_latin_wght_normal-s.p.2o7d_x-bmx02y.woff2",
+    "http://127.0.0.1:3100/_next/static/media/work_sans_latin_wght_normal-s.p.2xhghglq35dij.woff2",
+    "http://127.0.0.1:3100/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsenialon-dark.2kqkos8fgho4z.png&w=256&q=75",
+    "http://127.0.0.1:3100/_next/static/chunks/1hqblbeqbb1jf.css",
+    "http://127.0.0.1:3100/_next/static/chunks/2f16dnkpcsw55.css",
+    "http://127.0.0.1:3100/_next/static/chunks/3s6nzrbk-8mnv.js",
+    "http://127.0.0.1:3100/_next/static/chunks/19mx3mg6lkumu.js",
+    "http://127.0.0.1:3100/_next/static/chunks/3g4px251sg85e.js",
+    "http://127.0.0.1:3100/_next/static/chunks/2z-e6jheq0ftu.js",
+    "http://127.0.0.1:3100/_next/static/chunks/turbopack-03rfayxv7ep_b.js",
+    "http://127.0.0.1:3100/_next/static/chunks/3fntmmi971322.js",
+    "http://127.0.0.1:3100/_next/static/chunks/38k2_7amoczom.js",
+    "http://127.0.0.1:3100/_next/static/media/sora_latin_wght_normal-s.p.2o7d_x-bmx02y.woff2",
+    "http://127.0.0.1:3100/_next/static/media/work_sans_latin_wght_normal-s.p.2xhghglq35dij.woff2",
+    "http://127.0.0.1:3100/?_rsc=tXyZJ52UQVBCVsD3"
+  ],
+  "errors": []
+}

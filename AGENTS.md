@@ -2,7 +2,9 @@
 
 ## Fase de trabajo
 
-El usuario autorizó continuar ALG 2.1 y cerrar el acuerdo definitivo del contrato. La fuente única `docs/contracts/openapi.json` está acordada en `1.0.0`, con autoridad BE y política/registro en `docs/contracts/README.md`. La revisión semántica e interfaces están en `docs/REVISION_SEMANTICA_ALG.md` y `docs/INTERFACES_ANALISIS.md`; el consumo documental FE en `docs/REVISION_CONTRATO_FRONTEND.md`. ALG 2.1 y BE 3.1 se cierran documentalmente; G0 contractual queda cerrado. El acuerdo es revisión asistida por Codex a solicitud del usuario, sin atribuir firmas a los otros integrantes ni acreditar integraciones. FE 1.1 sigue pendiente de su segundo hito técnico tras 1.2. La siguiente tarea de construcción es FE 1.2; no se inicia automáticamente por cerrar este acuerdo. No ejecutar el prototipo ni reintentar la instalación cancelada de validadores.
+El usuario autorizó implementar FE 1.2 y BE 3.2. La base Next.js y su entrega a BE están en `frontend/README.md`; las verificaciones locales en `frontend/VERIFICACION.md`. Se aplicó Next.js 16.3.8 como parche de seguridad de la referencia 16.3.3. El control offline y el registro de gasto están en `docs/budget/README.md`: BE 3.2 conserva pendiente la verificación de cargos previos, modelos, saldos y mínimos de cuenta, con consumos pagados bloqueados. No desplegar la base sin completar FE 1.3/BE 3.6.
+
+La fuente única `docs/contracts/openapi.json` sigue acordada en `1.0.0`, con autoridad BE y política/registro en `docs/contracts/README.md`. ALG 2.1 y BE 3.1 están cerradas documentalmente y G0 contractual cerrado, mediante revisión asistida solicitada por el usuario, sin atribuir firmas a los otros integrantes ni acreditar integraciones. FE 1.1 conserva pendiente su segundo hito técnico de tipos/validación; debe preceder a FE 1.3. No ejecutar el prototipo ni reintentar la instalación cancelada de validadores.
 
 ## Contexto del producto
 

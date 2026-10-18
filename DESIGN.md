@@ -137,7 +137,7 @@ components:
 
 SENIALON debe sentirse como un espacio de trabajo donde cada afirmación puede contrastarse. La identidad combina el negro, el blanco cálido y el punto naranja de los logos Fluido con la precisión estructural del prisma aportado. La marca aparece en detalles consistentes; publicaciones, evidencia y decisiones ocupan el centro de la interfaz.
 
-Este documento es una **especificación visual previa a la implementación**, creada el 17 de octubre de 2026. Los tokens definen la base propuesta para construir la interfaz; todavía no describen componentes implementados ni certifican accesibilidad de una aplicación terminada. El usuario confirmó conservar los logos y el naranja de SENIALON y adaptar del prisma la tipografía, el rigor y la estructura. Las escalas y comportamientos restantes son decisiones de diseño de esta propuesta.
+Este documento fija la **identidad visual confirmada** el 17 de octubre de 2026. El usuario confirmó conservar los logos y el naranja de SENIALON y adaptar del prisma la tipografía, el rigor y la estructura. La base visual de FE 1.2 ya está implementada y revisada localmente en escritorio y móvil; los tokens y las reglas siguientes siguen rigiendo las vistas pendientes. Esta entrega no certifica accesibilidad integral ni acredita que el recorrido funcional esté terminado.
 
 **Key Characteristics:**
 
@@ -146,6 +146,12 @@ Este documento es una **especificación visual previa a la implementación**, cr
 - Estructura modular alineada con el trabajo editorial y la inspección de evidencia.
 - Estados expresados con palabras, símbolos y color, sin depender solo del color.
 - Densidad suficiente para comparar, con espacio para leer y tomar una decisión.
+
+### Registro de implementación — FE 1.2
+
+La [base del frontend](frontend/README.md) aplica los tokens oscuros de este documento en [CSS global](frontend/src/app/globals.css) y CSS Modules. Implementa la estructura de navegación y cabecera, la vista inicial de ejecuciones y el listado plegable de los once canales previstos. Los logos Fluido se conservan sin editar. La revisión local comprobó la composición en escritorio y móvil, con navegación lateral desde 1200 px y menú nativo plegable por debajo de ese ancho.
+
+El estado inicial distingue configuración y resultados: la recolección está deshabilitada con una explicación visible; los enlaces del corpus no se presentan como canales consultados. No hay todavía autenticación, consumo de API, análisis, persistencia ni despliegue. Comparación, fichas, formularios y sus estados continúan como patrones normativos pendientes de implementación.
 
 ### Fuentes y adaptación del prisma
 
@@ -179,7 +185,7 @@ Escribir en español, con frases directas y vocabulario editorial. Usar «public
 
 Usar los archivos existentes, con su fondo y proporción. No reconstruir el logotipo con Sora, recolorearlo ni restaurar el logo inicial. La palabra se ve en minúsculas en el dibujo; el nombre escrito del producto es SENIALON. El texto alternativo es «SENIALON» cuando identifica el producto; una repetición decorativa junto al mismo nombre puede llevar alternativa vacía.
 
-Los PNG de marca completa tienen proporción 1200:520 y márgenes internos amplios. En una cabecera de 80 px, una imagen de 184 px de ancho conserva la proporción y deja una marca legible. En móvil, usar 138 px de ancho dentro de una cabecera de 64 px. Reservar al menos 12 px respecto a controles vecinos. Estos tamaños son recomendaciones de implementación, pendientes de comprobar en navegador.
+Los PNG de marca completa tienen proporción 1200:520 y márgenes internos amplios. La base implementada usa la marca de 184 px de ancho y 80 px de alto en escritorio; en móvil, 138 px de ancho dentro de una cabecera de 64 px. La proporción y legibilidad se revisaron en navegador. Reservar al menos 12 px respecto a controles vecinos al extender la composición.
 
 ## Colors
 
@@ -242,7 +248,7 @@ La meta de implementación es contraste mínimo AA: 4,5:1 para texto normal y 3:
 
 **Body Font:** Work Sans (con system-ui y sans-serif como alternativas).
 
-**Character:** Sora aporta el carácter geométrico del prisma en títulos breves; Work Sans sostiene la comparación de datos, la lectura de evidencia y los controles. Las fuentes aún no se distribuyen en este repositorio: deben incorporarse y comprobarse al implementar, con carga local o la estrategia del frontend elegido.
+**Character:** Sora aporta el carácter geométrico del prisma en títulos breves; Work Sans sostiene la comparación de datos, la lectura de evidencia y los controles. La base incorpora sus archivos variables WOFF2 mediante `next/font/local`, desde los paquetes Fontsource fijados en `5.3.0`. El build y la navegación sirven las fuentes localmente, sin consultar un servicio de fuentes externo.
 
 ### Hierarchy
 
@@ -310,7 +316,7 @@ Iconografía sencilla de trazo, consistente en grosor y tamaño de 20 px. La bib
 
 ## Components
 
-Los siguientes componentes son patrones propuestos para implementación. Cada control debe cubrir reposo, hover, foco, pulsado, deshabilitado y proceso cuando corresponda. El foco será visible con un contorno de 2 px en `primary` sobre superficie oscura y separación de 2 px; sobre un botón naranja, usar el contorno claro `text` y la misma separación. Comprobarlo también en modos de alto contraste.
+Los siguientes componentes conservan los patrones normativos de la interfaz. FE 1.2 implementa la navegación, los contenedores, los detalles plegables de fuentes y el botón de recolección deshabilitado; los patrones funcionales restantes aún deben construirse. Cada control debe cubrir reposo, hover, foco, pulsado, deshabilitado y proceso cuando corresponda. El foco será visible con un contorno de 2 px en `primary` sobre superficie oscura y separación de 2 px; sobre un botón naranja, usar el contorno claro `text` y la misma separación. Comprobarlo también en modos de alto contraste.
 
 ### Buttons
 
@@ -406,4 +412,4 @@ Notion aparece al final de la ficha solamente si la integración está operativa
 - **Don't** usar bento decorativo, nav flotante con desenfoque, neones o animaciones de radar para sustituir evidencia y jerarquía.
 - **Don't** afirmar cumplimiento AAA, tiempos de respuesta, precisión o exportaciones que no se hayan verificado.
 
-Formato organizado según [DESIGN.md](https://raw.githubusercontent.com/google-labs-code/design.md/main/docs/spec.md). La implementación posterior debe contrastar esta especificación visual con las specs funcionales y el diseño técnico, sin modificar silenciosamente el alcance.
+Formato organizado según [DESIGN.md](https://raw.githubusercontent.com/google-labs-code/design.md/main/docs/spec.md). Cada extensión debe contrastar esta especificación visual con las specs funcionales y el diseño técnico, sin modificar silenciosamente el alcance.

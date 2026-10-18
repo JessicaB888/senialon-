@@ -1,0 +1,34 @@
+{
+  "recorded_at": "2026-10-18T00:03:03-05:00",
+  "command": "python3.12 -B backend/budget.py --ledger docs/budget/ledger.json --provider jev",
+  "exit_code": 2,
+  "report": {
+    "state": "blocked",
+    "provider": "jev",
+    "kind": "call",
+    "reasons": [
+      "Falta confirmar cargos/recargas/consumos y reservas iniciales del equipo.",
+      "Falta verificar la cuenta del proveedor antes de esta prueba.",
+      "Modo de facturación del proveedor no confirmado.",
+      "Recargas automáticas desactivadas/no aplicables sin verificar.",
+      "Costo máximo de la operación desconocido; no se interpreta como cero.",
+      "Saldo/crédito o margen de cuenta desconocido.",
+      "Modelo o servicio concreto sin confirmar.",
+      "Tarifa aplicable a la cuenta/modelo sin verificar."
+    ],
+    "maximum_usd": null,
+    "budget": {
+      "currency": "USD",
+      "incremental_limit": "20.00",
+      "state": "blocked",
+      "reason": "Falta confirmar cargos/recargas/consumos y reservas iniciales del equipo.; Falta verificar la cuenta del proveedor antes de esta prueba.; Modo de facturación del proveedor no confirmado.; Recargas automáticas desactivadas/no aplicables sin verificar.; Costo máximo de la operación desconocido; no se interpreta como cero.; Saldo/crédito o margen de cuenta desconocido.; Modelo o servicio concreto sin confirmar.; Tarifa aplicable a la cuenta/modelo sin verificar.",
+      "confirmed_new_charges": null,
+      "reserved": null,
+      "available_for_new_calls": null
+    },
+    "cash_commitment_usd": null,
+    "consumption_commitment_usd": null,
+    "reservation_recorded": false,
+    "scope": "Preflight offline. BE 3.10 debe reclamar/reservar atómicamente antes de llamar; este comando no ejecuta ni autoriza pagos."
+  }
+}

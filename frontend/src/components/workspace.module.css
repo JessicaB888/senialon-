@@ -1,0 +1,207 @@
+.workspace {
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 224px minmax(0, 1fr);
+}
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--color-border);
+  background: var(--color-background);
+  padding: 0 var(--space-medium);
+}
+.brand {
+  display: flex;
+  width: fit-content;
+  min-height: 80px;
+  align-items: center;
+  margin-bottom: var(--space-section);
+}
+.brand img,
+.mobileBrand img {
+  display: block;
+  width: auto;
+  object-fit: contain;
+}
+.brand img {
+  height: 80px;
+}
+.navigation {
+  display: grid;
+  gap: var(--space-small);
+}
+.navigation a,
+.navigation > span {
+  display: flex;
+  align-items: center;
+  gap: var(--space-control);
+  min-height: 48px;
+  padding: var(--space-control);
+  border-radius: var(--radius-control);
+  font-size: var(--text-small);
+  font-weight: 500;
+}
+.navigation svg {
+  flex: 0 0 20px;
+}
+.activeLink {
+  background: var(--color-surface-raised);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+.activeLink::after {
+  content: "";
+  margin-left: auto;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.activeLink:hover {
+  background: var(--color-surface-hover);
+}
+.activeLink:active {
+  background: var(--color-surface);
+}
+.unavailableLink {
+  color: var(--color-text-muted);
+}
+.navHint {
+  padding: var(--space-control);
+  color: var(--color-text-muted);
+  font-size: var(--text-small);
+  line-height: 1.5;
+}
+.sidebarFooter {
+  display: grid;
+  gap: var(--space-micro);
+  margin-top: auto;
+  padding: var(--space-panel) var(--space-control);
+  color: var(--color-text-muted);
+  font-size: var(--text-small);
+}
+.sidebarFooter strong {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+.content {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.topbar {
+  min-height: 80px;
+  padding-inline: var(--space-section);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-medium);
+}
+.sectionLabel,
+.workspaceLabel {
+  font-size: var(--text-small);
+  color: var(--color-text-secondary);
+}
+.workspaceLabel {
+  padding: var(--space-small) var(--space-control);
+  background: var(--color-surface);
+  border-radius: var(--radius-small);
+}
+.main {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding: var(--space-section);
+  flex: 1;
+  outline: none;
+}
+.main:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -4px;
+}
+.footer {
+  padding: var(--space-panel) var(--space-section);
+  color: var(--color-text-muted);
+  font-size: var(--text-small);
+}
+.mobileBrand,
+.mobileNavigation {
+  display: none;
+}
+@media (max-width: 1199px) {
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sidebar,
+  .sectionLabel {
+    display: none;
+  }
+  .mobileBrand {
+    display: flex;
+    align-items: center;
+  }
+  .mobileBrand img {
+    height: 60px;
+  }
+  .topbar {
+    padding-inline: var(--space-panel);
+  }
+  .main {
+    padding: var(--space-panel);
+  }
+  .mobileNavigation {
+    display: block;
+    border-bottom: 1px solid var(--color-border);
+    padding-inline: var(--space-panel);
+  }
+  .mobileNavigation summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-control);
+    min-height: 48px;
+    cursor: pointer;
+    font-size: var(--text-small);
+  }
+  .mobileNavigation summary::marker,
+  .mobileNavigation summary::-webkit-details-marker {
+    display: none;
+  }
+  .menuChevron {
+    margin-left: auto;
+    transition: transform var(--motion-control);
+  }
+  .mobileNavigation[open] .menuChevron {
+    transform: rotate(180deg);
+  }
+  .mobileNavigation nav {
+    padding-bottom: var(--space-medium);
+  }
+  .footer {
+    padding-inline: var(--space-panel);
+  }
+}
+@media (max-width: 767px) {
+  .topbar {
+    min-height: 64px;
+    padding-inline: var(--space-medium);
+    gap: var(--space-small);
+  }
+  .mobileBrand img {
+    height: 60px;
+    max-width: 138px;
+  }
+  .workspaceLabel {
+    font-size: var(--text-caption);
+    padding: var(--space-small);
+  }
+  .mobileNavigation {
+    padding-inline: var(--space-medium);
+  }
+  .main {
+    padding: var(--space-panel) var(--space-medium);
+  }
+  .footer {
+    padding: var(--space-panel) var(--space-medium);
+  }
+}

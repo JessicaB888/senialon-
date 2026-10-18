@@ -1,12 +1,12 @@
 # Plan de frontend de SENIALON
 
-**Responsable confirmado:** tú, como integrante FE del equipo. **Estado:** contrato único acordado **`1.0.0`**, revisión documental FE favorable y revisión semántica/interfaces ALG 2.1 registradas por revisión asistida autorizada por el usuario. **G0 contractual está cerrado**; no hay código del producto implementado. FE 1.1 completa sigue pendiente de 1.2 y su hito técnico. Este ajuste no inicia Next.js ni acredita acceso o gasto; BE 3.2 sigue pendiente antes de cualquier consumo pagado. La entrega sigue siendo el 18 de octubre de 2026 antes de las 12:00, America/Bogota; no se asignan duraciones sin disponibilidad confirmada.
+**Responsable confirmado:** tú, como integrante FE del equipo. **Estado:** contrato único **`1.0.0`** y G0 contractual cerrados mediante las revisiones documentales registradas. El usuario autorizó FE 1.2 y BE 3.2: la [base frontend local](../frontend/README.md) tiene arranque y build verificables; el [control offline de presupuesto](budget/README.md) bloquea pruebas pagadas mientras falte la verificación de cuentas. FE 1.1 conserva pendiente el hito técnico de tipos/validación; no hay autenticación, integración o despliegue acreditados. La entrega sigue siendo el 18 de octubre de 2026 antes de las 12:00, America/Bogota; no se asignan duraciones sin disponibilidad confirmada.
 
 Las doce tareas y sus casillas siguen en [tasks.md](../openspec/changes/definir-mvp-senialon/tasks.md). Este documento prepara su prioridad, dependencias y orden; no crea otra lista de estados ni cambia sus IDs. Referencias: [plan del equipo](PLAN_DE_TRABAJO.md), [diseño técnico](../openspec/changes/definir-mvp-senialon/design.md), [C4](ARQUITECTURA_C4.md) y [DESIGN.md](../DESIGN.md).
 
 ## Por cuál empezar
 
-**La siguiente tarea de construcción es 1.2: base de Next.js y sistema visual.** El primer hito documental de 1.1 ya es favorable y el contrato 1.0.0 cierra G0 contractual. Después de 1.2 se completa el hito técnico de 1.1 —tipos y validación de respuestas— y se continúa con 1.3 —acceso y conexión—. Esa es la secuencia preparada; no se ejecuta construcción en este ajuste documental.
+**La siguiente tarea de frontend es completar 1.1: tipos y validación de respuestas.** Su primer hito documental ya es favorable sobre 1.0.0 y la base de 1.2 entrega el entorno técnico. Después sigue 1.3 —acceso y conexión—. BE puede preparar 3.3 usando los comandos de `frontend/README.md`; eso no habilita pruebas pagadas o un despliegue sin protección.
 
 Tras la inspección inicial sin contrato se preparó draft.1 y se emitió la [revisión FE](REVISION_CONTRATO_FRONTEND.md) de diez necesidades, veinte casos y ocho observaciones. Draft.2 incorporó H01–H04; son antecedentes preservados en el contrato activo [1.0.0](contracts/README.md), SHA-256 `d7e0b018263658e686da00997ddffbd19ba96e6e73de5b08e3f8917b95375956`, con 94 esquemas y 74 ejemplos sintéticos. La [revisión semántica](REVISION_SEMANTICA_ALG.md) y las [interfaces ALG–BE](INTERFACES_ANALISIS.md) cierran el acuerdo documental, sin atribuir una firma a otros integrantes ni acreditar calidad empírica o implementación.
 
@@ -17,7 +17,7 @@ Para evitar un ciclo, **1.1 tiene dos hitos dentro de la misma tarea**:
 - **Revisión documental:** inventario, ejemplos, campos, estados y conformidad de FE sobre el borrador. Esto es lo que necesita el cierre del contrato G0; no requiere código ni crear tipos TypeScript.
 - **Consumo técnico:** después de 1.2, preparar tipos y validación de respuestas del contrato acordado y comprobar su consumo. La casilla 1.1 se completa al verificar ambos hitos; no tiene que estar marcada completa para cerrar G0.
 
-Con G0 contractual cerrado, la primera tarea de construcción sigue siendo **1.2: base de Next.js y aplicación del sistema visual**. No necesita esperar a que YouTube, JEV o Gemini funcionen; respeta el stack y el contrato acordados. Las pruebas pagadas mantienen como requisito BE 3.2 y las llamadas de la aplicación BE 3.10; el acuerdo del contrato no habilita esos consumos.
+La base **1.2** conserva el sistema visual confirmado y aplica el parche Next.js 16.3.8 sin cambiar React o TypeScript. No necesita APIs operativas. Las pruebas pagadas mantienen como requisito la verificación pendiente de BE 3.2 y las llamadas de la aplicación BE 3.10; el build de frontend no habilita esos consumos.
 
 ## Prioridad y orden recomendado
 

@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "currency": "USD",
+  "incremental_limit_usd": "20.00",
+  "baseline": {
+    "status": "unconfirmed",
+    "evidence": null,
+    "verified_at": null,
+    "note": "Pendiente de la respuesta del equipo sobre nuevos cargos, recargas, consumos y reservas. Las listas vacías no acreditan gasto cero."
+  },
+  "vercel_subscription": {
+    "already_paid_outside_limit": true,
+    "evidence": "Confirmación previa del usuario: el abono activo de Vercel está pagado aparte de los 20 USD.",
+    "new_extras_verified": false
+  },
+  "providers": {
+    "jev": {
+      "status": "not_configured",
+      "selected_model": null,
+      "funding_mode": null,
+      "available_spend_usd": null,
+      "minimum_topup_usd": null,
+      "minimum_topup_evidence": null,
+      "auto_recharge": "unknown",
+      "tariff_verified": false,
+      "tariff_evidence": null,
+      "evidence": null,
+      "verified_at": null
+    },
+    "gemini": {
+      "status": "declared_configured_not_verified",
+      "selected_model": null,
+      "funding_mode": null,
+      "available_spend_usd": null,
+      "minimum_topup_usd": null,
+      "minimum_topup_evidence": null,
+      "auto_recharge": "unknown",
+      "tariff_verified": false,
+      "tariff_evidence": null,
+      "evidence": null,
+      "verified_at": null
+    },
+    "vercel": {
+      "status": "declared_configured_not_verified",
+      "selected_model": null,
+      "funding_mode": null,
+      "available_spend_usd": null,
+      "minimum_topup_usd": null,
+      "minimum_topup_evidence": null,
+      "auto_recharge": "unknown",
+      "tariff_verified": false,
+      "tariff_evidence": null,
+      "evidence": null,
+      "verified_at": null
+    },
+    "youtube": {
+      "status": "not_configured",
+      "selected_model": null,
+      "funding_mode": null,
+      "available_spend_usd": null,
+      "minimum_topup_usd": null,
+      "minimum_topup_evidence": null,
+      "auto_recharge": "unknown",
+      "tariff_verified": false,
+      "tariff_evidence": null,
+      "evidence": null,
+      "verified_at": null
+    }
+  },
+  "cash_entries": [],
+  "usage_entries": [],
+  "reservations": []
+}

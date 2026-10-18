@@ -26,12 +26,14 @@ Los logos actuales están en `branding/`. Las variantes disponibles son:
 - [Arquitectura C4](docs/ARQUITECTURA_C4.md).
 - [Sistema visual y de interfaz](DESIGN.md).
 - [Contexto del producto para diseño](PRODUCT.md).
+- [Base frontend, arranque y entrega a Backend — FE 1.2](frontend/README.md).
+- [Control de presupuesto y verificaciones pendientes — BE 3.2](docs/budget/README.md).
 
 ## OpenSpec
 
-Configurado con OpenSpec **1.14.3**, esquema `spec-driven`, perfil `core` e integración para Codex. El cambio [definir-mvp-senialon](openspec/changes/definir-mvp-senialon/proposal.md) incluye la propuesta, seis especificaciones funcionales, el [diseño técnico recomendado](openspec/changes/definir-mvp-senialon/design.md) y las [tareas pendientes de ejecución](openspec/changes/definir-mvp-senialon/tasks.md). La planificación está completa para revisión; no se ha desarrollado código del producto ni se han probado sus integraciones. El Python aportado en `docs/` se conserva como referencia para una evolución predictiva futura.
+Configurado con OpenSpec **1.14.3**, esquema `spec-driven`, perfil `core` e integración para Codex. El cambio [definir-mvp-senialon](openspec/changes/definir-mvp-senialon/proposal.md) incluye la propuesta, seis especificaciones funcionales, el [diseño técnico recomendado](openspec/changes/definir-mvp-senialon/design.md) y las [tareas de ejecución](openspec/changes/definir-mvp-senialon/tasks.md). El usuario autorizó FE 1.2 y BE 3.2: existe una base visual local y un control offline de presupuesto. Recolección, autenticación, persistencia, análisis y despliegue siguen pendientes; no hay integraciones externas probadas. El Python aportado en `docs/` se conserva sin ejecutar para una evolución predictiva futura.
 
-El frontend usará el stack verificado de `personal-finance-assistant`: **Next.js 16.3.3 con App Router, React 19.3.0, TypeScript 5.9.3 y npm**. Python para análisis y Vercel para despliegue también están confirmados. El diseño propone Next.js como entrada web y FastAPI/Python como servicio interno del mismo proyecto Vercel, PostgreSQL en Supabase Free y acceso mediante credencial compartida. El primer despliegue debe verificar esta conexión. Los nuevos consumos de la demo tienen un máximo de **20 USD**; la suscripción Vercel ya abonada queda aparte. El primer bloque de ejecución configura y comprueba YouTube Data API, JEV y persistencia, y verifica Gemini y Vercel.
+El frontend conserva el stack de `personal-finance-assistant`: **Next.js/App Router, React 19.3.0, TypeScript 5.9.3 y npm**, con Node `>=24.21.0 <25`. SENIALON fija Next.js **16.3.8**, un parche de seguridad de la referencia 16.3.3; [motivo y comandos](frontend/README.md). Python para análisis y Vercel para despliegue también están confirmados. El diseño propone Next.js como entrada web y FastAPI/Python como servicio interno del mismo proyecto Vercel, PostgreSQL en Supabase Free y acceso mediante credencial compartida. El primer despliegue debe verificar esta conexión. Los nuevos consumos de la demo tienen un máximo de **20 USD**; la suscripción Vercel ya abonada queda aparte. Las pruebas pagadas permanecen bloqueadas hasta verificar las cuentas según BE 3.2.
 
 OpenSpec requiere Node.js **20.19.0 o posterior**. Para preparar esta herramienta en otra máquina:
 
@@ -42,7 +44,7 @@ openspec --version
 
 La configuración del proyecto y las skills ya están en `openspec/` y `.agents/skills/`; no hace falta repetir la inicialización al clonar el repositorio.
 
-Para revisar o resolver dudas en Codex, usar `openspec-explore`. El usuario autorizó ALG 2.1 y el acuerdo definitivo: el [contrato único](docs/contracts/openapi.json) queda acordado en `1.0.0`, con revisión semántica, interfaces y [consumo documental FE](docs/REVISION_CONTRATO_FRONTEND.md) registrados. ALG 2.1 y BE 3.1 se cierran y G0 contractual queda cerrado mediante revisión asistida por Codex; no se atribuyen firmas a otros integrantes ni pruebas reales de servicios. La siguiente construcción es **FE 1.2**, después el hito técnico de tipos/validación FE 1.1 y FE 1.3. Las proyecciones temporales no completan ese hito. BE 3.2 sigue pendiente antes de pruebas pagadas. Este acuerdo no inicia automáticamente código; las tareas conservan dueños y dependencias. [Documentación de la integración](https://openspec.dev/docs/supported-tools#codex).
+Para revisar o resolver dudas en Codex, usar `openspec-explore`; para ejecutar las tareas autorizadas, `openspec-apply-change`. El [contrato único](docs/contracts/openapi.json) conserva `1.0.0`, con revisión semántica, interfaces y [consumo documental FE](docs/REVISION_CONTRATO_FRONTEND.md) registrados. ALG 2.1 y BE 3.1 están cerradas y G0 contractual cerrado mediante revisión asistida por Codex, sin firmas atribuidas a otros integrantes ni pruebas reales de servicios. Después de la base FE 1.2, sigue el hito técnico de tipos/validación FE 1.1 y luego FE 1.3; BE puede preparar 3.3 con los comandos entregados. BE 3.2 conserva pendientes sus verificaciones de cuenta antes de pruebas pagadas. Las tareas mantienen dueños y dependencias. [Documentación de la integración](https://openspec.dev/docs/supported-tools#codex).
 
 El contexto y las reglas de SENIALON están en [openspec/config.yaml](openspec/config.yaml). El trabajo comienza por las especificaciones antes de implementar el producto.
 
@@ -58,4 +60,4 @@ node --version
 openspec --version
 ```
 
-Este ajuste afecta solo a la sesión de terminal. Otros equipos con Node compatible no lo necesitan. El runtime usado para verificar OpenSpec es 24.19.0; el futuro frontend requiere **Node.js >=24.21.0 y <25**, siguiendo el proyecto de referencia. El funcionamiento del CLI no valida ese requisito del producto.
+Este ajuste afecta solo a la sesión de terminal. Otros equipos con Node compatible no lo necesitan. El runtime usado para verificar OpenSpec es 24.19.0; el frontend requiere **Node.js >=24.21.0 y <25** y se verificó separadamente con 24.21.0. El funcionamiento del CLI no sustituye ese requisito del producto.

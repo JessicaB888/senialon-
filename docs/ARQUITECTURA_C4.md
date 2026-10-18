@@ -1,8 +1,8 @@
 # Arquitectura C4 de SENIALON
 
-**Estado:** arquitectura objetivo, previa a implementación. **Fecha:** 17 de octubre de 2026, America/Bogota.
+**Estado:** arquitectura objetivo; base frontend y control offline de presupuesto iniciados, sin despliegue. **Actualización:** 18 de octubre de 2026, America/Bogota.
 
-Este documento representa el [diseño técnico](../openspec/changes/definir-mvp-senialon/design.md), las [specs](../openspec/changes/definir-mvp-senialon/proposal.md) y el [plan de tres áreas](PLAN_DE_TRABAJO.md). No acredita servicios desplegados, integraciones probadas o código construido. Si cambia una decisión, actualizar primero su fuente y después estas vistas.
+Este documento representa el [diseño técnico](../openspec/changes/definir-mvp-senialon/design.md), las [specs](../openspec/changes/definir-mvp-senialon/proposal.md) y el [plan de tres áreas](PLAN_DE_TRABAJO.md). Los diagramas siguen mostrando la arquitectura objetivo; la [base FE 1.2](../frontend/README.md) y el [control de BE 3.2](budget/README.md) no acreditan servicios desplegados ni integraciones probadas. Si cambia una decisión, actualizar primero su fuente y después estas vistas.
 
 Los niveles C1, C2 y C3 se expresan con diagramas Mermaid y etiquetas de tipo, tecnología y responsabilidad. En C4, un contenedor representa una aplicación o almacenamiento; aquí no implica Docker. El despliegue se muestra aparte. No se inventa el nivel de código C4: las clases y funciones concretas se documentarán cuando exista implementación. [Modelo C4](https://c4model.com/diagrams), [contenedores](https://c4model.com/diagrams/container), [componentes](https://c4model.com/diagrams/component).
 

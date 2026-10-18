@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Frontend confirmado por el usuario: el mismo stack de personal-finance-assistant, verificado como Next.js 16.3.3 con App Router, React/React DOM 19.3.0, TypeScript 5.9.3 y npm; Node.js >=24.21.0 y <25. Python para análisis y Vercel para despliegue también están confirmados.
+Frontend confirmado por el usuario: el mismo stack de personal-finance-assistant, cuya referencia usa Next.js 16.3.3. La base implementada en FE 1.2 fija **Next.js 16.3.8** por un parche de seguridad de esa línea, con App Router, React/React DOM 19.3.0, TypeScript 5.9.3 y npm; Node.js >=24.21.0 y <25. Ver [entrega y verificación local](frontend/README.md). Python para análisis y Vercel para despliegue también están confirmados.
 
 FastAPI, PostgreSQL en Supabase Free y dos servicios conectados en Vercel son la arquitectura propuesta, todavía sin implementar ni probar. Ver [diseño técnico](openspec/changes/definir-mvp-senialon/design.md). Reutilizar el stack no implica copiar código ni la identidad visual del proyecto financiero.
 
@@ -43,7 +43,7 @@ La entrega prevista es el 18 de octubre de 2026 antes de las 12:00, America/Bogo
 - Pilares: ROI y costos de IA, automatización comercial con IA, eficiencia operativa con IA y liderazgo aplicado a IA; también otro pertinente e información insuficiente.
 - URL desplegada, credencial compartida para toda la aplicación y persistencia duradera. HTTP Basic es el mecanismo técnico propuesto; no hay un login propio confirmado.
 - Notion es una extensión manual opcional de última prioridad. El prototipo predictivo aportado queda fuera del MVP, sin ejecutar ni validar.
-- No se ha implementado código del producto. Las capacidades se formalizan en las [specs del cambio](openspec/changes/definir-mvp-senialon/proposal.md).
+- La base visual de frontend y el control offline de presupuesto están implementados. La recolección, autenticación, persistencia y análisis real siguen pendientes; el [control de presupuesto](docs/budget/README.md) bloquea pruebas pagadas mientras falten verificaciones de cuenta. Las capacidades objetivo se formalizan en las [specs del cambio](openspec/changes/definir-mvp-senialon/proposal.md).
 
 ## Brand Commitments
 

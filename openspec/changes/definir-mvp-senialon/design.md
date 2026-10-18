@@ -4,7 +4,7 @@
 
 Ver [proposal.md](proposal.md) para el problema y alcance. El usuario confirmó el mismo stack frontend de personal-finance-assistant, Python para análisis, Vercel para despliegue, acceso completo con una credencial de demo compartida y recuperación duradera. Las demás decisiones técnicas son recomendaciones. El plan de pago de Vercel ya está activo y abonado aparte; 20 USD es el máximo para nuevos consumos de APIs y extras de esta demo.
 
-Gemini y Vercel están declarados configurados por el equipo; no se probaron desde SENIALON. YouTube Data API y JEV no están configurados. PostgreSQL externo aún debe prepararse. El repositorio contiene documentación, branding y un prototipo de referencia sin ejecutar; no existe implementación del producto.
+Gemini y Vercel están declarados configurados por el equipo; no se probaron desde SENIALON. YouTube Data API y JEV no están configurados. PostgreSQL externo aún debe prepararse. Tras la autorización de FE 1.2/BE 3.2 existe una base frontend local y un control offline de presupuesto, sin integraciones ni despliegue. El prototipo de referencia continúa sin ejecutar.
 
 Este diseño aplica: hay varios proveedores, un modelo de datos nuevo, autenticación, persistencia y límites de ejecución que deben resolverse antes de programar. Es la arquitectura recomendada para revisión; no presume experiencia del equipo ni servicios ya validados.
 
@@ -41,7 +41,9 @@ La decisión del usuario sustituye la propuesta anterior de interfaz Jinja2/HTMX
 
 Estas son versiones observadas, no una afirmación de que sean las más recientes ni de compatibilidad ya probada en SENIALON. Al implementar, fijar dependencias compatibles y verificar el build. La referencia no tiene Tailwind ni shadcn/ui declarados; no introducirlos como si formaran parte del stack existente. Mantener estilos y assets propios de SENIALON. No se requiere una biblioteca de gráficos para resolver los conteos del MVP.
 
-El backend recomendado continúa en **Python 3.12 + FastAPI**, con HTTPX para proveedores, Pydantic para contratos y pruebas deterministas con pytest. Las versiones de paquetes Python se fijarán al preparar el entorno. Proponer frontend/ y backend/ como directorios de implementación futura en este repositorio, sin crearlos en la fase de especificación.
+**Implementación FE 1.2:** Next.js y `eslint-config-next` se fijaron en **16.3.8**, parche de la misma línea que corrige alertas de la referencia 16.3.3, conservando React/React DOM 19.3.0 y TypeScript 5.9.3. Versiones efectivas, evidencia de build y la limitación de auditoría en tooling están en [frontend/README.md](../../../frontend/README.md). La tabla anterior conserva el dato histórico inspeccionado en PFA.
+
+El backend recomendado continúa en **Python 3.12 + FastAPI**, con HTTPX para proveedores, Pydantic para contratos y pruebas deterministas con pytest. Las versiones de paquetes Python se fijarán al preparar el entorno en BE 3.3. `frontend/` contiene la base FE 1.2; `backend/` contiene únicamente el control presupuestario offline de BE 3.2 con tests de biblioteca estándar, sin HTTP, BD o análisis de dominio.
 
 Desplegar ambos mediante **Vercel Services** en un mismo proyecto: Next.js como servicio público en la raíz y Python como servicio interno sin rewrite público, accesible desde funciones de Next mediante un binding. Services está en beta; verificar disponibilidad efectiva, arranque local y primer despliegue en la cuenta del equipo antes de ampliar desarrollo. Los bindings están disponibles en funciones durante la ejecución, no en builds ni middleware; conservar las llamadas en Route Handlers o funciones de servidor. [Services](https://vercel.com/docs/services), [bindings](https://vercel.com/docs/services/bindings), [FastAPI en Vercel](https://vercel.com/docs/frameworks/backend/fastapi), [runtime Python](https://vercel.com/docs/functions/runtimes/python).
 
